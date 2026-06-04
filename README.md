@@ -11,7 +11,7 @@ Agradecemos as contribuições de nossa comunidade e de funcionários da Adobe d
 
 ## Código de conduta do Adobe Open Source
 
-Este projeto adotou o [Código de Conduta do Adobe Open Source](code-of-conduct.md) ou o [ Código de Conduta do .NET Foundation](https://dotnetfoundation.org/code-of-conduct). Para obter mais informações, consulte o artigo [Contribuição](contributing.md).
+Este projeto adotou o [Código de Conduta do Adobe Open Source](code-of-conduct.md) ou o [&#x200B; Código de Conduta do .NET Foundation](https://dotnetfoundation.org/code-of-conduct). Para obter mais informações, consulte o artigo [Contribuição](contributing.md).
 
 ## Como contribuir para o conteúdo do Adobe
 
