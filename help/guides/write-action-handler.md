@@ -1,9 +1,9 @@
 ---
 title: Gravar o manipulador de ação
 description: Saiba como escrever um manipulador de ação para seu aplicativo Adobe LLM, incluindo o contrato do manipulador, structuredContent e um exemplo de trabalho.
-source-git-commit: 483a71f5f1de5caf1bd89b26f4d67d2d5a0aa15a
+source-git-commit: 1a99e2e80e50a3bcf9ce6fb910365202bf06e113
 workflow-type: tm+mt
-source-wordcount: '714'
+source-wordcount: '719'
 ht-degree: 0%
 
 ---
@@ -13,9 +13,11 @@ ht-degree: 0%
 
 >[!IMPORTANT]
 >
->**Aviso de isenção de responsabilidade:** esta é uma versão beta do [!DNL LLM Apps]. Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do aplicativo ou do produto.
+>[!DNL Adobe LLM Apps] está atualmente na Beta.
+>
+>Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-Depois de criar uma ação na interface do usuário, os metadados são armazenados na API [!DNL LLM Apps], mas ainda não há código. Este guia mostra como escrever a função de manipulador que é executada quando uma plataforma do LLM (como [!DNL ChatGPT] ou Claude) invoca sua ação.
+Depois de criar uma ação na interface do usuário do [!DNL Adobe LLM Apps], os metadados são armazenados na API [!DNL LLM Apps] — mas ainda não há código. Este guia mostra como escrever a função de manipulador que é executada quando uma plataforma do LLM (como [!DNL ChatGPT] ou Claude) invoca sua ação.
 
 Para obter detalhes sobre o layout do projeto, desenvolvimento local e testes, consulte [Desenvolvimento](/help/reference/development.md).
 
