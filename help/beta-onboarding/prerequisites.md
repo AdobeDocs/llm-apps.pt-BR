@@ -1,13 +1,15 @@
 ---
-title: Pré-requisitos
+title: Pré-requisitos para aplicativos do Adobe LLM
 description: O que é necessário configurar antes de iniciar a sessão de integração do Adobe LLM Apps Beta.
-source-git-commit: 1ff383dff82068f68746d665d079216375ba523a
+source-git-commit: 98d5590c927bf8ffad54061ee027664452c129c1
 workflow-type: tm+mt
-source-wordcount: '530'
-ht-degree: 1%
+source-wordcount: '539'
+ht-degree: 0%
 
 ---
 
+
+# Pré-requisitos para aplicativos do Adobe LLM {#prerequisites-for-adobe-llm-apps}
 
 Antes de sua sessão de integração com o Adobe, confirme se você tem o seguinte em vigor. Sempre que possível, execute as etapas de verificação abaixo — os resultados informam quem precisa estar na sala, não se você pode continuar.
 
