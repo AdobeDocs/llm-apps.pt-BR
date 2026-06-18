@@ -1,9 +1,9 @@
 ---
 title: Testar no ChatGPT
 description: Saiba como adicionar seu aplicativo Adobe LLM implantado ao ChatGPT e testá-lo em uma conversa real.
-source-git-commit: 483a71f5f1de5caf1bd89b26f4d67d2d5a0aa15a
+source-git-commit: 1a99e2e80e50a3bcf9ce6fb910365202bf06e113
 workflow-type: tm+mt
-source-wordcount: '798'
+source-wordcount: '804'
 ht-degree: 2%
 
 ---
@@ -13,13 +13,15 @@ ht-degree: 2%
 
 >[!IMPORTANT]
 >
->**Aviso de isenção de responsabilidade:** esta é uma versão beta do [!DNL LLM Apps]. Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do aplicativo ou do produto.
+>[!DNL Adobe LLM Apps] está atualmente na Beta.
+>
+>Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
 >[!NOTE]
 >
 >Este guia usa [!DNL ChatGPT] como exemplo. As etapas gerais — registro de um URL de servidor MCP e teste em uma conversa — também se aplicam a outras plataformas LLM, embora o fluxo de configuração e a interface variem.
 
-Após uma implantação bem-sucedida, seu aplicativo está sendo executado no [!DNL Adobe I/O Runtime] e expõe uma URL de servidor MCP. Este guia mostra como adicioná-lo a [!DNL ChatGPT] e testá-lo em uma conversa real.
+Após uma implantação bem-sucedida com o [!DNL Adobe LLM Apps], seu aplicativo está sendo executado no [!DNL Adobe I/O Runtime] e expõe uma URL de servidor MCP. Este guia mostra como adicioná-lo a [!DNL ChatGPT] e testá-lo em uma conversa real.
 
 ## Requisitos do plano
 

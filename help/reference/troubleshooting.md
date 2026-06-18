@@ -1,9 +1,9 @@
 ---
 title: Solução de problemas para aplicativos Adobe LLM
 description: Soluções para problemas comuns ao criar, implantar e testar aplicativos Adobe LLM.
-source-git-commit: 98d5590c927bf8ffad54061ee027664452c129c1
+source-git-commit: 1a99e2e80e50a3bcf9ce6fb910365202bf06e113
 workflow-type: tm+mt
-source-wordcount: '439'
+source-wordcount: '451'
 ht-degree: 0%
 
 ---
@@ -13,7 +13,11 @@ ht-degree: 0%
 
 >[!IMPORTANT]
 >
->**Aviso de isenção de responsabilidade:** esta é uma versão beta do [!DNL LLM Apps]. Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do aplicativo ou do produto.
+>[!DNL Adobe LLM Apps] está atualmente na Beta.
+>
+>Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+
+Isso fornece informações de solução de problemas ao trabalhar com [!DNL Adobe LLM Apps].
 
 ## Problemas comuns
 

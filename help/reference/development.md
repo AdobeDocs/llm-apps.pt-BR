@@ -1,9 +1,9 @@
 ---
 title: Desenvolvimento para aplicativos Adobe LLM
 description: Estrutura de projeto, fluxo de trabalho de desenvolvimento local e configuração de teste para o código do manipulador de aplicativos Adobe LLM.
-source-git-commit: 51ffb31eec82f9639bd7ade9052d61028c262d0e
+source-git-commit: 1a99e2e80e50a3bcf9ce6fb910365202bf06e113
 workflow-type: tm+mt
-source-wordcount: '318'
+source-wordcount: '324'
 ht-degree: 4%
 
 ---
@@ -13,9 +13,11 @@ ht-degree: 4%
 
 >[!IMPORTANT]
 >
->**Aviso de isenção de responsabilidade:** esta é uma versão beta do [!DNL LLM Apps]. Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do aplicativo ou do produto.
+>[!DNL Adobe LLM Apps] está atualmente na Beta.
+>
+>Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-Esta seção aborda a estrutura do projeto do manipulador, o fluxo de trabalho de desenvolvimento local e a configuração de teste. Para obter o contrato do manipulador e o código de exemplo, consulte [Gravar o Manipulador de Ação](/help/guides/write-action-handler.md).
+Esta seção aborda a estrutura do projeto do manipulador, o fluxo de trabalho de desenvolvimento local e a configuração de teste para [!DNL Adobe LLM Apps]. Para obter o contrato do manipulador e o código de exemplo, consulte [Gravar o Manipulador de Ação](/help/guides/write-action-handler.md).
 
 ## Estrutura de projeto
 
