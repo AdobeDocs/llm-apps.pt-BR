@@ -45,7 +45,7 @@ Se a Produção entrar em conflito com a origem ou os planos, documente a Produ�
 - Diferencie o scaffold gerado da integração pronta para produção.
 - Evite nomes de trabalhadores internos, campos de banco de dados, tíquetes de implementação e detalhes instáveis do pipeline.
 - Não duplique tabelas de campo entre guias; vincule à referência.
-- Preservar a interface e as diretivas do Experience League: `[!DNL]`, ``, `[!IMPORTANT]`, `[!NOTE]` e `[!TIP]`.
+- Preservar a interface e as diretivas do Experience League: `[!DNL]`, &grave;&grave;, `[!IMPORTANT]`, `[!NOTE]` e `[!TIP]`.
 - Usar links internos relativos à raiz: `/help/...`.
 - Use as frases em maiúsculas e minúsculas para títulos e cabeçalhos, a menos que o rótulo de um produto exija o contrário.
 - Use o texto alternativo de imagem descritiva que explica a tela e o estado.
