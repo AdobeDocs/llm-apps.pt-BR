@@ -1,15 +1,15 @@
 ---
-title: Implantar O Aplicativo
+title: Implante seu aplicativo
 description: Saiba como implantar seu aplicativo Adobe LLM no preparo e na produção usando a interface do usuário de aplicativos LLM.
-source-git-commit: 1a99e2e80e50a3bcf9ce6fb910365202bf06e113
+source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
 workflow-type: tm+mt
-source-wordcount: '359'
+source-wordcount: '322'
 ht-degree: 0%
 
 ---
 
 
-# Implantar O Aplicativo
+# Implantar O Aplicativo {#deploy-your-app}
 
 >[!IMPORTANT]
 >
@@ -19,26 +19,24 @@ ht-degree: 0%
 
 Depois de gravar o código do manipulador e enviá-lo para o repositório vinculado, você poderá implantar o aplicativo na interface do usuário do [!DNL LLM Apps].
 
+Esta é uma etapa compartilhada para cada jornada. Após a implantação, continue a [testar o plug-in ChatGPT](/help/guides/test-in-chatgpt.md) ou [testar o conector Claude](/help/guides/test-in-claude.md).
+
 ## Iniciar a implantação
 
-Navegue até a página Detalhes do aplicativo. Clique no botão **[!UICONTROL Implantar]** no canto superior direito:
+Abra a página Detalhes do aplicativo e selecione **[!UICONTROL Implantar]**.
 
-![Detalhes do aplicativo — pronto para implantar](/help/assets/guide-deploy/app-detail-deploy-ready.png)
+Selecione o ambiente de destino e selecione **[!UICONTROL Implantar]**.
 
-Isso abre a caixa de diálogo de implantação. Selecione o ambiente de destino na lista suspensa:
+![Implantar — selecione o ambiente de destino](/help/assets/guide-onboarding-agent/deploy-stage.png)
 
-![Caixa de diálogo Implantar — selecionar ambiente de destino](/help/assets/guide-deploy/deploy-pipeline-dropdown.png)
+A implantação é executada em quatro etapas:
 
-Clique em **[!UICONTROL Implantar]** para iniciar o pipeline. As quatro etapas são:
+1. **Preparando** — recupera a configuração necessária para implantar o aplicativo.
+2. **Iniciar implantação** — inicia o processo de implantação em segundo plano.
+3. **Criar aplicativo** — instala dependências e cria o código de repositório mais recente.
+4. **Publicar** — publica o aplicativo em [!DNL Adobe I/O Runtime].
 
-1. **Coletar credenciais** — lê os metadados do aplicativo, gera um token [!DNL GitHub] e busca credenciais de Tempo de Execução da API do Console.
-2. **Acionar pipeline de compilação** — envia todos os parâmetros para o pipeline de compilação.
-3. **Clonar e compilar** — o pipeline clona seu repositório, gera `actions.json` dos metadados da interface do usuário, executa o `npm install` e o webpack para produzir `dist/index.js`.
-4. **Implantar em Tempo de Execução** — implanta o pacote no namespace [!DNL Adobe I/O Runtime] do seu aplicativo.
-
-Depois de iniciado, o pipeline é executado automaticamente e mostra o progresso em tempo real:
-
-![Implantar pipeline em execução](/help/assets/guide-deploy/deploy-pipeline-deploying.png)
+![Implantar — pipeline de implantação em execução](/help/assets/guide-onboarding-agent/deploy-running.png)
 
 >[!NOTE]
 >
@@ -46,20 +44,25 @@ Depois de iniciado, o pipeline é executado automaticamente e mostra o progresso
 
 ## Depois de uma implantação bem-sucedida
 
-Quando todas as etapas forem concluídas, a caixa de diálogo mostrará uma confirmação **Implantação bem-sucedida** com a URL implantada e os detalhes do artefato:
+Quando todas as etapas forem concluídas, a caixa de diálogo exibirá **Implantação bem-sucedida**.
 
-![Implantação bem-sucedida](/help/assets/guide-deploy/app-detail-deploy-finish.png)
+![Implantação — implantação bem-sucedida](/help/assets/guide-onboarding-agent/deploy-successful.png)
 
 Clique em **Fechar** para fechar a caixa de diálogo. Role para baixo até a seção **[!UICONTROL Testar o aplicativo]** na página Detalhes do aplicativo:
 
-![Testar o aplicativo — URLs implantadas](/help/assets/guide-deploy/test-app-deployed.png)
+![Detalhes do aplicativo — copie a URL do servidor MCP](/help/assets/guide-onboarding-agent/app-mcp-url.png)
 
-Cada ambiente (**Preparo** e **Produção**) mostra a URL do servidor MCP em [!DNL Adobe I/O Runtime]. Este é o URL fornecido à plataforma LLM ao registrar seu aplicativo. Clique em **Copiar URL** para copiá-la para a área de transferência.
+Cada ambiente implantado mostra um URL de servidor MCP. Selecione **[!UICONTROL Copiar URL]** e use-a para criar um plug-in na plataforma LLM de destino.
 
-A seção **Histórico de implantação** abaixo mantém um log completo de cada implantação entre ambientes:
+A seção **Histórico de implantação** mostra as últimas 10 implantações:
 
 ![Histórico de implantação](/help/assets/guide-deploy/deployment-history.png)
 
 Cada linha mostra o **Ambiente** de destino (Preparo ou Produção), o **Status** (Bem-sucedido ou Com Falha) e a **Implantação na** data. Você pode usar essa tabela para rastrear quando as implantações ocorreram e verificar se
 implantação mais recente bem-sucedida.
+
+## Próxima etapa
+
+- [Testar o aplicativo implantado como um plug-in ChatGPT](/help/guides/test-in-chatgpt.md).
+- [Teste o aplicativo implantado como um conector Claude](/help/guides/test-in-claude.md).
 

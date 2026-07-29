@@ -1,15 +1,15 @@
 ---
-title: Desenvolvimento para aplicativos Adobe LLM
-description: Estrutura de projeto, fluxo de trabalho de desenvolvimento local e configuração de teste para o código do manipulador de aplicativos Adobe LLM.
-source-git-commit: 1a99e2e80e50a3bcf9ce6fb910365202bf06e113
+title: Desenvolvimento e teste do manipulador local
+description: Manipule a estrutura do projeto, os comandos do servidor local, o teste de MCP e o teste de unidade para aplicativos Adobe LLM.
+source-git-commit: eec74b87457bc852d7a8dd0e46c2a4385a93ae0a
 workflow-type: tm+mt
-source-wordcount: '324'
-ht-degree: 4%
+source-wordcount: '280'
+ht-degree: 1%
 
 ---
 
 
-# Desenvolvimento {#development}
+# Desenvolvimento e teste de manipulador local {#development}
 
 >[!IMPORTANT]
 >
@@ -17,7 +17,13 @@ ht-degree: 4%
 >
 >Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-Esta seção aborda a estrutura do projeto do manipulador, o fluxo de trabalho de desenvolvimento local e a configuração de teste para [!DNL Adobe LLM Apps]. Para obter o contrato do manipulador e o código de exemplo, consulte [Gravar o Manipulador de Ação](/help/guides/write-action-handler.md).
+Use essa referência ao desenvolver manipuladores localmente. Para obter o contrato de resultado do manipulador, consulte [Personalizar um manipulador gerado](/help/guides/customize-handler.md).
+
+## Requisitos
+
+- Node.js 24 ou posterior.
+- npm.
+- Um clone local do repositório do manipulador vinculado.
 
 ## Estrutura de projeto
 
@@ -27,15 +33,11 @@ O repositório vinculado segue este layout:
 your-llm-app/
 ├── entry.js                   # Webpack entry — do not modify
 ├── actions/                   # One folder per action
-│   ├── search-products/
-│   │   └── index.js           # Handler (async function)
-│   ├── get-product-details/
-│   │   └── index.js
 │   └── echo/
-│       └── index.js
+│       └── index.js           # Example handler
 ├── test/
 │   ├── actions/
-│   │   └── search-products.test.js
+│   │   └── echo.test.js
 │   ├── fixtures/
 │   │   └── actions.json
 │   ├── html-transform.js
@@ -43,7 +45,7 @@ your-llm-app/
 │   └── server.test.js
 ├── server/
 │   └── local.js               # Local dev server (port 9080)
-├── actions.json               # Gitignored — local copy of UI metadata
+├── actions.json               # Gitignored — optional local metadata
 ├── app.config.yaml            # Adobe I/O Runtime config
 ├── webpack.config.js
 └── package.json
@@ -52,7 +54,7 @@ your-llm-app/
 Pontos principais:
 
 - **`entry.js`** é o ponto de entrada do webpack. No momento da compilação, ele descobre cada arquivo `actions/*/index.js` e os agrupa em um único `dist/index.js`. Não modifique.
-- **`actions.json`** está sendo ignorado. Baixe-o da página Ações na interface do usuário para desenvolvimento local. Para implantações, o pipeline o grava automaticamente da API.
+- **`actions.json`** está sendo ignorado. O pipeline de implantação o grava automaticamente dos metadados de ação em [!DNL LLM Apps].
 - **Testes** ativos em `test/actions/`, **não** dentro de `actions/`. O Webpack agrupa tudo em `actions/` no artefato implantado — os testes de co-localização os enviariam para [!DNL Adobe I/O Runtime].
 
 ## Desenvolvimento local
@@ -66,11 +68,11 @@ npm run dev:local
 
 Isso cria o projeto com o webpack e inicia um servidor HTTP Node.js simples em `http://localhost:9080`. O servidor detecta automaticamente os arquivos do manipulador em `actions/` e os registra como ferramentas MCP.
 
-### Baixar `actions.json`
+### Comportamento de metadados locais
 
-Para que o servidor local saiba mais sobre os metadados de ação (nome, descrição, esquema de entrada), baixe `actions.json` da página Ações na interface do usuário do [!DNL LLM Apps] e coloque-o na raiz do repositório. Sem ele, o servidor descobre os manipuladores, mas os registra com o mínimo de metadados.
+A interface atual não fornece um download de `actions.json`. Você pode executar o servidor local sem este arquivo; ele descobre manipuladores em `actions/` e os registra com metadados mínimos.
 
-Você também pode copiar `actions.example.json` para `actions.json` como ponto de partida.
+Sem `actions.json`, os argumentos de ação local não são validados em relação ao esquema de entrada da interface do usuário. Os testes de unidade e integração usam `test/fixtures/actions.json` para metadados representativos.
 
 ### Testar com curl
 
@@ -81,11 +83,11 @@ curl -sX POST "http://localhost:9080" \
   -H 'accept: application/json;q=1.0, text/event-stream;q=0.5' \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list","params":{}}'
 
-# Call the search-products action
+# Call the boilerplate echo action
 curl -sX POST "http://localhost:9080" \
   -H 'content-type: application/json' \
   -H 'accept: application/json;q=1.0, text/event-stream;q=0.5' \
-  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"search-products","arguments":{"category":"bagged-coffee"}}}'
+  -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"echo","arguments":{"message":"hello"}}}'
 ```
 
 ### Testar com Inspetor MCP
@@ -101,30 +103,17 @@ Definir **Tipo de Transporte** para `streamable-http` e **URL** para `http://loc
 Os testes de unidade de manipulador ficam em `test/actions/` e espelham o layout `actions/`:
 
 ```javascript
-// test/actions/search-products.test.js
-const handler = require('../../actions/search-products/index.js')
+// test/actions/echo.test.js
+const handler = require('../../actions/echo/index.js')
 
-test('returns all products when no filter is given', async () => {
+test('echoes the message', async () => {
+  const result = await handler({ message: 'hello' })
+  expect(result.content[0].text).toBe('Echo: hello')
+})
+
+test('always returns content parts', async () => {
   const result = await handler({})
-  expect(result.content[0].text).toContain('product')
-  expect(result.structuredContent.products.length).toBeGreaterThan(0)
-})
-
-test('filters by category', async () => {
-  const result = await handler({ category: 'bagged-coffee' })
-  expect(result.structuredContent.products.every(
-    (p) => p.category === 'bagged-coffee'
-  )).toBe(true)
-})
-
-test('filters by query', async () => {
-  const result = await handler({ query: 'dark-roast' })
-  expect(result.structuredContent.products.length).toBeGreaterThan(0)
-})
-
-test('returns empty result for unknown category', async () => {
-  const result = await handler({ category: 'nonexistent' })
-  expect(result.structuredContent.products).toHaveLength(0)
+  expect(Array.isArray(result.content)).toBe(true)
 })
 ```
 
@@ -132,20 +121,8 @@ Executar testes com:
 
 ```bash
 npm test                                      # all tests
-npx jest test/actions/search-products        # one action only
+npx jest test/actions/echo                   # one action only
 ```
 
-## Implantação
-
-Você não cria nem implanta manualmente. Para obter uma apresentação completa do pipeline de implantação, consulte [Implantar seu aplicativo](/help/guides/deploy-your-app.md).
-
-Seu fluxo de trabalho diário é:
-
-| Etapa | Ação |
-|------|--------|
-| &#x200B;1. Manipulador de gravação ou edição | `actions/<name>/index.js` |
-| &#x200B;2. Baixar metadados | Página Ações → **Baixar actions.json** |
-| &#x200B;3. Testar localmente | `npm run dev:local` |
-| &#x200B;4. Código push | `git push` |
-| &#x200B;5. Implantar | Página de detalhes do aplicativo → **[!UICONTROL Implantar]** |
+Depois que os testes locais forem aprovados, envie as alterações por push e siga [Implantar alterações](/help/guides/deploy-your-app.md).
 
