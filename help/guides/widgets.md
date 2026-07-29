@@ -1,15 +1,15 @@
 ---
-title: Configurar o dispositivo (EDS)
-description: Saiba como configurar um projeto de widget do Edge Delivery Services e implementar o contrato de bloco para renderizar respostas visuais dentro das plataformas LLM.
-source-git-commit: 1a99e2e80e50a3bcf9ce6fb910365202bf06e113
+title: Personalizar um widget de EDS gerado
+description: Entenda e personalize o widget do Edge Delivery Services criado pelo Agente de integração de aplicativos do Adobe LM.
+source-git-commit: 4c259a4587c0a84bb634a9a56c043dfe1cfc31fb
 workflow-type: tm+mt
-source-wordcount: '1226'
-ht-degree: 1%
+source-wordcount: '650'
+ht-degree: 0%
 
 ---
 
 
-# Configurar o dispositivo (EDS)
+# Personalizar um widget gerado {#customize-generated-widget}
 
 >[!IMPORTANT]
 >
@@ -17,290 +17,183 @@ ht-degree: 1%
 >
 >Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-Este guia explica como criar um widget EDS de ponta a ponta: desde a configuração da sua ação na interface do usuário do [!DNL LLM Apps], até a configuração do seu projeto EDS, passando pela gravação do código de bloco que renderiza os seus dados na plataforma LLM. Para obter uma visão geral de alto nível, consulte [Conceitos principais](/help/overview/overview.md#widgets-eds).
+>[!NOTE]
+>
+>Este guia pressupõe uma familiaridade básica com os Serviços de entrega de borda (EDS) da Adobe. Se você é novo no EDS, primeiro leia o [Tutorial do desenvolvedor do EDS](https://www.aem.live/developer/tutorial) e o [Explorar blocos](https://www.aem.live/docs/exploring-blocks) para aprender o básico — blocos, a função `decorate` e a estrutura do projeto do EDS — antes de personalizar um widget.
 
-## O SDK [!DNL LLM Apps]
+O Agente de integração cria um dispositivo EDS para cada ação gerada. O widget já recebe o resultado da ação, renderiza dados de exemplo, aplica o estilo do host e está vinculado à ação em [!DNL LLM Apps].
 
-Tudo começa com o pacote [`@adobe/llmapps-sdk`](https://www.npmjs.com/package/@adobe/llmapps-sdk) npm. O SDK é a biblioteca do JavaScript que ativa o canal de comunicação bidirecional entre o dispositivo e o host do LLM.
+Comece testando o widget gerado. Em seguida, personalize o contrato de dados, a interação e o design visual.
 
-O SDK também envia `aem-embed.js` — o ponto de entrada específico do EDS que conecta o SDK ao pipeline de bloco do EDS padrão. Quando você `npm install @adobe/llmapps-sdk`, um script de pós-instalação copia automaticamente dois arquivos no seu projeto:
+**Jornada:** encontre o bloco gerado → alinhar seu contrato de dados → personalizar com segurança → visualizar localmente → implantar e testar.
 
+## Localizar o widget gerado
+
+Abra o repositório EDS selecionado ao criar o aplicativo. Cada widget gerado é um bloco EDS:
+
+```text
+blocks/
+└── <action-name>/
+    ├── <action-name>.js
+    └── <action-name>.css
 ```
+
+- O arquivo JavaScript lê o resultado da ação e cria a interface.
+- O arquivo CSS controla o layout, o comportamento responsivo e o design visual.
+- A solicitação de pull gerada mostra os arquivos exatos criados para a ação.
+
+O Agente de integração também configura os URLs do widget e os arquivos de suporte do SDK. Não é necessário criar um segundo projeto EDS ou inserir novamente esses valores para personalizar um widget gerado.
+
+## Como o SDK de aplicativos LLM conecta o widget
+
+O pacote `@adobe/llmapps-sdk` conecta o dispositivo EDS ao host LLM. O repositório EDS gerado inclui:
+
+```text
 scripts/
-└── llm-apps/
-    ├── aem-embed.js     ← EDS widget entry point, ships with the SDK
-    └── llmapps-sdk.js   ← core SDK, loaded internally by aem-embed.js
+├── aem-embed.js
+└── llmapps-sdk.js
 ```
 
-Em projetos EDS, **você nunca usa o SDK diretamente no seu código de bloco.** `aem-embed.js` cria e gerencia a conexão do SDK e transmite uma instância `LLMApp` totalmente conectada para o seu bloco como o argumento `bridge` em `decorate(block, bridge)`. A API completa do SDK está disponível em `bridge` — nenhuma importação é necessária.
-
-Se você estiver criando um widget **sem EDS** (um bundler padrão ou projeto TypeScript), poderá usar o SDK diretamente:
+O `aem-embed.js` estabelece a conexão de host, carrega a página de EDS e chama seu bloco:
 
 ```javascript
-import { LLMApp } from '@adobe/llmapps-sdk';
-
-const app = new LLMApp({ appInfo: { name: 'MyWidget', version: '1.0.0' } });
-await app.connect();
-
-const { structuredContent } = await app.toolResult;
-```
-
-## Como tudo se encaixa
-
-Quando a IA chama sua ação e o manipulador retorna `structuredContent`, a plataforma LLM renderiza um widget interativo na conversa. Três coisas fazem isso funcionar em conjunto:
-
-**Interface do usuário do [!DNL LLM Apps]** — ao criar uma ação, você insere um **[!UICONTROL URL de Script]** e um **[!UICONTROL URL do Widget]** na guia Metadados do Widget. A URL do Script aponta para `aem-embed.js` — o arquivo que vem com a SDK e reside no repositório EDS em `scripts/llm-apps/aem-embed.js`. Isso informa à plataforma LLM qual script carregar quando a ação for chamada.
-
-**`aem-embed.js`** — a plataforma LLM carrega esse script em uma superfície de widget em sandbox. `aem-embed.js` é um elemento personalizado do HTML (`<aem-embed>`) que atua como ponto de entrada com reconhecimento de EDS para o seu widget. Ele executa o handshake com o host LLM usando o SDK, suprime o pipeline de página EDS normal (sem cabeçalho/rodapé), busca o conteúdo da página EDS na URL do Widget, executa o pipeline de bloco EDS e fornece um objeto `bridge` ativo para a função `decorate()` de cada bloco.
-
-**Código do bloco** — você grava um bloco EDS padrão que exporta uma função `decorate(block, bridge)`. O `bridge` é a instância conectada do SDK — ele fornece o resultado estruturado da ação e permite que você envie mensagens de volta para a conversa.
-
-## Adicionar a um projeto EDS existente
-
-Se você já tiver um projeto EDS, há apenas duas etapas antes de começar a escrever blocos.
-
-1. Instalar `@adobe/llmapps-sdk`. O script de pós-instalação copia `aem-embed.js` e `llmapps-sdk.js` para `scripts/llm-apps/`:
-
-   ```bash
-   npm install @adobe/llmapps-sdk
-   ```
-
-2. Configure os cabeçalhos CORS para que a plataforma LLM possa carregar suas páginas de widget e scripts entre origens — consulte [Configurar cabeçalhos CORS](#configure-cors-headers) abaixo.
-
-Em seguida, crie seu bloco após o [`decorate(block, bridge)` contrato](#the-decorateblock-bridge-contract), crie a página do widget e insira as URLs na caixa de diálogo Criar Ação.
-
-## Configurar um novo projeto de EDS
-
-### Criar o repositório
-
-1. Crie um novo repositório [!DNL GitHub] com base no modelo [AEM boilerplate](https://github.com/adobe/aem-boilerplate).
-2. Adicione o [Aplicativo GitHub da Sincronização de Código do AEM](https://github.com/apps/aem-code-sync) ao repositório.
-3. Instale a CLI do AEM para desenvolvimento local: `npm install -g @adobe/aem-cli`.
-4. Instalar `@adobe/llmapps-sdk`. O script de pós-instalação copia `aem-embed.js` e `llmapps-sdk.js` para `scripts/llm-apps/`:
-
-   ```bash
-   npm install @adobe/llmapps-sdk
-   ```
-
-Para obter um guia completo sobre projetos EDS, consulte o [tutorial para desenvolvedores do AEM](https://www.aem.live/developer/tutorial) e [anatomia do projeto](https://www.aem.live/developer/anatomy-of-a-project).
-
-Depois de configurado, seu site de EDS estará disponível em:
-
-- **Visualizar:** `https://main--<repo>--<owner>.aem.page/`
-- **Ao vivo:** `https://main--<repo>--<owner>.aem.live/`
-
-### Estrutura do repositório
-
-```
-my-brand-eds/
-├── scripts/
-│   ├── llm-apps/
-│   │   ├── aem-embed.js           # Widget entry point — copied by post-install
-│   │   └── llmapps-sdk.js         # Core SDK — copied by post-install
-│   ├── aem.js                     # AEM core library
-│   └── scripts.js                 # Site-level decoration and loading
-├── blocks/
-│   └── search-products/           # One folder per widget block
-│       ├── search-products.js
-│       └── search-products.css
-├── styles/
-│   └── styles.css
-├── head.html
-└── package.json
-```
-
-### Configurar cabeçalhos do CORS
-
-As páginas do widget EDS são carregadas dentro de uma superfície de widget em sandbox pela plataforma LLM. O site EDS deve retornar cabeçalhos `access-control-allow-origin` corretos para que o host possa buscar o conteúdo do widget entre as origens.
-
-Os cabeçalhos são configurados por meio do painel de administração do AEM em `admin.hlx.page` usando o [Serviço de Configuração](https://aem.live/docs/config-service-setup). Adicione cabeçalhos de resposta personalizados para os caminhos em que suas páginas de widget e scripts SDK residem:
-
-```json
-{
-  "/<your-widget-pages-path>/**": [
-    { "key": "access-control-allow-origin", "value": "*" }
-  ],
-  "/scripts/**": [
-    { "key": "access-control-allow-origin", "value": "*" }
-  ]
+export default async function decorate(block, bridge) {
+  // Customize the widget here.
 }
 ```
 
->[!NOTE]
->
->É aceitável usar `*` como valor de origem para o conteúdo de widget público no domínio `.aem.live`. Se o site tiver conteúdo protegido, restrinja a origem a domínios específicos.
+Você não importa a SDK no bloco. O `bridge` conectado é fornecido automaticamente. Ele permite que o widget:
 
-### Criar a página do widget
+- Ler o resultado do manipulador com `bridge.toolResult`.
+- Aplicar estilo de host com `bridge.applyHostStyles()`.
+- Continuar a conversa com `bridge.sendMessage()`.
+- Invocar outra ação com `bridge.callTool()`.
+- Mantenha seu tamanho sincronizado com `bridge.autoResize()`.
 
-Crie uma página na ferramenta de criação do EDS e adicione o bloco a ela. A URL da página se torna a **[!UICONTROL URL do Widget]** configurada por você na ação — essa é a única conexão entre a ação e o bloco. Não há requisito de nomenclatura entre o bloco e o nome da ação.
+Este guia aborda os métodos comuns de ponte. Consulte o [`@adobe/llmapps-sdk` pacote](https://www.npmjs.com/package/@adobe/llmapps-sdk) para obter a API completa.
 
-![Criação de EDS — bloco adicionado à página do widget](/help/assets/guide-widget/aem-author.png)
+## Entender o contrato de dados
 
-### Insira os URLs na caixa de diálogo Criar ação
-
-Após configurar seu repositório EDS, vá para **Metadados do widget → URLs de modelo** ao criar sua ação:
-
-**[!UICONTROL URL do Script]** — aponta para `aem-embed.js` no seu repositório EDS. Este é o mesmo valor para cada ação no mesmo projeto EDS:
-
-```
-https://main--<repo>--<owner>.aem.live/scripts/llm-apps/aem-embed.js
-```
-
-**[!UICONTROL URL do Widget]** — o URL da página EDS criada para este widget. Exclusivo por ação:
-
-```
-https://main--<repo>--<owner>.aem.live/<path-to-your-widget-page>
-```
-
-A plataforma LLM carrega `aem-embed.js` do URL do Script. `aem-embed.js` então busca `.plain.html` da URL do Widget para obter o conteúdo do bloco.
-
-## Fluxo de dados
-
-O caminho completo do seu manipulador para um widget renderizado:
-
-1. **O manipulador de ações** retorna `structuredContent`:
+O manipulador de ações retorna `structuredContent` e o bloco o lê de `bridge.toolResult`.
 
 ```javascript
-// actions/search-products/index.js
+// Handler result
 return {
-  structuredContent: {
-    products: [
-      { id: 'COF-001', name: 'Single Origin Ethiopian Coffee', price: '$18', rating: 4.7 },
-      { id: 'COF-002', name: 'Colombia Huila Natural', price: '$22', rating: 4.5 },
-    ],
-    total: 2,
-    category: 'coffee'
-  }
+  content: [{ type: 'text', text: `Found ${products.length} products.` }],
+  structuredContent: { products, total: products.length }
 };
 ```
 
-1. A **plataforma LLM** abre uma superfície de widget e carrega `aem-embed.js` da URL do Script.
-
-1. O **`aem-embed.js`** se conecta ao host por meio da SDK, obtém `.plain.html` da URL do Widget, executa o pipeline de blocos EDS e chama `decorate(block, bridge)` no bloco.
-
-1. **Seu bloco** lê os dados de `bridge.toolResult` e renderiza a interface.
-
-1. **A interação do usuário** aciona `bridge.sendMessage(...)` ou `bridge.callTool(...)`, enviando um acompanhamento para a conversa.
-
-## O contrato `decorate(block, bridge)`
-
-Cada bloco de widget EDS deve exportar uma função `decorate` padrão. Esta é a assinatura de bloco EDS padrão, estendida com um segundo argumento — o `bridge` conectado, que é uma instância do SDK [`LLMApp`](https://www.npmjs.com/package/@adobe/llmapps-sdk) com a API completa disponível:
-
 ```javascript
+// EDS block
 export default async function decorate(block, bridge) {
-  // ...
+  const result = bridge ? await bridge.toolResult : null;
+  const products = result?.structuredContent?.products ?? [];
+  // Render products.
 }
 ```
 
-`bridge` está presente apenas quando executado na superfície do widget da plataforma LLM. Sempre proteja suas chamadas de ponte para que seu bloco também seja renderizado quando visualizado diretamente em um navegador ou em seu servidor de desenvolvimento local.
+Quando você alterar `structuredContent`, atualize o manipulador e o widget juntos. Consulte [Personalizar um manipulador gerado](/help/guides/customize-handler.md) para obter o contrato de retorno completo.
 
-### Renderização de dados a partir do resultado da ação
+## Renderizar dados externos com segurança
 
-`bridge.toolResult` é uma Promessa que resolve com o resultado completo que seu manipulador retornou, incluindo `structuredContent`.
+Tratar saída do manipulador como dados não confiáveis. Prefira APIs DOM como `textContent` em vez de inserir valores de resposta em `innerHTML`.
 
 ```javascript
-const SAMPLE_PRODUCTS = [
-  { id: 'COF-001', name: 'Single Origin Ethiopian Coffee', price: '$18', rating: 4.7 },
-];
+function createProductCard(product, bridge) {
+  const card = document.createElement('article');
+  card.className = 'product-card';
 
-export default async function decorate(block, bridge) {
-  let products = SAMPLE_PRODUCTS;
+  const title = document.createElement('h3');
+  title.textContent = String(product.name ?? 'Product');
 
-  if (bridge) {
-    const result = await bridge.toolResult;
-    products = result?.structuredContent?.products ?? [];
-  }
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.textContent = 'Tell me more';
+  button.addEventListener('click', () => {
+    if (bridge && product.id) {
+      bridge.sendMessage(`Show me details for product ${String(product.id)}`);
+    }
+  });
 
-  block.innerHTML = products.map(p => `
-    <div class="product-card">
-      <h3>${p.name}</h3>
-      <p class="price">${p.price}</p>
-      <button data-id="${p.id}">Tell me more</button>
-    </div>
-  `).join('');
+  card.append(title, button);
+  return card;
 }
 ```
 
-### Aplicação do tema do host
+Valide as URLs antes de atribuí-las a `href` ou `src` e permita somente os protocolos exigidos pela experiência.
 
-Chame `bridge.applyHostStyles()` no início de `decorate` para inserir as variáveis e fontes CSS do host (tema claro/escuro, tipografia) no widget. Isso mantém o widget visualmente consistente com a interface do usuário da plataforma LLM ao redor.
+## Usar a ponte do host
 
-```javascript
-export default async function decorate(block, bridge) {
-  if (bridge) {
-    bridge.applyHostStyles();
-  }
-  // ...
-}
-```
+O EDS passa uma ponte conectada para `decorate(block, bridge)`. A ponte de proteção chama, portanto, o bloco também é renderizado durante a pré-visualização direta do EDS.
 
-Para reagir às alterações de tema no tempo de execução (por exemplo, quando o usuário alterna entre o modo claro e escuro):
+### Aplicar estilos de host
 
 ```javascript
 if (bridge) {
-  bridge.onContextChange(ctx => {
-    block.dataset.theme = ctx.theme; // 'light' | 'dark'
-  });
+  bridge.applyHostStyles();
 }
 ```
 
-### Envio de uma mensagem de acompanhamento
+Isso se aplica à tipografia do host e às variáveis de tema. O CSS do widget deve suportar temas de host claros e escuros.
 
-`bridge.sendMessage(text)` injeta uma mensagem de usuário na conversa. Essa é a principal maneira de um widget acionar mais interação com a IA, por exemplo, quando um usuário clica em um cartão de produto para solicitar detalhes.
+### Enviar uma mensagem de acompanhamento
 
 ```javascript
-block.querySelectorAll('button[data-id]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    bridge.sendMessage(`Show me details for product ${btn.dataset.id}`);
-  });
+await bridge.sendMessage('Show me similar products.');
+```
+
+Use `sendMessage` quando uma interação precisar continuar a conversa.
+
+### Chamar outra ação
+
+```javascript
+const result = await bridge.callTool('get-product-details', {
+  id: product.id
 });
 ```
 
-### Chamada direta de outra ação
+Use `callTool` para uma interação explícita que precisa de outro resultado de ação. Transmita apenas valores validados e lide com falhas sem expor detalhes internos.
 
-`bridge.callTool(name, args)` invoca outra ação de dentro do widget sem passar pela mensagem do usuário. Útil para carregar dados relacionados sob demanda.
-
-```javascript
-btn.addEventListener('click', async () => {
-  const result = await bridge.callTool('get-product-details', { id: product.id });
-  renderDetails(result.structuredContent);
-});
-```
-
-### Redimensionamento automático do widget
-
-A plataforma LLM dimensiona o widget com base no que você relata. Use o `bridge.autoResize(element)` para manter a altura do widget sincronizada à medida que o conteúdo for alterado — ele usa um `ResizeObserver` internamente. Chame-o após a renderização inicial:
+### Manter o tamanho do widget sincronizado
 
 ```javascript
-export default async function decorate(block, bridge) {
-  // ... render content ...
-
-  if (bridge) {
-    bridge.autoResize(block);
-  }
+if (bridge) {
+  bridge.autoResize(block);
 }
 ```
 
-Ou relatar um tamanho fixo manualmente:
+Chame `autoResize` após a renderização inicial para que o host possa responder às alterações de conteúdo.
 
-```javascript
-bridge.reportSize(block.offsetWidth, block.offsetHeight);
-```
+## Visualizar suas alterações
 
-### Modo de visualização e desenvolvimento local
+Os blocos gerados devem incluir dados de amostra para visualização direta quando `bridge` não estiver disponível.
 
-Ao visualizar uma página EDS diretamente em um navegador ou no servidor de desenvolvimento local, `bridge` é `undefined`. Use o padrão de fallback de dados de amostra mostrado acima para que seu bloco seja renderizado imediatamente sem um manipulador ativo.
-
-Para iniciar um servidor de desenvolvimento local:
+Para visualizar o projeto EDS localmente:
 
 ```bash
 npm install -g @adobe/aem-cli
 aem up
 ```
 
-Isso abre o `http://localhost:3000`, onde você pode navegar até as páginas do seu widget e ver os blocos serem renderizados com dados de exemplo. As alterações no bloqueio de JS e CSS são refletidas imediatamente.
+Abra a página de widget gerada em `http://localhost:3000`. Verificar:
 
-## Próximas etapas
+- Estados de vazio, carregamento, sucesso e erro.
+- Texto longo e campos opcionais ausentes.
+- Navegação pelo teclado e foco visível.
+- Temas claros e escuros.
+- Layouts estreitos e largos.
 
-- [Guia: Gravar o manipulador de ação](/help/guides/write-action-handler.md)
+Em seguida, implante o aplicativo para preparo e teste com `structuredContent` ativo na plataforma LLM.
 
+## Publicar a personalização
+
+1. Confirme e envie as alterações de EDS.
+2. Se você alterou a forma dos dados, confirme e empurre as alterações do manipulador correspondente.
+3. Implante o aplicativo para preparo.
+4. Testar a ação e o widget em [!DNL ChatGPT].
+5. Promova a versão verificada para produção.
+
+## Outras configurações de EDS
+
+Se você não usou o Agente de Integração ou deseja integrar um site de EDS existente, consulte [Trazer seu próprio projeto de EDS](/help/guides/bring-your-own-eds.md).

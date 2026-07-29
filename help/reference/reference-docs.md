@@ -1,15 +1,15 @@
 ---
-title: Documentação de referência para aplicativos Adobe LLM
-description: Referência de campo para configuração de ação na interface do usuário de aplicativos do Adobe LLM.
-source-git-commit: 1a99e2e80e50a3bcf9ce6fb910365202bf06e113
+title: Campos de ação e widget
+description: Definições de campo para metadados de ação, parâmetros, widgets, CSP e permissões em aplicativos Adobe LLM.
+source-git-commit: eec74b87457bc852d7a8dd0e46c2a4385a93ae0a
 workflow-type: tm+mt
-source-wordcount: '500'
-ht-degree: 6%
+source-wordcount: '606'
+ht-degree: 5%
 
 ---
 
 
-# Material de referência {#reference-material}
+# Campos de ação e widget {#action-widget-configuration}
 
 >[!IMPORTANT]
 >
@@ -17,11 +17,11 @@ ht-degree: 6%
 >
 >Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-Esta seção fornece referência em nível de campo para a configuração de ação na interface do usuário do [!DNL Adobe LLM Apps].
+Use esta página para pesquisar campos no editor de ações. Para obter a jornada de criação completa, consulte [Criar uma ação do zero](/help/guides/create-action.md).
 
 ## Parâmetros de ação
 
-Parâmetros de entrada são os valores que a plataforma LLM ([!DNL ChatGPT], Claude) envia para o manipulador de ação. O modelo os extrai da mensagem do usuário e os mapeia para esses campos automaticamente.
+Parâmetros de entrada são os valores que a plataforma LLM envia para o manipulador de ação. O modelo os extrai da mensagem do usuário e os mapeia para esses campos.
 
 | Propriedade | Descrição |
 |----------|-------------|
@@ -32,7 +32,7 @@ Parâmetros de entrada são os valores que a plataforma LLM ([!DNL ChatGPT], Cla
 
 ### Parâmetros de arquivo
 
-Os parâmetros de arquivo transportam objetos de arquivo com propriedades `download_url` e `file_id`. Defina nomes de campos de entrada que devem receber dados de arquivo quando um usuário carrega um arquivo na conversa.
+Parâmetros de arquivo são nomes de campos de entrada configurados no editor de ação. Quando um usuário carrega um arquivo, o host fornece um objeto de arquivo para esses argumentos, normalmente incluindo `download_url` e `file_id`.
 
 ## Campos de metadados
 
@@ -40,8 +40,10 @@ Os parâmetros de arquivo transportam objetos de arquivo com propriedades `downl
 
 | Texto | Obrigatório | Descrição |
 |-------|----------|-------------|
-| **Nome da ação** | Sim | Identificador da ação (por exemplo, *Pesquisar Produtos*) |
+| **Nome da ação** | Sim | Nome para exibição da ação (por exemplo, *Pesquisar Produtos*) |
 | **Descrição** | Sim | Explicação do que a ação faz — a plataforma LLM usa isso para decidir quando chamá-la |
+
+Após a criação, o editor também mostra um **Identificador de código** imutável. Ele mapeia a ação para `actions/<code-identifier>/index.js` no repositório do manipulador.
 
 ### Anotações
 
@@ -60,6 +62,9 @@ Dicas opcionais que descrevem o comportamento da ação:
 |-------|------------|-------------|
 | **Chamando texto de status** | 64 caracteres | Mensagem mostrada na plataforma LLM enquanto a ação é executada (por exemplo, *Carregando produtos...* ) |
 | **Texto de status chamado** | 64 caracteres | Mensagem mostrada após a ação ser concluída (por exemplo, *Produtos carregados...* ) |
+| **Descrição do widget** | 512 caracteres | Mapeia para `_meta["openai/widgetDescription"]`; resume o componente renderizado para o modelo e reduz a narração repetida |
+
+A descrição da ação controla quando o modelo seleciona a ação. A descrição do widget explica o que o componente mostra após ser renderizado.
 
 ### Visibilidade
 
@@ -67,6 +72,14 @@ Dicas opcionais que descrevem o comportamento da ação:
 |--------|-------------|
 | **Expor ao modelo de IA** | A ação pode ser invocada pelo modelo de IA durante conversas |
 | **Mostrar como widget na superfície do aplicativo** | A ação renderiza um widget visual no aplicativo |
+
+### Analytics
+
+| Texto | Descrição |
+|-------|-------------|
+| **Coletar intenção de usuário** | Coleta um resumo da conversa que levou à ação para análise |
+
+## Campos de widget
 
 ### Informações do widget
 
@@ -80,8 +93,8 @@ Dicas opcionais que descrevem o comportamento da ação:
 
 | Texto | Descrição |
 |-------|-------------|
-| **[!UICONTROL URL do Script]** | Script de ponto de entrada — `https://main--<repo>--<owner>.aem.live/scripts/aem-embed.js`. Compartilhado em todas as ações |
-| **URL de inserção do widget** | Página EDS para esta ação — `https://main--<repo>--<owner>.aem.live/eds-widgets/<action-name>`. Exclusivo por ação |
+| **[!UICONTROL URL do Script]** | URL HTTPS para o ponto de entrada EDS `scripts/aem-embed.js`. Compartilhado entre ações no mesmo projeto EDS |
+| **URL do widget** | URL HTTPS da página EDS renderizada por esta ação. As ações geradas configuram isso automaticamente |
 
 ## Configuração da CSP
 
