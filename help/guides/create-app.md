@@ -1,15 +1,15 @@
 ---
-title: Crie seu primeiro aplicativo LLM com o agente de integração
-description: Crie um aplicativo Adobe LLM no seu site, analise as ações geradas, implante-o e teste-o no ChatGPT.
-source-git-commit: b9242903f930aa1770a999a2665e1e80d64d56b6
+title: Criar o primeiro aplicativo LLM automaticamente
+description: Crie um aplicativo Adobe LLM no seu site, analise as ações geradas, implante-o e teste-o em uma plataforma LLM compatível, como o ChatGPT.
+source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
 workflow-type: tm+mt
-source-wordcount: '1219'
+source-wordcount: '1217'
 ht-degree: 0%
 
 ---
 
 
-# Criar seu primeiro aplicativo com o agente de integração {#create-first-app}
+# Criar Seu Primeiro Aplicativo Automaticamente {#create-first-app}
 
 >[!IMPORTANT]
 >
@@ -17,9 +17,9 @@ ht-degree: 0%
 >
 >Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-O Agente de integração transforma o site em um scaffold de aplicativo funcional. Ele propõe ações, grava código do manipulador e testa, cria widgets EDS e envia os arquivos gerados para dois repositórios [!DNL GitHub] que você possui.
+A plataforma transforma seu site em um andaime de aplicativo de trabalho. Ele propõe ações, grava código do manipulador e testa, cria widgets EDS e envia os arquivos gerados para dois repositórios [!DNL GitHub] que você possui.
 
-Aguarde aproximadamente 15 minutos para a geração. No final deste tutorial, você terá um aplicativo implantado que poderá ser testado em [!DNL ChatGPT].
+Aguarde aproximadamente 15 minutos para a geração. No final deste tutorial, você terá um aplicativo implantado que poderá testar em uma plataforma LLM compatível, como o [!DNL ChatGPT].
 
 **Jornada:** Confirme os requisitos → crie dois repositórios → crie o aplicativo → revise as ações geradas → implante em Preparo → teste o plug-in → conecte os sistemas de produção.
 
@@ -31,14 +31,14 @@ Este tutorial cria um aplicativo LLM para o [Frescopa Coffee](https://frescopa.c
 
 ## Criar dois repositórios vazios
 
-O Agente de integração precisa de dois repositórios vazios. Crie ambos na mesma conta ou organização [!DNL GitHub]:
+A plataforma precisa de dois repositórios vazios. Crie ambos na mesma conta ou organização [!DNL GitHub]:
 
 - **Repositório de manipulador** — armazena manipuladores de ação e testes. Por exemplo, `my-brand-llm-app`.
 - **Repositório EDS** — armazena blocos de widget e estilos gerados. Por exemplo, `my-brand-llm-app-eds`.
 
 Vá para [github.com/new](https://github.com/new) para cada repositório.
 
-Não inicialize o repositório com um arquivo README, `.gitignore` ou licença. O agente de integração prepara a estrutura do projeto necessária.
+Não inicialize o repositório com um arquivo README, `.gitignore` ou licença. A plataforma prepara a estrutura de projeto necessária.
 
 >[!TIP]
 >
@@ -55,7 +55,7 @@ Não inicialize o repositório com um arquivo README, `.gitignore` ou licença. 
    >A região de análise não pode ser alterada após a criação do aplicativo.
 
 4. Em **[!UICONTROL Criar Meu Aplicativo]**, selecione **[!UICONTROL Criar meu aplicativo automaticamente]**.
-5. Em **[!UICONTROL seu site]**, digite a URL do site, incluindo o protocolo `https://`. O Agente de integração analisa esse site para determinar ações úteis e resultados de amostra representativos.
+5. Em **[!UICONTROL seu site]**, digite a URL do site, incluindo o protocolo `https://`. A plataforma analisa esse site para determinar ações úteis e resultados de amostra representativos.
 
 ![Criar Aplicativo LLM — detalhes do aplicativo e Compilar Meu Aplicativo habilitado](/help/assets/guide-onboarding-agent/app-details-onboarding.png)
 
@@ -118,13 +118,13 @@ Você deve ser um administrador do site de EDS. Se a caixa de diálogo relatar q
 
 3. Retorne a [!DNL LLM Apps], atualize o repositório EDS e selecione **[!UICONTROL Criar Aplicativo]** novamente.
 
-Depois que as verificações do repositório e do administrador forem bem-sucedidas, [!DNL LLM Apps] criará o aplicativo e iniciará o Agente de Integração.
+Depois que as verificações do repositório e do administrador forem bem-sucedidas, [!DNL LLM Apps] cria o aplicativo e começa a gerar ações.
 
 ## Aguardar a geração de Ações
 
 Vá para a página **[!UICONTROL Ações]**, à esquerda. A página Ações mostra **Descobrindo ações para sua experiência de conversação** enquanto o agente analisa o site e gera o aplicativo. A geração geralmente leva aproximadamente 15 minutos. Você pode sair desta página e retornar mais tarde.
 
-![Ações — Agente de integração gerando recomendações](/help/assets/guide-onboarding-agent/actions-generating.png)
+![Ações — gerando recomendações](/help/assets/guide-onboarding-agent/actions-generating.png)
 
 Durante a geração, [!DNL LLM Apps]:
 
@@ -205,5 +205,5 @@ O aplicativo gerado usa dados de amostra. Antes de usá-lo com os clientes:
 6. **Verificar no Estágio** — reimplante e teste cada ação por meio do plug-in [!DNL ChatGPT].
 7. **Implantar para produção** — após o êxito no teste de preparo, implante para produção e crie ou atualize o plug-in com a URL do servidor MCP de produção.
 
-Para adicionar um recurso que o Agente de Integração não criou, consulte [Criar uma ação do zero](/help/guides/create-action.md).
+Para adicionar um recurso que a plataforma não criou, consulte [Criar uma ação do zero](/help/guides/create-action.md).
 

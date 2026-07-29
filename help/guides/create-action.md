@@ -1,9 +1,9 @@
 ---
 title: Criar uma ação do zero
 description: Defina os metadados da ação, implemente o manipulador, conecte um widget de EDS, teste-o e implante-o com os aplicativos Adobe LLM.
-source-git-commit: 4c259a4587c0a84bb634a9a56c043dfe1cfc31fb
+source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
 workflow-type: tm+mt
-source-wordcount: '1141'
+source-wordcount: '1137'
 ht-degree: 0%
 
 ---
@@ -21,11 +21,11 @@ ht-degree: 0%
 >
 >Este guia pressupõe uma familiaridade básica com os Serviços de entrega de borda (EDS) da Adobe. Se você é novo no EDS, primeiro leia o [Tutorial do desenvolvedor do EDS](https://www.aem.live/developer/tutorial) e o [Explorar blocos](https://www.aem.live/docs/exploring-blocks) para aprender o básico — blocos, a função `decorate` e a estrutura do projeto do EDS — antes de conectar um widget.
 
-Use este guia para adicionar um recurso que o Agente de integração não criou. Você definirá a ação em [!DNL LLM Apps], gravará o manipulador no repositório vinculado, adicionará um widget, se necessário, e o testará e implantará.
+Use este guia para adicionar um recurso que a plataforma não criou. Você definirá a ação em [!DNL LLM Apps], gravará o manipulador no repositório vinculado, adicionará um widget, se necessário, e o testará e implantará.
 
 **Jornada:** Planeje a ação → crie seus metadados → escreva o manipulador → conecte o dispositivo → teste localmente → implante e teste o plug-in.
 
-Para seu primeiro aplicativo, comece com [Crie seu primeiro aplicativo com o Agente de integração](/help/guides/create-app.md).
+Para seu primeiro aplicativo, comece com [Crie seu primeiro aplicativo automaticamente](/help/guides/create-app.md).
 
 ## Antes de começar
 

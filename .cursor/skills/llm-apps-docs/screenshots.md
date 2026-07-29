@@ -1,7 +1,7 @@
 ---
-source-git-commit: eec74b87457bc852d7a8dd0e46c2a4385a93ae0a
+source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
 workflow-type: tm+mt
-source-wordcount: '695'
+source-wordcount: '696'
 ht-degree: 0%
 
 ---
@@ -76,7 +76,7 @@ O usuário deve capturar os estados relevantes do manifesto, incluindo:
 1. Crie o aplicativo antes que o GitHub seja conectado.
 2. Seleção de acesso ao repositório do aplicativo GitHub.
 3. **Criar meu aplicativo automaticamente** habilitado com ambos os repositórios selecionados.
-4. Criação de aplicativo ou inicialização de agente de integração.
+4. Criação de aplicativo ou inicialização automática da compilação de aplicativo.
 5. Ações sendo geradas.
 6. Ações geradas prontas para revisão.
 7. Metadados, manipulador e widget de uma ação representativa.

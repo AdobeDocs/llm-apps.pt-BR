@@ -1,9 +1,9 @@
 ---
 title: Implante seu aplicativo
 description: Saiba como implantar seu aplicativo Adobe LLM no preparo e na produção usando a interface do usuário de aplicativos LLM.
-source-git-commit: eec74b87457bc852d7a8dd0e46c2a4385a93ae0a
+source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
 workflow-type: tm+mt
-source-wordcount: '309'
+source-wordcount: '322'
 ht-degree: 0%
 
 ---
@@ -19,7 +19,7 @@ ht-degree: 0%
 
 Depois de gravar o código do manipulador e enviá-lo para o repositório vinculado, você poderá implantar o aplicativo na interface do usuário do [!DNL LLM Apps].
 
-Esta é uma etapa compartilhada para cada jornada. Após a implantação, continue a [testar o plug-in ChatGPT](/help/guides/test-in-chatgpt.md).
+Esta é uma etapa compartilhada para cada jornada. Após a implantação, continue a [testar o plug-in ChatGPT](/help/guides/test-in-chatgpt.md) ou [testar o conector Claude](/help/guides/test-in-claude.md).
 
 ## Iniciar a implantação
 
@@ -63,5 +63,6 @@ implantação mais recente bem-sucedida.
 
 ## Próxima etapa
 
-[Testar o aplicativo implantado como um plug-in ChatGPT](/help/guides/test-in-chatgpt.md).
+- [Testar o aplicativo implantado como um plug-in ChatGPT](/help/guides/test-in-chatgpt.md).
+- [Teste o aplicativo implantado como um conector Claude](/help/guides/test-in-claude.md).
 

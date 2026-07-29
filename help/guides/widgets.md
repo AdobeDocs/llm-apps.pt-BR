@@ -1,9 +1,9 @@
 ---
 title: Personalizar um widget de EDS gerado
-description: Entenda e personalize o widget do Edge Delivery Services criado pelo Agente de integração de aplicativos do Adobe LM.
-source-git-commit: 4c259a4587c0a84bb634a9a56c043dfe1cfc31fb
+description: Entenda e personalize o widget do Edge Delivery Services criado automaticamente pelos aplicativos LLM do Adobe.
+source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
 workflow-type: tm+mt
-source-wordcount: '650'
+source-wordcount: '646'
 ht-degree: 0%
 
 ---
@@ -21,7 +21,7 @@ ht-degree: 0%
 >
 >Este guia pressupõe uma familiaridade básica com os Serviços de entrega de borda (EDS) da Adobe. Se você é novo no EDS, primeiro leia o [Tutorial do desenvolvedor do EDS](https://www.aem.live/developer/tutorial) e o [Explorar blocos](https://www.aem.live/docs/exploring-blocks) para aprender o básico — blocos, a função `decorate` e a estrutura do projeto do EDS — antes de personalizar um widget.
 
-O Agente de integração cria um dispositivo EDS para cada ação gerada. O widget já recebe o resultado da ação, renderiza dados de exemplo, aplica o estilo do host e está vinculado à ação em [!DNL LLM Apps].
+A plataforma cria um dispositivo EDS para cada ação gerada. O widget já recebe o resultado da ação, renderiza dados de exemplo, aplica o estilo do host e está vinculado à ação em [!DNL LLM Apps].
 
 Comece testando o widget gerado. Em seguida, personalize o contrato de dados, a interação e o design visual.
 
@@ -42,7 +42,7 @@ blocks/
 - O arquivo CSS controla o layout, o comportamento responsivo e o design visual.
 - A solicitação de pull gerada mostra os arquivos exatos criados para a ação.
 
-O Agente de integração também configura os URLs do widget e os arquivos de suporte do SDK. Não é necessário criar um segundo projeto EDS ou inserir novamente esses valores para personalizar um widget gerado.
+A plataforma também configura os URLs do widget e os arquivos SDK de suporte. Não é necessário criar um segundo projeto EDS ou inserir novamente esses valores para personalizar um widget gerado.
 
 ## Como o SDK de aplicativos LLM conecta o widget
 
@@ -196,4 +196,4 @@ Em seguida, implante o aplicativo para preparo e teste com `structuredContent` a
 
 ## Outras configurações de EDS
 
-Se você não usou o Agente de Integração ou deseja integrar um site de EDS existente, consulte [Trazer seu próprio projeto de EDS](/help/guides/bring-your-own-eds.md).
+Se você não criou o aplicativo automaticamente ou deseja integrar um site de EDS existente, consulte [Trazer seu próprio projeto de EDS](/help/guides/bring-your-own-eds.md).

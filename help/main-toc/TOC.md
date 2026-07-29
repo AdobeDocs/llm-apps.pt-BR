@@ -1,10 +1,10 @@
 ---
 user-guide-title: Guia de aplicativos do LLM
 breadcrumb-title: Aplicativos LLM
-user-guide-description: Crie, personalize, implante e teste experiências interativas no ChatGPT com aplicativos do Adobe LLM.
-source-git-commit: 6bd504024ea25470440ce7c9b36ee5b4a4d936f9
+user-guide-description: Crie, personalize, implante e teste experiências interativas em plataformas LLM compatíveis, como ChatGPT com aplicativos Adobe LLM.
+source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
 workflow-type: tm+mt
-source-wordcount: '90'
+source-wordcount: '100'
 ht-degree: 4%
 
 ---
@@ -14,7 +14,7 @@ ht-degree: 4%
 
 + [Visão geral](/help/overview/overview.md)
 + Crie e inicie seu primeiro aplicativo {#build-first-app}
-  + [Criar seu primeiro aplicativo com o agente de integração](/help/guides/create-app.md)
+  + [Criar Seu Primeiro Aplicativo Automaticamente](/help/guides/create-app.md)
 + Personalizar o aplicativo gerado {#customize-generated-app}
   + [Personalizar um manipulador gerado](/help/guides/customize-handler.md)
   + [Personalizar um widget gerado](/help/guides/widgets.md)
@@ -25,6 +25,7 @@ ht-degree: 4%
 + Implantar e testar {#deploy-and-test}
   + [Implantar O Aplicativo](/help/guides/deploy-your-app.md)
   + [Testar seu aplicativo LLM como um plug-in ChatGPT](/help/guides/test-in-chatgpt.md)
+  + [Testar seu aplicativo LLM como um conector Claude](/help/guides/test-in-claude.md)
 + Referência {#reference}
   + [Desenvolvimento e teste de manipulador local](/help/reference/development.md)
   + [Campos de ação e widget](/help/reference/reference-docs.md)

@@ -1,9 +1,9 @@
 ---
 title: Uma visão geral dos aplicativos Adobe LLM
 description: Saiba o que são os aplicativos LLM do Adobe, como funcionam e o que é necessário para começar.
-source-git-commit: 8b4027d0fd73b8134a7478a5044f992e6cf03024
+source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
 workflow-type: tm+mt
-source-wordcount: '972'
+source-wordcount: '970'
 ht-degree: 1%
 
 ---
@@ -34,17 +34,13 @@ O [!DNL Adobe LLM Apps] permite que sua marca ofereça ações úteis — como d
 
 ## Por que [!DNL LLM Apps] é importante
 
-As interações LLM são fundamentalmente diferentes da pesquisa tradicional. A sessão média [!DNL ChatGPT] dura quatro vezes mais do que uma sessão de pesquisa tradicional. Mais de 40% dos consumidores dependem de ferramentas de IA para decisões de compra complexas. Sem o [!DNL LLM Apps], você poderá ganhar a menção, mas perderá o cliente. O [!DNL LLM Apps] garante que sua marca não só fique visível, como também seja acionável no exato momento em que um usuário estiver pronto para decidir.
+As interações LLM são fundamentalmente diferentes da pesquisa tradicional. A duração média das sessões LLM é quatro vezes maior do que a de uma sessão de pesquisa tradicional. Mais de 40% dos consumidores dependem de ferramentas de IA para decisões de compra complexas. Sem o [!DNL LLM Apps], você poderá ganhar a menção, mas perderá o cliente. O [!DNL LLM Apps] garante que sua marca não só fique visível, como também seja acionável no exato momento em que um usuário estiver pronto para decidir.
 
 ## Principais conceitos {#key-concepts}
 
 ### Aplicativo LLM
 
 Seu assistente de marca com o qual os usuários interagem dentro do [!DNL ChatGPT] ou de outras plataformas do LLM. Ele agrupa todas as suas ações e faz a implantação como uma única unidade.
-
-### Agente de integração
-
-O fluxo de trabalho guiado de criação de aplicativos começou com **[!UICONTROL Criar meu aplicativo automaticamente]**. Ele analisa o site, propõe ações e gera um manipulador e um widget para cada ação.
 
 ### Ação {#actions}
 
@@ -133,23 +129,23 @@ Para verificar o acesso, abra a [Ferramenta de administração de usuário do ED
 
 ### Site
 
-Você precisa de um site HTTPS público que represente os produtos, serviços ou tarefas que o aplicativo deve suportar. O Agente de integração analisa esse site para propor ações e criar dados de amostra representativos.
+Você precisa de um site HTTPS público que represente os produtos, serviços ou tarefas que o aplicativo deve suportar. A plataforma analisa esse site para propor ações e criar dados de amostra representativos.
 
 Não use um site que exponha informações confidenciais ou de acesso controlado.
 
-### [!DNL ChatGPT] para teste
+### [!DNL ChatGPT] ou [!DNL Claude] para teste
 
-Para concluir o tutorial de introdução, use um plano [!DNL ChatGPT] com suporte e habilite o modo de desenvolvedor. Os administradores do Workspace podem restringir o acesso. Consulte [Test em ChatGPT](/help/guides/test-in-chatgpt.md#plan-requirements).
+Para concluir o tutorial de introdução, use um plano [!DNL ChatGPT] com suporte e o modo de desenvolvedor habilitado, ou um plano [!DNL Claude] com suporte e conectores personalizados habilitados. Os administradores da Workspace ou da organização podem restringir o acesso. Consulte [Testar no ChatGPT](/help/guides/test-in-chatgpt.md#plan-requirements) ou [Testar no Claude](/help/guides/test-in-claude.md#plan-requirements).
 
 ## Escolha sua jornada {#choose-your-journey}
 
 ### &#x200B;1. Crie e inicie seu primeiro aplicativo
 
-Comece com [Crie e inicie seu primeiro aplicativo](/help/guides/create-app.md). Esta jornada começa com dois repositórios vazios e termina com um aplicativo pronto para produção testado como plug-in do [!DNL ChatGPT].
+Comece com [Crie e inicie seu primeiro aplicativo](/help/guides/create-app.md). Esta jornada começa com dois repositórios vazios e termina com um aplicativo pronto para produção testado como plug-in em uma plataforma LLM compatível, como o [!DNL ChatGPT].
 
 ### &#x200B;2. Personalizar o aplicativo gerado
 
-Escolha esta jornada quando o agente de integração criar o aplicativo e você quiser substituir o comportamento de amostra:
+Escolha esta jornada quando a plataforma tiver criado o aplicativo automaticamente e você quiser substituir o comportamento de amostra:
 
 1. [Personalize os manipuladores gerados](/help/guides/customize-handler.md) para conectar suas APIs e definir os dados retornados por cada ação.
 2. [Personalize os widgets gerados](/help/guides/widgets.md) para usar esses dados e aplicar suas interações e design.
@@ -160,7 +156,7 @@ Escolha [Adicionar uma nova ação do zero](/help/guides/create-action.md) para 
 
 ### &#x200B;4. Conectar um projeto EDS existente
 
-Escolha [Conectar um projeto EDS existente](/help/guides/bring-your-own-eds.md) quando já tiver um site EDS ou não tiver usado o Agente de Integração.
+Escolha [Conectar um projeto EDS existente](/help/guides/bring-your-own-eds.md) quando já tiver um site EDS ou não tiver compilado o aplicativo automaticamente.
 
-Cada jornada usa as etapas [implantação](/help/guides/deploy-your-app.md) e [teste de plug-in ChatGPT](/help/guides/test-in-chatgpt.md) compartilhadas.
+Cada jornada usa a etapa [implantação](/help/guides/deploy-your-app.md) compartilhada e, em seguida, o [teste de plug-in ChatGPT](/help/guides/test-in-chatgpt.md) ou o [teste de conector Claude](/help/guides/test-in-claude.md) compartilhado.
 

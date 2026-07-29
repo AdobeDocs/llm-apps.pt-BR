@@ -1,9 +1,9 @@
 ---
 title: Personalizar um manipulador de ação gerado
 description: Entenda o contrato do manipulador de aplicativos LLM do Adobe, substitua os dados de amostra gerados e mantenha a saída do manipulador alinhada com o widget.
-source-git-commit: eec74b87457bc852d7a8dd0e46c2a4385a93ae0a
+source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
 workflow-type: tm+mt
-source-wordcount: '542'
+source-wordcount: '541'
 ht-degree: 0%
 
 ---
@@ -17,7 +17,7 @@ ht-degree: 0%
 >
 >Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-O Agente de integração cria um manipulador de trabalho para cada ação gerada. Inicialmente, o manipulador retorna dados de amostra para que você possa testar a experiência completa.
+A plataforma cria um manipulador de trabalho para cada ação gerada. Inicialmente, o manipulador retorna dados de amostra para que você possa testar a experiência completa.
 
 Use este guia para entender o contrato do manipulador e substituir os dados de amostra pelas APIs ou fontes de dados.
 

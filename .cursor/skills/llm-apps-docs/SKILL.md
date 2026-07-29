@@ -1,9 +1,9 @@
 ---
 name: llm-apps-docs
 description: Crie, atualize, revise e valide a documentação pública e as capturas de tela dos Aplicativos Adobe LLM. Use sempre que editar artigos llm-apps.en, seu índice do Experience League, orientação do agente de integração, documentos de widget do EDS, orientação de prontidão de produção ou capturas de tela de documentação.
-source-git-commit: ca0d8f49a295e6465f2e9b20809e69436bfa93d5
+source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
 workflow-type: tm+mt
-source-wordcount: '716'
+source-wordcount: '813'
 ht-degree: 0%
 
 ---
@@ -34,10 +34,11 @@ Se a Produção entrar em conflito com a origem ou os planos, documente a Produ�
 
 ## Regras de criação
 
-- Liderar usuários pela primeira vez por meio do Agente de integração.
+- Usuários potenciais pela primeira vez através da criação automática de aplicativos (o fluxo **[!UICONTROL Criar meu aplicativo automaticamente]**).
 - Organize a navegação em torno das jornadas e resultados do usuário, não em tópicos de implementação.
 - Indique a sequência de jornadas próximo ao início de cada guia e forneça a próxima etapa compartilhada.
-- Use o **Agente de Integração** para o recurso do produto e a cópia exata da interface do usuário, como o **[!UICONTROL Criar meu aplicativo automaticamente]** para controles.
+- Não use nomes de código internos (por exemplo, &quot;Agente de integração&quot;) em documentos voltados para o cliente — esse recurso nunca é exposto na interface do usuário do produto. Descreva-o genericamente (por exemplo, &quot;a plataforma&quot;) e use uma cópia exata da interface do usuário, como **[!UICONTROL Criar meu aplicativo automaticamente]** para controles.
+- [!DNL Adobe LLM Apps] é independente de plataforma — seu servidor MCP funciona com qualquer plataforma LLM compatível, não apenas [!DNL ChatGPT]. Não use frases com afirmações gerais ou ilustrativas como se [!DNL ChatGPT] fosse o único alvo (por exemplo, prefira &quot;uma plataforma LLM com suporte, como [!DNL ChatGPT]&quot;, a &quot;ChatGPT&quot; sozinha). Somente nomeie [!DNL ChatGPT] explicitamente no conteúdo que é genuinamente e atualmente específico para [!DNL ChatGPT]: o [Guia de Teste no ChatGPT](/help/guides/test-in-chatgpt.md) dedicado, seus links cruzados diretos/etapas de procedimento e o conteúdo de referência ou solução de problemas específico para [!DNL ChatGPT].
 - Explicar um conceito técnico quando o usuário o encontra pela primeira vez; vincular ao conceito mais profundo ou material de referência.
 - Mantenha tutoriais lineares, guias passo a passo focados em tarefas e páginas de referência fatuais.
 - Inclua apenas as informações de que o leitor precisa para a tarefa atual; prefira frases curtas e diretas.
@@ -45,7 +46,7 @@ Se a Produção entrar em conflito com a origem ou os planos, documente a Produ�
 - Diferencie o scaffold gerado da integração pronta para produção.
 - Evite nomes de trabalhadores internos, campos de banco de dados, tíquetes de implementação e detalhes instáveis do pipeline.
 - Não duplique tabelas de campo entre guias; vincule à referência.
-- Preservar a interface e as diretivas do Experience League: `[!DNL]`, &grave;&grave;, `[!IMPORTANT]`, `[!NOTE]` e `[!TIP]`.
+- Preservar a interface e as diretivas do Experience League: `[!DNL]`, ``, `[!IMPORTANT]`, `[!NOTE]` e `[!TIP]`.
 - Usar links internos relativos à raiz: `/help/...`.
 - Use as frases em maiúsculas e minúsculas para títulos e cabeçalhos, a menos que o rótulo de um produto exija o contrário.
 - Use o texto alternativo de imagem descritiva que explica a tela e o estado.

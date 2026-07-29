@@ -1,7 +1,7 @@
 ---
 title: Traga seu próprio projeto do Edge Delivery Services
 description: Conecte um projeto existente do Adobe Edge Delivery Services a uma ação do Adobe LLM Apps.
-source-git-commit: eec74b87457bc852d7a8dd0e46c2a4385a93ae0a
+source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
 workflow-type: tm+mt
 source-wordcount: '472'
 ht-degree: 2%
@@ -17,9 +17,9 @@ ht-degree: 2%
 >
 >Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-Use este guia quando você já tiver um projeto do Edge Delivery Services (EDS) ou quando tiver criado um aplicativo sem o Agente de integração.
+Use este guia quando você já tiver um projeto do Edge Delivery Services (EDS) ou quando tiver criado um aplicativo sem criá-lo automaticamente.
 
-Se o Agente de integração criou seu widget, siga [Personalizar um widget gerado](/help/guides/widgets.md). O projeto gerado já inclui os arquivos do SDK, o bloco, o conteúdo e a configuração de ação descritos aqui.
+Se a plataforma criou seu widget automaticamente, siga [Personalizar um widget gerado](/help/guides/widgets.md). O projeto gerado já inclui os arquivos do SDK, o bloco, o conteúdo e a configuração de ação descritos aqui.
 
 **Jornada:** Prepare o projeto do EDS → instale o SDK → crie e publique o bloco → configure a ação → implante e teste.
 
