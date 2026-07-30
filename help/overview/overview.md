@@ -1,9 +1,9 @@
 ---
 title: Uma visão geral dos aplicativos Adobe LLM
 description: Saiba o que são os aplicativos LLM do Adobe, como funcionam e o que é necessário para começar.
-source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
+source-git-commit: 1d677c4e21963d1b126abb6287fccedfc1933c1a
 workflow-type: tm+mt
-source-wordcount: '970'
+source-wordcount: '938'
 ht-degree: 1%
 
 ---
@@ -109,23 +109,20 @@ Se você vir **Acesso restrito**, entre em contato com o administrador da organi
 
 ### [!DNL GitHub]
 
-Você precisa de uma conta do [!DNL GitHub] que possa:
+Você precisa de uma conta [!DNL GitHub] que **possa** fazer o seguinte. Esta é uma verificação de permissões — não instalar nada ainda:
 
 - Crie dois repositórios na conta ou organização que será proprietária do aplicativo.
-- Instale ou solicite a instalação do Aplicativo [!DNL GitHub] do Adobe LLM Apps.
-- Instale ou solicite a instalação da Sincronização de código AEM para o repositório EDS.
+- Instale [!DNL GitHub] aplicativos mais tarde no processo de instalação ou tenha um administrador da organização que possa aprová-los.
 
 Para verificar o acesso de criação de repositório, abra [github.com/new](https://github.com/new) e confirme se a conta ou organização pretendida aparece em **Proprietário**.
 
 ![GitHub — selecione um proprietário de repositório](/help/assets/overview/github-repo-owner-dropdown.png)
 
-Para repositórios de propriedade da organização, um administrador da organização pode precisar aprovar os aplicativos [!DNL GitHub]. Conceda acesso a cada aplicativo somente aos repositórios usados pelo aplicativo LLM.
+Para repositórios de propriedade da organização, um administrador da organização pode precisar aprovar os aplicativos [!DNL GitHub].
 
-### AEM Sites com Edge Delivery Services
-
-Sua organização precisa de uma licença do Adobe Experience Manager Sites que inclua o Edge Delivery Services (EDS). Você também precisará de acesso de administrador ao site do EDS criado a partir do repositório do widget.
-
-Para verificar o acesso, abra a [Ferramenta de administração de usuário do EDS](https://tools.aem.live/tools/user-admin/index.html), digite o nome da organização e busque os usuários. Confirme se sua conta tem o selo **admin**.
+>[!NOTE]
+>
+>Esta é uma verificação de permissão, não uma etapa de configuração. Ainda não instale aplicativos do [!DNL GitHub] — [Crie seu primeiro aplicativo automaticamente](/help/guides/create-app.md) orientará você na instalação de cada um, com escopo para os repositórios exatos que criar, no ponto em que for necessário.
 
 ### Site
 
