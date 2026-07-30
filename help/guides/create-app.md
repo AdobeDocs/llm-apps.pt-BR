@@ -1,9 +1,9 @@
 ---
 title: Criar o primeiro aplicativo LLM automaticamente
 description: Crie um aplicativo Adobe LLM no seu site, analise as ações geradas, implante-o e teste-o em uma plataforma LLM compatível, como o ChatGPT.
-source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
+source-git-commit: f91bb73a39cc5aacf44979ee55dd0ab5f69d4c81
 workflow-type: tm+mt
-source-wordcount: '1217'
+source-wordcount: '1272'
 ht-degree: 0%
 
 ---
@@ -17,7 +17,7 @@ ht-degree: 0%
 >
 >Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-A plataforma transforma seu site em um andaime de aplicativo de trabalho. Ele propõe ações, grava código do manipulador e testa, cria widgets EDS e envia os arquivos gerados para dois repositórios [!DNL GitHub] que você possui.
+A plataforma transforma seu site em um aplicativo totalmente funcional. Ele propõe ações, grava código do manipulador e testa, cria widgets EDS e envia os arquivos gerados para dois repositórios [!DNL GitHub] que você possui.
 
 Aguarde aproximadamente 15 minutos para a geração. No final deste tutorial, você terá um aplicativo implantado que poderá testar em uma plataforma LLM compatível, como o [!DNL ChatGPT].
 
@@ -103,6 +103,11 @@ Quando o repositório EDS selecionado está vazio, o [!DNL LLM Apps] o inicializ
 
 1. Na mensagem abaixo do repositório EDS, selecione **[!UICONTROL Instalar sincronização de código do AEM]**.
 2. Em [!DNL GitHub], instale a Sincronização de Código AEM e conceda a ela acesso ao repositório EDS.
+
+   Na página de confirmação **Sincronização de Código AEM registrada**, em **[!UICONTROL Usuários do site]**, selecione **[!UICONTROL + Adicionar usuário]** e adicione o endereço de email que você usa para entrar no [!DNL LLM Apps] com a função de **[!UICONTROL administrador]**. Em seguida, selecione **[!UICONTROL Concluir configuração]** na parte inferior da página.
+
+   ![Sincronização de código do AEM registrada — adicione a si mesmo como um usuário do site com a função de administrador](/help/assets/guide-onboarding-agent/aem-code-sync-site-users-admin.png)
+
 3. Retorne à caixa de diálogo Criar aplicativo LLM.
 
 ![Criar Aplicativo LLM — repositório EDS vazio inicializado e sincronização de código AEM necessária](/help/assets/guide-onboarding-agent/install-aem-code-sync.png)
@@ -191,7 +196,7 @@ Faça uma pergunta que corresponda a uma das ações geradas. Verifique se:
 
 ![ChatGPT — resposta de plug-in do aplicativo LLM gerada](/help/assets/guide-onboarding-agent/chatgpt-generated-app.png)
 
-Agora você tem um scaffold completo.
+Agora você tem um aplicativo completo e funcional.
 
 ## Prepare o aplicativo para produção
 
