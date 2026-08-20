@@ -1,9 +1,9 @@
 ---
 title: Uma visão geral dos aplicativos Adobe LLM
 description: Saiba o que são os aplicativos LLM do Adobe, como funcionam e o que é necessário para começar.
-source-git-commit: e066f66b37914e2f747176e865e26dcc074bff20
+source-git-commit: 2f3480b3667a6ab7c4ed65b999eed4638c383edb
 workflow-type: tm+mt
-source-wordcount: '973'
+source-wordcount: '969'
 ht-degree: 1%
 
 ---
@@ -60,9 +60,7 @@ O endpoint exposto após a implantação. Uma plataforma LLM compatível se cone
 
 ## Como funciona
 
-Em um alto nível, três coisas acontecem: você diz a [!DNL LLM Apps] qual é a sua marca
-ofertas, isso se transforma em algo que um assistente de IA pode realizar, e seu
-o cliente recebe uma resposta verdadeira — diretamente no chat.
+Em um alto nível, três coisas acontecem: você informa ao [!DNL LLM Apps] o que sua marca oferece, isso se transforma em algo em que um assistente de IA pode agir, e seu cliente recebe uma resposta real — bem no bate-papo.
 
 ```
 ┌────────────────────┐          ┌────────────────────┐          ┌────────────────────┐
@@ -74,8 +72,7 @@ o cliente recebe uma resposta verdadeira — diretamente no chat.
 └────────────────────┘          └────────────────────┘          └────────────────────┘
 ```
 
-Quer os detalhes técnicos — o que você constrói e como as peças se encaixam?
-Consulte [Como um aplicativo é conectado](/help/overview/app-architecture.md).
+Quer os detalhes técnicos — o que você constrói e como as peças se encaixam? Consulte [Como um aplicativo é conectado](/help/guides/app-architecture.md).
 
 ## Requisitos {#requirements}
 
