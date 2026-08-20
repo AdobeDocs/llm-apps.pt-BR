@@ -1,9 +1,9 @@
 ---
 title: Uma visão geral dos aplicativos Adobe LLM
 description: Saiba o que são os aplicativos LLM do Adobe, como funcionam e o que é necessário para começar.
-source-git-commit: 1d677c4e21963d1b126abb6287fccedfc1933c1a
+source-git-commit: 2f3480b3667a6ab7c4ed65b999eed4638c383edb
 workflow-type: tm+mt
-source-wordcount: '938'
+source-wordcount: '969'
 ht-degree: 1%
 
 ---
@@ -60,36 +60,19 @@ O endpoint exposto após a implantação. Uma plataforma LLM compatível se cone
 
 ## Como funciona
 
-O diagrama abaixo mostra como as partes se encaixam, desde a definição de um aplicativo na interface até a visualização dos resultados ao vivo na plataforma LLM.
+Em um alto nível, três coisas acontecem: você informa ao [!DNL LLM Apps] o que sua marca oferece, isso se transforma em algo em que um assistente de IA pode agir, e seu cliente recebe uma resposta real — bem no bate-papo.
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                      LLM Apps UI                            │
-│  ┌──────────┐   ┌──────────┐   ┌───────────────────────┐    │
-│  │   App    │──▶│ Actions  │──▶│ Metadata + Widget cfg │    │
-│  └──────────┘   └──────────┘   └───────────┬───────────┘    │
-└─────────────────────────────────────────── │ ────────────-──┘
-                                             │ deploy
-                                             ▼
-┌─────────────────────────────────────────────────────────────┐
-│                  Adobe I/O Runtime                          │
-│               MCP Server (auto-generated)                   │
-│  ┌───────────────┐ ┌──────────────────┐ ┌───────────────┐   │
-│  │ search-       │ │ get-product-     │ │ find-where-   │   │
-│  │ products      │ │ details          │ │ to-buy        │   │
-│  └───────────────┘ └──────────────────┘ └───────────────┘   │
-└──────────────────────────────┬──────────────────────────────┘
-                               │ MCP protocol
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│                        ChatGPT                              │
-│  Conversation                                               │
-│  ┌───────────────────────────────────────────────────────┐  │
-│  │  EDS Widget                                           │  │
-│  │  Product carousel, store locator, detail card ...     │  │
-│  └───────────────────────────────────────────────────────┘  │
-└─────────────────────────────────────────────────────────────┘
+┌────────────────────┐          ┌────────────────────┐          ┌────────────────────┐
+│     Your brand     │          │      LLM Apps      │          │    AI assistant    │
+│                    │          │                    │          │                    │
+│   What you offer   │   ───▶   │  Turns that into   │   ───▶   │ Answers with your  │
+│  and how you help  │          │    something AI    │          │    brand, live     │
+│  customers today   │          │     can act on     │          │  inside the chat   │
+└────────────────────┘          └────────────────────┘          └────────────────────┘
 ```
+
+Quer os detalhes técnicos — o que você constrói e como as peças se encaixam? Consulte [Como um aplicativo é conectado](/help/guides/app-architecture.md).
 
 ## Requisitos {#requirements}
 
