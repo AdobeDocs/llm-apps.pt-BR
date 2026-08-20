@@ -20,7 +20,7 @@ ht-degree: 0%
 ## Em uma frase
 
 Um **Aplicativo LLM** é um conjunto de **Ações** (cada uma exposta por uma ferramenta sobre o **Modelo
-Protocolo de Contexto**, ou **MCP**) que você publica em um único ponto de extremidade. Um host de chat
+Protocolo de Contexto&#x200B;**, ou &#x200B;** MCP**) que você publica em um único ponto de extremidade. Um host de chat
 como [!DNL ChatGPT] descobre essas ferramentas, chama-as de meio de conversa e renderiza
 um **widget interativo** com o resultado — bem dentro do chat.
 
