@@ -1,19 +1,22 @@
 ---
-source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
+source-git-commit: 03c918b1643d9c4e8ebee40fd67694acb6751a14
 workflow-type: tm+mt
-source-wordcount: '398'
+source-wordcount: '1080'
 ht-degree: 0%
-
 ---
-# Manifesto de captura de tela de integração
+# Manifesto de captura de tela
 
 Capturar caixa de entrada: `docs-captures/<YYYY-MM-DD>/`
-
-Diretório de saída: `help/assets/guide-onboarding-agent/`
 
 Capture somente pontos de verificação que ajudem materialmente o usuário a tomar uma decisão ou verificar o estado.
 
 Os nomes de arquivos do Source não precisam corresponder aos nomes de arquivos finais. As capturas de tela dos mapas de habilidades por estado visível da interface do usuário, preservam os arquivos brutos e criam cópias limpas usando os nomes abaixo.
+
+Cada guia abaixo declara seu próprio diretório de saída. Use o da seção à qual a captura pertence.
+
+&#x200B;# Guia de integração
+
+Diretório de saída: `help/assets/guide-onboarding-agent/`
 
 ## Capturas necessárias
 
@@ -123,3 +126,91 @@ Adicione uma captura somente quando a prosa não puder explicar a decisão clara
 - Ícone de plug-in fazer upload.
 
 Não adicione capturas de tela para listas de campos estáticos que já estão limpas em prosa.
+
+&#x200B;# Guia de autenticação
+
+Diretório de saída: `help/assets/guide-authentication/`
+
+Referenciado por [authentication.md](../../../help/guides/authentication.md).
+
+A etapa **[!UICONTROL Copiar o identificador de recurso]** reutiliza o guia de integração
+`app-mcp-url.png`. Não o capture novamente.
+
+Cada captura nesta seção mostra a configuração de segurança. Mascarar antes de salvar:
+
+- A URL do **[!UICONTROL Emissor]** e qualquer nome de host que identifique o provedor de identidade ou seu fornecedor.
+- O URL do servidor MCP, por completo, onde quer que apareça.
+- Identificadores de locatário, cliente e organização.
+- Nome da conta, avatar e email.
+
+Use valores de espaço reservado neutros em que um campo deve permanecer legível — por exemplo, um emissor de
+`https://auth.example.com`. Os nomes de escopo devem ser lidos como exemplos genéricos, como `orders:read`.
+
+## Capturas necessárias
+
+### `auth-core-settings.png`
+
+- Estado: **[!UICONTROL Configurações]** > **[!UICONTROL Autenticação]** com **[!UICONTROL Habilitar autenticação]** ativada e **[!UICONTROL Configurações principais]** preenchidas.
+- Incluir: o seletor de **[!UICONTROL Workspace]** que mostra o **[!UICONTROL Estágio]**, **[!UICONTROL Habilitar autenticação]** em seu estado ligado, **[!UICONTROL Emissor]** e **[!UICONTROL Escopos com suporte]** que contém pelo menos dois escopos.
+- Inclua o controle **[!UICONTROL Configurações avançadas]** recolhido, para que o leitor possa ver que o **[!UICONTROL URI JWKS]** é opcional e onde ele está.
+- Mask: o nome de host do emissor.
+- Texto alternativo: `Authentication — enable authentication and complete the core settings`
+
+Capturado em 25 de agosto de 2026. Recortado para soltar a tela vazia; não é necessário mascaramento, porque
+**[!UICONTROL Emissor]** foi definido como `https://auth.example.com` no produto antes de
+captura. Prefira isso à edição da imagem posteriormente. **[!UICONTROL Escopos com suporte]** suspensões
+um escopo (`read:all`); dois ilustrariam melhor o campo, mas isso não vale a pena
+capturar novamente por conta própria.
+
+### `auth-per-action.png`
+
+- Estado: **[!UICONTROL Configuração por ação]** após habilitar a autenticação, com os modos deliberadamente misturados.
+- Inclua: pelo menos três ações, uma por modo — **[!UICONTROL Nenhuma]**, **[!UICONTROL Obrigatório]** e **[!UICONTROL Opcional]** — e a coluna **[!UICONTROL Escopos]** preenchida nas restritas.
+- Incluir: **[!UICONTROL Exigir autenticação em todas as ações]**, idealmente em seu estado indeterminado, que é o que uma configuração mista produz.
+- Use apenas nomes de ações de correção.
+- Texto alternativo: `Authentication — set an auth mode and scopes for each action`
+
+Capturado em 25 de agosto de 2026. Cortado apenas, nada para mascarar. Mostra todos os três modos, um preenchido
+**[!UICONTROL Escopos]** célula e **[!UICONTROL Exigir autenticação em todas as ações]** em sua
+estado indeterminado, com `Test Action 1/2/3` como nomes de correção.
+
+Cortar **dentro** da própria borda do contêiner do painel de configurações — uma regra 1px de altura completa fica em cada borda
+lado da captura e deixar qualquer um no quadro é lido como uma linha reta abaixo da borda do
+imagem.
+
+O próprio aviso do produto sobre [!DNL Claude] aplicando autenticação por conector foi
+**não observado nesta guia em duas rodadas de captura**, portanto, não é necessário aqui. O
+o guia declara esse comportamento em prosa. Se o aviso existir em uma build posterior,
+capturar como `auth-claude-warning.png` e adicionar uma entrada.
+
+### `chatgpt-authentication-mode.png`
+
+- Estado: a caixa de diálogo **[!UICONTROL Novo Plug-in]** com a lista suspensa **[!UICONTROL Autenticação]** aberta.
+- Inclua: todos os três valores — **[!UICONTROL Sem Autenticação]**, **[!UICONTROL Misto]** e **[!UICONTROL OAuth]** — para que a tabela de mapeamento no guia possa ser verificada em relação ao controle real.
+- Máscara: o URL do servidor MCP e qualquer identificador de conector no URL do navegador.
+- Texto alternativo: `ChatGPT — select the authentication mode for the plugin`
+
+Enquadre-o da mesma forma que o `chatgpt-new-plugin.png` do guia de integração: o cartão de diálogo com
+uma margem da página ainda visível ao redor dela, aproximadamente 40px para a esquerda e para cima. Não cortar a liberação para
+o cartão.
+
+Capturado em 25/08/2026, modo de luz, para corresponder a todas as outras capturas na documentação. O
+a lista suspensa oculta o campo **[!UICONTROL URL do Servidor]**, portanto, a URL do MCP não é legível — mas
+seu material translúcido deixa uma imagem borrada do conteúdo desse campo sangrar ao lado da
+opções. As três linhas não destacadas foram repintadas com o preenchimento do painel e seus rótulos
+renderizado novamente, o que o remove. Verificar por amostragem, não por olho: o sangramento é fraco o suficiente para
+e é o URL do servidor MCP.
+
+Observe que o controle em tempo real oferece **quatro** valores — **[!UICONTROL OAuth]**, **Access
+token/chave de API&rbrack;**, &#x200B;** [!UICONTROL Sem autenticação] **&#x200B; e &#x200B;** [!UICONTROL Misto]**. O mapeamento do guia
+A tabela abrange apenas os três que os modos de autenticação de um aplicativo podem mapear, o que é correto, mas não
+descreva a lista suspensa como tendo três opções.
+
+## Capturas opcionais
+
+Adicionar somente se a prosa for insuficiente:
+
+- `auth-scope-blocked.png` — **[!UICONTROL Salvar]** bloqueado porque uma ação requer um escopo ausente de **[!UICONTROL Escopos com suporte]**. Útil para a entrada da solução de problemas.
+- O prompt de entrada no meio da conversa uma ação **[!UICONTROL Opcional]** gera. Interface de usuário de propriedade de plataforma que muda com frequência e já está descrita em prosa.
+
+Não capture a página de logon do próprio provedor de identidade. Identifica o fornecedor, que esta documentação não nomeia.

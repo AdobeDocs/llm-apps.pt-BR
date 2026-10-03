@@ -1,9 +1,8 @@
 ---
-source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
+source-git-commit: 03c918b1643d9c4e8ebee40fd67694acb6751a14
 workflow-type: tm+mt
-source-wordcount: '696'
+source-wordcount: '703'
 ht-degree: 0%
-
 ---
 # Procedimento de captura de tela da produção
 
@@ -102,7 +101,7 @@ Quando o usuário solicita a atualização da documentação de uma pasta de cap
    - informações sensíveis;
    - Comportamento de produção em conflito com os documentos.
 6. Não edite capturas de origem.
-7. Para cada imagem aceita, crie uma cópia limpa com o nome de arquivo de manifesto estável em `help/assets/guide-onboarding-agent/`.
+7. Para cada imagem aceita, crie uma cópia limpa com o nome de arquivo do manifesto estável no diretório de saída que sua seção manifest declara.
 8. Recortar somente quando a interface ao redor não adiciona contexto útil.
 9. Mascarar valores confidenciais. Se o mascaramento seguro não for possível, peça uma recaptura.
 10. Atualize o artigo e o texto alternativo para corresponder ao fluxo de trabalho capturado.
