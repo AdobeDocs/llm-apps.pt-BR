@@ -19,7 +19,7 @@ espera-se que você mantenha esse código. Denuncie comportamento inaceitável p
 
 ## Documentação do Guia do colaborador
 
-Consulte o [Guia do Colaborador](https://experienceleague.adobe.com/docs/contributor/contributor-guide/introduction.html).
+Consulte o [Guia do Colaborador](https://experienceleague.adobe.com/docs/contributor/contributor-guide/introduction.html?lang=pt-BR).
 
 ## Você tem dúvidas?
 
