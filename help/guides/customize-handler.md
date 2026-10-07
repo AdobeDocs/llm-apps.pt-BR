@@ -1,13 +1,11 @@
 ---
 title: Personalizar um manipulador de ação gerado
 description: Entenda o contrato do manipulador de aplicativos LLM do Adobe, substitua os dados de amostra gerados e mantenha a saída do manipulador alinhada com o widget.
-source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
+source-git-commit: 2d8f44f4f258bf217992131de9d9450a4023560d
 workflow-type: tm+mt
-source-wordcount: '541'
+source-wordcount: '537'
 ht-degree: 0%
-
 ---
-
 
 # Personalizar um manipulador gerado {#customize-generated-handler}
 
@@ -15,7 +13,7 @@ ht-degree: 0%
 >
 >[!DNL Adobe LLM Apps] está atualmente na Beta.
 >
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para ingressar na Beta, envie um email para `llm-apps-beta@adobe.com`.
 
 A plataforma cria um manipulador de trabalho para cada ação gerada. Inicialmente, o manipulador retorna dados de amostra para que você possa testar a experiência completa.
 
