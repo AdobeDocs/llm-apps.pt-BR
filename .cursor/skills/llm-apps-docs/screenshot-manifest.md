@@ -1,7 +1,7 @@
 ---
-source-git-commit: 03c918b1643d9c4e8ebee40fd67694acb6751a14
+source-git-commit: 41bd4b6239171c7a3af7dc6349eaa3cbb880449c
 workflow-type: tm+mt
-source-wordcount: '1080'
+source-wordcount: '1279'
 ht-degree: 0%
 ---
 # Manifesto de captura de tela
@@ -14,7 +14,7 @@ Os nomes de arquivos do Source não precisam corresponder aos nomes de arquivos 
 
 Cada guia abaixo declara seu próprio diretório de saída. Use o da seção à qual a captura pertence.
 
-&#x200B;# Guia de integração
+# Guia de integração
 
 Diretório de saída: `help/assets/guide-onboarding-agent/`
 
@@ -106,7 +106,7 @@ Diretório de saída: `help/assets/guide-onboarding-agent/`
 ### `chatgpt-plugin-connect.png`
 
 - Estado: confirmação após a criação do plug-in.
-- Incluir: **Adicionar <plugin> para ChatGPT &#x200B;** e**&#x200B; Connect &#x200B;**.
+- Incluir: **Adicionar <plugin> para ChatGPT **e** Connect **.
 - Máscara: URL do navegador e identificadores do conector.
 - Texto alternativo: `ChatGPT — connect the new plugin`
 
@@ -127,7 +127,7 @@ Adicione uma captura somente quando a prosa não puder explicar a decisão clara
 
 Não adicione capturas de tela para listas de campos estáticos que já estão limpas em prosa.
 
-&#x200B;# Guia de autenticação
+# Guia de autenticação
 
 Diretório de saída: `help/assets/guide-authentication/`
 
@@ -201,8 +201,8 @@ opções. As três linhas não destacadas foram repintadas com o preenchimento d
 renderizado novamente, o que o remove. Verificar por amostragem, não por olho: o sangramento é fraco o suficiente para
 e é o URL do servidor MCP.
 
-Observe que o controle em tempo real oferece **quatro** valores — **[!UICONTROL OAuth]**, **Access
-token/chave de API&rbrack;**, &#x200B;** [!UICONTROL Sem autenticação] **&#x200B; e &#x200B;** [!UICONTROL Misto]**. O mapeamento do guia
+Observe que o controle em tempo real oferece **quatro** valores — **[!UICONTROL OAuth]**, **[!UICONTROL Access
+token/chave de API]**, **[!UICONTROL Sem autenticação]** e **[!UICONTROL Misto]**. O mapeamento do guia
 A tabela abrange apenas os três que os modos de autenticação de um aplicativo podem mapear, o que é correto, mas não
 descreva a lista suspensa como tendo três opções.
 
@@ -214,3 +214,51 @@ Adicionar somente se a prosa for insuficiente:
 - O prompt de entrada no meio da conversa uma ação **[!UICONTROL Opcional]** gera. Interface de usuário de propriedade de plataforma que muda com frequência e já está descrita em prosa.
 
 Não capture a página de logon do próprio provedor de identidade. Identifica o fornecedor, que esta documentação não nomeia.
+
+# Guia de variáveis do aplicativo
+
+Diretório de saída: `help/assets/guide-app-variables/`
+
+Referenciado por [app-variables.md](../../../help/guides/app-variables.md).
+
+Use a variável de correção `GREETING_PREFIX` com o valor `Good day`, no espaço de trabalho **[!UICONTROL Preparo]**. Os valores das variáveis são visíveis na tabela, portanto, nunca capture uma configuração real.
+
+## Capturas necessárias
+
+### `variables-empty.png`
+
+- Estado: **[!UICONTROL Configurações]** > **[!UICONTROL Variáveis e Segredos]** sem variáveis no **[!UICONTROL Estágio]**.
+- Incluir: a navegação de configurações, o seletor **[!UICONTROL Workspace]** e **[!UICONTROL Adicionar]**.
+- Texto alternativo: `Variables & Secrets — empty Stage workspace with the Add button`
+
+Capturado em 10/2026. Recortado para soltar a tela vazia; nada para mascarar.
+
+### `add-variable-dialog.png`
+
+- Estado: a caixa de diálogo **[!UICONTROL Adicionar Variável ou Segredo]** foi preenchida antes de salvar.
+- Incluir: os *Segredos ainda não são suportados* aviso, **[!UICONTROL Nome]** `GREETING_PREFIX`, **[!UICONTROL Tipo]** **[!UICONTROL Variável]** e **[!UICONTROL Valor]** `Good day`.
+- Texto alternativo: `Add Variable or Secret — GREETING_PREFIX set to Good day`
+
+Capturado em 10/2026. Cortado abaixo da caixa de diálogo; nada para mascarar.
+
+### `variable-added.png`
+
+- Estado: a tabela de variáveis após salvar, com uma linha `GREETING_PREFIX`.
+- Incluir: **[!UICONTROL Nome]**, **[!UICONTROL Tipo]**, **[!UICONTROL Valor]**, **[!UICONTROL Última atualização]** e os controles de cópia, edição e exclusão.
+- Texto alternativo: `Variables & Secrets — GREETING_PREFIX saved in the Stage workspace`
+
+Capturado em 10/2026. Recortado para soltar a tela vazia; nada para mascarar.
+
+### `update-variable-dialog.png`
+
+- Estado: **[!UICONTROL Atualizar caixa de diálogo GREETING_PREFIX]** com **[!UICONTROL Valor atual]** `Good day` e **[!UICONTROL Novo valor]** `Howdy`.
+- Texto alternativo: `Update GREETING_PREFIX — change the value from Good day to Howdy`
+
+Capturado em 10/2026. O título da página recortada e a sobreposição vazia abaixo da caixa de diálogo foram cortados; o sinal de interpolação do texto após `Howdy` foi pintado. Nada para mascarar.
+
+### `delete-variable-dialog.png`
+
+- Estado: **[!UICONTROL Excluir GREETING_PREFIX?]** diálogo de confirmação.
+- Texto alternativo: `Delete GREETING_PREFIX — confirm the permanent deletion`
+
+Capturado em 10/2026. Recortada a sobreposição vazia abaixo da caixa de diálogo; nada para mascarar.

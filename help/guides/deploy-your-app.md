@@ -1,13 +1,11 @@
 ---
 title: Implante seu aplicativo
 description: Saiba como implantar seu aplicativo Adobe LLM no preparo e na produção usando a interface do usuário de aplicativos LLM.
-source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
+source-git-commit: 4e447562c5d38f68c209ded7370e9d384a7c9701
 workflow-type: tm+mt
-source-wordcount: '322'
+source-wordcount: '352'
 ht-degree: 0%
-
 ---
-
 
 # Implantar O Aplicativo {#deploy-your-app}
 
@@ -26,6 +24,8 @@ Esta é uma etapa compartilhada para cada jornada. Após a implantação, contin
 Abra a página Detalhes do aplicativo e selecione **[!UICONTROL Implantar]**.
 
 Selecione o ambiente de destino e selecione **[!UICONTROL Implantar]**.
+
+Se os seus manipuladores usarem [variáveis de aplicativo](/help/guides/app-variables.md), configure-as para o ambiente de destino antes de implantar. As variáveis adicionadas, atualizadas ou excluídas entram em vigor nessa implantação; Preparo e Produção têm valores independentes.
 
 ![Implantar — selecione o ambiente de destino](/help/assets/guide-onboarding-agent/deploy-stage.png)
 
@@ -65,4 +65,3 @@ implantação mais recente bem-sucedida.
 
 - [Testar o aplicativo implantado como um plug-in ChatGPT](/help/guides/test-in-chatgpt.md).
 - [Teste o aplicativo implantado como um conector Claude](/help/guides/test-in-claude.md).
-

@@ -1,9 +1,9 @@
 ---
 title: Personalizar um manipulador de ação gerado
 description: Entenda o contrato do manipulador de aplicativos LLM do Adobe, substitua os dados de amostra gerados e mantenha a saída do manipulador alinhada com o widget.
-source-git-commit: 2d8f44f4f258bf217992131de9d9450a4023560d
+source-git-commit: d9fb493c0b1708e4566e93a4f883e99bb4166e18
 workflow-type: tm+mt
-source-wordcount: '537'
+source-wordcount: '581'
 ht-degree: 0%
 ---
 
@@ -215,6 +215,8 @@ module.exports = async ({ query = '' } = {}) => {
 ```
 
 Mantenha o acesso protegido à rede no manipulador. Nunca coloque credenciais de API no JavaScript widget ou no controle de origem.
+
+Para configurações não confidenciais de que seu manipulador precisa, como uma URL de serviço, consulte [Configurar variáveis e segredos do aplicativo](/help/guides/app-variables.md). As variáveis são configuradas por ambiente e têm efeito na próxima implantação. O suporte secreto ainda não está disponível; não use variáveis para armazenar credenciais da API.
 
 ## Gerenciar estados esperados
 
