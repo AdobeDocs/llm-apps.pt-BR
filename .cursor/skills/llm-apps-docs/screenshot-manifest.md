@@ -14,7 +14,7 @@ Os nomes de arquivos do Source não precisam corresponder aos nomes de arquivos 
 
 Cada guia abaixo declara seu próprio diretório de saída. Use o da seção à qual a captura pertence.
 
-# Guia de integração
+&#x200B;# Guia de integração
 
 Diretório de saída: `help/assets/guide-onboarding-agent/`
 
@@ -106,7 +106,7 @@ Diretório de saída: `help/assets/guide-onboarding-agent/`
 ### `chatgpt-plugin-connect.png`
 
 - Estado: confirmação após a criação do plug-in.
-- Incluir: **Adicionar <plugin> para ChatGPT **e** Connect **.
+- Incluir: **Adicionar <plugin> para ChatGPT &#x200B;** e**&#x200B; Connect &#x200B;**.
 - Máscara: URL do navegador e identificadores do conector.
 - Texto alternativo: `ChatGPT — connect the new plugin`
 
@@ -127,7 +127,7 @@ Adicione uma captura somente quando a prosa não puder explicar a decisão clara
 
 Não adicione capturas de tela para listas de campos estáticos que já estão limpas em prosa.
 
-# Guia de autenticação
+&#x200B;# Guia de autenticação
 
 Diretório de saída: `help/assets/guide-authentication/`
 
@@ -201,8 +201,8 @@ opções. As três linhas não destacadas foram repintadas com o preenchimento d
 renderizado novamente, o que o remove. Verificar por amostragem, não por olho: o sangramento é fraco o suficiente para
 e é o URL do servidor MCP.
 
-Observe que o controle em tempo real oferece **quatro** valores — **[!UICONTROL OAuth]**, **[!UICONTROL Access
-token/chave de API]**, **[!UICONTROL Sem autenticação]** e **[!UICONTROL Misto]**. O mapeamento do guia
+Observe que o controle em tempo real oferece **quatro** valores — **[!UICONTROL OAuth]**, **Access
+token/chave de API&rbrack;**, &#x200B;** [!UICONTROL Sem autenticação] **&#x200B; e &#x200B;** [!UICONTROL Misto]**. O mapeamento do guia
 A tabela abrange apenas os três que os modos de autenticação de um aplicativo podem mapear, o que é correto, mas não
 descreva a lista suspensa como tendo três opções.
 
@@ -215,7 +215,7 @@ Adicionar somente se a prosa for insuficiente:
 
 Não capture a página de logon do próprio provedor de identidade. Identifica o fornecedor, que esta documentação não nomeia.
 
-# Guia de variáveis do aplicativo
+&#x200B;# Guia de variáveis do aplicativo
 
 Diretório de saída: `help/assets/guide-app-variables/`
 
