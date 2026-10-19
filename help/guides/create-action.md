@@ -1,13 +1,11 @@
 ---
 title: Criar uma ação do zero
 description: Defina os metadados da ação, implemente o manipulador, conecte um widget de EDS, teste-o e implante-o com os aplicativos Adobe LLM.
-source-git-commit: bb3d8a02f22a91ceeeba5999453aeb4221060f80
+source-git-commit: 0f9dd0a5b1008e183eb8ab5a4c2eae34a78923bb
 workflow-type: tm+mt
-source-wordcount: '1137'
+source-wordcount: '1453'
 ht-degree: 0%
-
 ---
-
 
 # Criar uma ação do zero {#create-action-from-scratch}
 
@@ -21,11 +19,11 @@ ht-degree: 0%
 >
 >Este guia pressupõe uma familiaridade básica com os Serviços de entrega de borda (EDS) da Adobe. Se você é novo no EDS, primeiro leia o [Tutorial do desenvolvedor do EDS](https://www.aem.live/developer/tutorial) e o [Explorar blocos](https://www.aem.live/docs/exploring-blocks) para aprender o básico — blocos, a função `decorate` e a estrutura do projeto do EDS — antes de conectar um widget.
 
-Use este guia para adicionar um recurso que a plataforma não criou. Você definirá a ação em [!DNL LLM Apps], gravará o manipulador no repositório vinculado, adicionará um widget, se necessário, e o testará e implantará.
+Adicione um recurso que a plataforma não criou. Defina a ação em [!DNL LLM Apps], grave o manipulador no repositório vinculado e adicione um widget, se necessário.
 
-**Jornada:** Planeje a ação → crie seus metadados → escreva o manipulador → conecte o dispositivo → teste localmente → implante e teste o plug-in.
+**Neste guia:** Aprenda a definir uma ação, implementar seu manipulador e conectar um widget opcional. Teste a ação localmente, implante o aplicativo e tente a ação em uma plataforma LLM compatível.
 
-Para seu primeiro aplicativo, comece com [Crie seu primeiro aplicativo automaticamente](/help/guides/create-app.md).
+Para seu primeiro aplicativo, comece com [Configuração de infraestrutura](/help/guides/create-app.md) e depois [Criar ações](/help/guides/creating-actions.md). O guia de ações Criar explica a geração automática de um site e a criação manual.
 
 ## Antes de começar
 
@@ -33,22 +31,22 @@ Você precisa:
 
 - Um aplicativo LLM existente.
 - Um repositório de manipulador vinculado.
-- O repositório foi clonado localmente com suas dependências instaladas.
+- Um clone local do repositório com suas dependências instaladas.
 - Um projeto EDS se a ação exibir um widget.
 - Uma API ou fonte de dados limpa para os resultados da produção.
 
 ## Planejar a ação
 
-Uma ação deve executar uma tarefa de limpeza do usuário. Antes de abrir a interface do usuário, defina:
+Projete cada ação em torno de uma tarefa de usuário limpa. Antes de abrir a interface do usuário, defina:
 
 - **Intenção** — o que o usuário está tentando fazer.
-- **Descrição** — quando a plataforma LLM deve selecionar esta ação.
+- **Descrição** — quando selecionar a ação.
 - **Entradas** — as informações mínimas necessárias do usuário.
 - **Resultado** — o texto e os dados estruturados retornados pelo manipulador.
 - **Comportamento** — se a ação lê dados, altera dados ou chama sistemas externos.
 - **Widget** — se o resultado precisa de uma interface visual.
 
-Por exemplo, uma ação **Pesquisar Produtos** pode usar:
+Por exemplo, use este plano para uma ação **Pesquisar Produtos**:
 
 ```text
 Intent: Find products matching a category or search phrase
@@ -62,13 +60,13 @@ Behavior: read-only, idempotent, open-world
 Widget: product cards
 ```
 
-Mantenha as tarefas relacionadas, mas diferentes, separadas. A pesquisa e a compra de produtos não devem ser uma única ação, pois têm requisitos de entrada, riscos e confirmação diferentes.
+Mantenha as tarefas relacionadas, mas diferentes, separadas. Use ações separadas para pesquisa de produto e compra de produto porque as tarefas têm diferentes requisitos de entrada, riscos e confirmação.
 
 ## Criar os metadados da ação
 
 Abra o aplicativo e selecione **[!UICONTROL Ações]** e, em seguida, **[!UICONTROL Criar Ação]**.
 
-O editor contém as guias **[!UICONTROL Ação]** e **[!UICONTROL Metadados do widget]**.
+A caixa de diálogo de criação contém as guias **[!UICONTROL Ação]** e **[!UICONTROL Metadados do widget]**. Expanda cada seção para configurar seus campos.
 
 ### Inserir informações básicas
 
@@ -78,6 +76,8 @@ Insira:
 
 - **[!UICONTROL Nome da ação]** — um nome de tarefa curto, como *Pesquisar Produtos*.
 - **[!UICONTROL Descrição]** — explique quando usar a ação e o que ela retorna.
+
+A caixa de diálogo deriva um **[!UICONTROL Identificador de código]** do nome, como `search-products`. O identificador é corrigido após a criação e deve ser exclusivo no aplicativo. Use o identificador exato para a pasta do manipulador.
 
 Uma descrição útil é específica:
 
@@ -108,28 +108,28 @@ Invoking: Searching products...
 Invoked: Products found
 ```
 
-Para ações com widgets, adicione **[!UICONTROL Descrição do widget]**. Isso é diferente da descrição da ação:
+Para ações com widgets, adicione **[!UICONTROL Descrição do widget]**. A descrição do widget é diferente da descrição da ação:
 
 - **A descrição da ação** ajuda o modelo a decidir quando invocar a ação.
 - A **Descrição do widget** mapeia para `_meta["openai/widgetDescription"]` e resume o que o componente renderizado mostra, reduzindo a narração repetida.
 
-[!DNL LLM Apps] aplica isso como metadados de componente. Não o retorne do manipulador.
+[!DNL LLM Apps] aplica a descrição do widget como metadados do componente. Não retorne a descrição do manipulador.
 
 ### Configurar visibilidade
 
 - **[!UICONTROL Expor ao modelo de IA]** permite que o modelo selecione a ação.
 - **[!UICONTROL Mostrar como widget na superfície do aplicativo]** exibe o widget configurado.
 
-Desativa a visibilidade do widget quando a ação retorna somente texto.
+Para uma ação somente texto, selecione também **[!UICONTROL Nenhum widget]** em **[!UICONTROL Metadados do widget]** > **[!UICONTROL Tipo]**. Os controles de visibilidade não escolhem o tipo de widget da ação.
 
 ### Adicionar parâmetros de entrada
 
 Adicione um parâmetro para cada valor que o manipulador aceita. Todos os parâmetros precisam:
 
-- **Nome** — a chave recebida pelo manipulador.
+- **Nome** — a chave que o manipulador recebe.
 - **Tipo** — String, Número, Inteiro ou Booleano.
-- **Descrição** — como o modelo deve extrair o valor.
-- **Obrigatório** — se a ação pode ser executada sem ela.
+- **Descrição** — como extrair o valor.
+- **Obrigatório** — se a ação requer o valor.
 
 Para **Pesquisar Produtos**:
 
@@ -151,13 +151,15 @@ Use nomes de parâmetros estáveis. Alterar um nome também requer alterar o man
 
 Habilite **[!UICONTROL Coletar intenção de usuário]** quando quiser que a análise inclua um resumo da conversa que levou à ação.
 
+A coleta de intenção do usuário é ativada por padrão. Revise a **[!UICONTROL Descrição da intenção do usuário]**, que contém as instruções para solicitar o resumo. Limite as instruções a uma intenção não confidencial e anônima e descreva sua coleta de dados na sua política de privacidade. A descrição aceita até 2.000 caracteres.
+
 ![Criar Ação — análise de intenção de usuário](/help/assets/guide-create-action/action-analytics-user-intent.png)
 
 Para obter definições completas de campo, consulte [Campos de ação e widget](/help/reference/reference-docs.md).
 
 ## Configurar o widget
 
-Ignorar esta seção para uma ação somente texto.
+Para uma ação somente texto, abra **[!UICONTROL Metadados do widget]** e defina **[!UICONTROL Tipo]** como **[!UICONTROL Nenhum widget]**. Em seguida, ignore as configurações restantes do widget.
 
 Abra Os **[!UICONTROL Metadados Do Widget]**.
 
@@ -165,11 +167,16 @@ Abra Os **[!UICONTROL Metadados Do Widget]**.
 
 Configurar o:
 
-- **Tipo** — selecione EDS.
-- **Domínio do widget** — a origem EDS que hospeda o widget.
+- **[!UICONTROL Tipo]** — selecione **[!UICONTROL Bloco Edge Delivery Services]** para um widget interativo.
+- **[!UICONTROL Domínio do widget]** — a origem da sandbox do widget. A interface o identifica conforme necessário para o envio do aplicativo e exclusivo por aplicativo; não é o mesmo que o URL da página de EDS.
 - **Borda preferencial** — solicita um contêiner com bordas no host.
-- **URL do Script** — o ponto de entrada do widget EDS.
-- **URL do Widget** — a página de EDS publicada para esta ação.
+
+Expanda **[!UICONTROL URLs de modelo]** e insira:
+
+- **[!UICONTROL URL do Script]** — o ponto de entrada do widget EDS.
+- **[!UICONTROL URL do Widget]** — a página de EDS publicada para esta ação.
+
+![Criar nova ação — URLs de script e widget para um widget EDS](/help/assets/guide-create-action/widget-template-urls.png)
 
 Os URLs típicos são:
 
@@ -183,7 +190,13 @@ https://main--<repo>--<owner>.aem.live/<widget-page>
 
 Conceda somente as permissões do navegador e os domínios CSP necessários.
 
-![Criar Ação — permissões e CSP](/help/assets/guide-create-action/widget-permissions-csp.png)
+Expanda **[!UICONTROL Permissões (específicas do MCP)]** somente se o widget precisar de recursos do navegador, como localização geográfica. Deixe as permissões não usadas desativadas.
+
+![Criar nova ação — permissões opcionais do navegador](/help/assets/guide-create-action/widget-permissions.png)
+
+Em **[!UICONTROL Configuração da CSP]**, adicione as origens necessárias para ativos e solicitações de rede. Um widget que carrega recursos externos pode não ser renderizado se o CSP estiver incompleto.
+
+![Criar nova ação — listas de domínios da política de segurança de conteúdo](/help/assets/guide-create-action/widget-csp.png)
 
 Se a página do projeto ou widget do EDS ainda não existir, conclua [Trazer seu próprio projeto EDS](/help/guides/bring-your-own-eds.md) e retorne à ação.
 
@@ -191,7 +204,9 @@ Se a página do projeto ou widget do EDS ainda não existir, conclua [Trazer seu
 
 Selecione **[!UICONTROL Criar nova ação]**. A ação aparece na página Ações com um selo **Não implantado**.
 
-Neste ponto, os metadados existem, mas a ação ainda precisa de um manipulador.
+Salvar cria os metadados, mas a ação ainda precisa de um manipulador.
+
+Quando você reabre a ação salva, o editor tem **[!UICONTROL detalhes do Widget de LLM]**, **[!UICONTROL detalhes da ação]** e **[!UICONTROL guias do Analytics]**. Para salvar edições posteriores, selecione **[!UICONTROL Salvar alterações]**. A caixa de diálogo de criação e o editor de ação salva têm layouts diferentes.
 
 ## Implementar o manipulador
 
@@ -234,7 +249,7 @@ O manipulador recebe os parâmetros definidos na interface do usuário do.
 
 ### Retornar `content`
 
-`content` é o fallback de texto lido pela plataforma LLM:
+A plataforma LLM lê `content` como fallback de texto:
 
 ```javascript
 content: [
@@ -246,7 +261,7 @@ Sempre retornar `content` úteis, mesmo quando a ação tiver um widget.
 
 ### Retornar `structuredContent`
 
-`structuredContent` é um objeto simples consumido pelo widget:
+O widget consome `structuredContent` como um objeto simples:
 
 ```javascript
 structuredContent: {
@@ -261,35 +276,43 @@ A forma deve corresponder ao que o bloco EDS lê de `bridge.toolResult`.
 
 ### Conectar uma API
 
-Mantenha o acesso protegido à API no manipulador do lado do servidor. Carregue a configuração do ambiente de tempo de execução e use uma origem HTTPS fixa.
+Manter chamadas de API no manipulador do lado do servidor. Este exemplo chama uma API de produto pública. Configure a origem HTTPS da API em uma [variável de aplicativo](/help/guides/app-variables.md) chamada `PRODUCT_API_ORIGIN`. O exemplo aceita os parâmetros `query` e `category` definidos acima, requer pelo menos um parâmetro e não requer credenciais.
 
 ```javascript
-const API_ORIGIN = process.env.PRODUCT_API_ORIGIN;
-const API_TOKEN = process.env.PRODUCT_API_TOKEN;
+const { getVariable } = require('@adobe/llm-apps-runtime');
 
-module.exports = async ({ query = '' } = {}) => {
-  const normalizedQuery = String(query).trim();
-  if (!normalizedQuery || normalizedQuery.length > 200) {
+module.exports = async ({ query = '', category = '' } = {}, extra) => {
+  const normalizedQuery = typeof query === 'string' ? query.trim() : '';
+  const normalizedCategory = typeof category === 'string' ? category.trim() : '';
+  if (typeof query !== 'string' || typeof category !== 'string'
+      || (!normalizedQuery && !normalizedCategory)
+      || normalizedQuery.length > 200 || normalizedCategory.length > 100) {
     return {
+      isError: true,
       content: [{ type: 'text', text: 'Enter a valid product search.' }],
       structuredContent: { products: [], total: 0 }
     };
   }
 
-  if (!API_ORIGIN || !API_TOKEN) {
+  const apiOrigin = getVariable(extra, 'PRODUCT_API_ORIGIN');
+  if (!apiOrigin) {
     throw new Error('Product API configuration is unavailable.');
   }
 
-  const origin = new URL(API_ORIGIN);
+  const origin = new URL(apiOrigin);
   if (origin.protocol !== 'https:') {
     throw new Error('Product API configuration must use HTTPS.');
   }
 
   const url = new URL('/v1/products', origin);
-  url.searchParams.set('query', normalizedQuery);
+  if (normalizedQuery) {
+    url.searchParams.set('query', normalizedQuery);
+  }
+  if (normalizedCategory) {
+    url.searchParams.set('category', normalizedCategory);
+  }
 
   const response = await fetch(url, {
-    headers: { Authorization: `Bearer ${API_TOKEN}` },
     signal: AbortSignal.timeout(8000)
   });
 
@@ -325,7 +348,7 @@ module.exports = async ({ query = '' } = {}) => {
 };
 ```
 
-Não coloque credenciais de API no código-fonte, nos metadados de ação, no JavaScript widget, nos logs ou em erros voltados para o usuário.
+Não coloque credenciais de API no código-fonte, nos metadados de ação, no JavaScript widget, nos logs ou em erros voltados para o usuário. Atualmente, a interface do usuário **[!UICONTROL Variáveis e segredos]** aceita somente variáveis não confidenciais, não segredos. Não armazene um token de API em uma variável. Se sua API upstream exigir credenciais, organize um mecanismo de credenciais do lado do servidor aprovado antes de conectá-lo.
 
 Para código de produção, valide a resposta upstream completa antes de mapear campos aprovados para `structuredContent`.
 
@@ -389,9 +412,8 @@ Consulte [Trazer seu próprio projeto de EDS](/help/guides/bring-your-own-eds.md
 
 1. Confirme e envie por push as alterações do manipulador e do widget.
 2. [Implante o aplicativo](/help/guides/deploy-your-app.md) para o Preparo.
-3. [Testar o plug-in ChatGPT](/help/guides/test-in-chatgpt.md).
-4. Verifique os prompts que devem e não devem invocar a ação.
+3. Teste o aplicativo em [ChatGPT](/help/guides/test-in-chatgpt.md) ou [Claude](/help/guides/test-in-claude.md).
+4. Verifique a seleção da ação com prompts que correspondam à ação e prompts não relacionados que não a chamem.
 5. Após o Êxito do preparo, implante para produção.
 
 Se os metadados existirem sem um manipulador correspondente, a implantação registrará a ação com um stub padrão. Adicione o manipulador antes de disponibilizar a ação aos usuários.
-- [Guia: configurar o widget (EDS)](/help/guides/widgets.md)

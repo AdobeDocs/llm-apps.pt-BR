@@ -1,13 +1,13 @@
 ---
 title: Implante seu aplicativo
 description: Saiba como implantar seu aplicativo Adobe LLM no preparo e na produção usando a interface do usuário de aplicativos LLM.
-source-git-commit: 4e447562c5d38f68c209ded7370e9d384a7c9701
+source-git-commit: a48b4022979d9a13b4fc3aa870c4ee6375e8bc13
 workflow-type: tm+mt
-source-wordcount: '352'
+source-wordcount: '412'
 ht-degree: 0%
 ---
 
-# Implantar O Aplicativo {#deploy-your-app}
+# Implante seu aplicativo {#deploy-your-app}
 
 >[!IMPORTANT]
 >
@@ -15,9 +15,9 @@ ht-degree: 0%
 >
 >Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-Depois de gravar o código do manipulador e enviá-lo para o repositório vinculado, você poderá implantar o aplicativo na interface do usuário do [!DNL LLM Apps].
+Depois de analisar as ações geradas ou enviar seu próprio código de manipulador para o repositório vinculado, implante o aplicativo do [!DNL LLM Apps]. Para ações geradas, revise e mescle o trabalho gerado antes da implantação.
 
-Esta é uma etapa compartilhada para cada jornada. Após a implantação, continue a [testar o plug-in ChatGPT](/help/guides/test-in-chatgpt.md) ou [testar o conector Claude](/help/guides/test-in-claude.md).
+**Neste guia:** saiba como implantar seu aplicativo no Stage, verificar o resultado da implantação e copiar a URL do servidor MCP para teste. Implantar para produção após o teste ser bem-sucedido.
 
 ## Iniciar a implantação
 
@@ -36,30 +36,31 @@ A implantação é executada em quatro etapas:
 3. **Criar aplicativo** — instala dependências e cria o código de repositório mais recente.
 4. **Publicar** — publica o aplicativo em [!DNL Adobe I/O Runtime].
 
-![Implantar — pipeline de implantação em execução](/help/assets/guide-onboarding-agent/deploy-running.png)
-
 >[!NOTE]
 >
->Se uma ação tiver metadados na interface do usuário, mas nenhum arquivo de manipulador correspondente no repositório, ela ainda será registrada. As chamadas usam um manipulador de stub padrão até que você adicione o código real.
+>Se uma ação tiver metadados na interface, mas nenhum arquivo de manipulador correspondente no repositório, a implantação ainda registrará a ação. As chamadas usam um manipulador de stub padrão até que você adicione o código real.
 
 ## Depois de uma implantação bem-sucedida
 
 Quando todas as etapas forem concluídas, a caixa de diálogo exibirá **Implantação bem-sucedida**.
 
-![Implantação — implantação bem-sucedida](/help/assets/guide-onboarding-agent/deploy-successful.png)
-
-Clique em **Fechar** para fechar a caixa de diálogo. Role para baixo até a seção **[!UICONTROL Testar o aplicativo]** na página Detalhes do aplicativo:
+Para fechar a caixa de diálogo, selecione **Fechar**. Na página Detalhes do aplicativo, navegue até **[!UICONTROL Testar o aplicativo]**:
 
 ![Detalhes do aplicativo — copie a URL do servidor MCP](/help/assets/guide-onboarding-agent/app-mcp-url.png)
 
-Cada ambiente implantado mostra um URL de servidor MCP. Selecione **[!UICONTROL Copiar URL]** e use-a para criar um plug-in na plataforma LLM de destino.
+Cada ambiente implantado mostra um URL de servidor MCP. Selecione **[!UICONTROL Copiar URL]** e use-a para criar um plug-in ou conector na plataforma LLM de destino.
 
 A seção **Histórico de implantação** mostra as últimas 10 implantações:
 
 ![Histórico de implantação](/help/assets/guide-deploy/deployment-history.png)
 
-Cada linha mostra o **Ambiente** de destino (Preparo ou Produção), o **Status** (Bem-sucedido ou Com Falha) e a **Implantação na** data. Você pode usar essa tabela para rastrear quando as implantações ocorreram e verificar se
-implantação mais recente bem-sucedida.
+Cada linha mostra o **Ambiente** de destino (Preparo ou Produção), **Status** (Bem-sucedido ou Com Falha) e **Implantado na data**. Use a tabela para rastrear datas de implantação e verificar se a implantação mais recente foi bem-sucedida.
+
+## Implantar alterações de configuração
+
+As alterações nos metadados de ação, nos switches de **[!UICONTROL Visibilidade]** da página do aplicativo, na autenticação e nas variáveis do aplicativo entrarão em vigor na próxima implantação nesse ambiente. Salvar uma configuração não atualiza o servidor MCP implantado sozinho.
+
+Verifique o ambiente de destino todas as vezes. A implantação em preparo não implanta as mesmas alterações na produção.
 
 ## Próxima etapa
 

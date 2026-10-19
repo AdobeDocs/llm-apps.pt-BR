@@ -1,9 +1,9 @@
 ---
 title: Personalizar um manipulador de ação gerado
 description: Entenda o contrato do manipulador de aplicativos LLM do Adobe, substitua os dados de amostra gerados e mantenha a saída do manipulador alinhada com o widget.
-source-git-commit: d9fb493c0b1708e4566e93a4f883e99bb4166e18
+source-git-commit: 0f9dd0a5b1008e183eb8ab5a4c2eae34a78923bb
 workflow-type: tm+mt
-source-wordcount: '581'
+source-wordcount: '880'
 ht-degree: 0%
 ---
 
@@ -13,40 +13,41 @@ ht-degree: 0%
 >
 >[!DNL Adobe LLM Apps] está atualmente na Beta.
 >
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para ingressar na Beta, envie um email para `llm-apps-beta@adobe.com`.
+>Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-A plataforma cria um manipulador de trabalho para cada ação gerada. Inicialmente, o manipulador retorna dados de amostra para que você possa testar a experiência completa.
+A plataforma cria um manipulador de trabalho para cada ação gerada. Inicialmente, o manipulador retorna dados de amostra para testar a experiência completa.
 
-Use este guia para entender o contrato do manipulador e substituir os dados de amostra pelas APIs ou fontes de dados.
-
-**Jornada:** Encontre o manipulador gerado → entenda suas entradas e resultado → conecte seu sistema → mantenha o contrato do widget alinhado → teste e implante.
+**Neste guia:** Saiba como localizar o manipulador gerado, substituir seus dados de exemplo por chamadas para seus sistemas e manter sua resposta compatível com o widget. Em seguida, teste e implante suas alterações.
 
 ## Localizar o manipulador gerado
 
-Abra o repositório do manipulador selecionado durante a integração:
+Abra o repositório do manipulador conectado durante a [configuração de infraestrutura](/help/guides/create-app.md). Se você usa a infraestrutura gerenciada da Adobe, solicite acesso ao código antes de continuar.
 
 ```text
 actions/
-└── <action-name>/
-    └── index.js
+└── <action-slug>/
+    ├── index.js
+    └── data.json
 ```
 
-Os testes correspondentes são armazenados separadamente:
+Os testes correspondentes ficam em um diretório separado:
 
 ```text
 test/
 └── actions/
-    └── <action-name>.test.js
+    └── <action-slug>.test.js
 ```
 
-Editar o `index.js` gerado. Não altere arquivos de tempo de execução como `entry.js`.
+Use a solicitação de pull gerada para localizar os arquivos exatos. A pasta slug usa hifens: a plataforma gera uma ação com o identificador de código `search_products` em `actions/search-products/`. O tempo de execução reconhece o formulário hifenizado, bem como uma pasta que corresponde exatamente ao identificador.
+
+Edite o `index.js` gerado e quaisquer dados de amostra associados. Não altere arquivos de tempo de execução como `entry.js`.
 
 ## Contrato do manipulador
 
 Cada manipulador exporta uma função assíncrona:
 
 ```javascript
-module.exports = async (args) => {
+module.exports = async (args, extra) => {
   return {
     content: [
       { type: 'text', text: 'Response for the LLM platform.' }
@@ -58,7 +59,7 @@ module.exports = async (args) => {
 };
 ```
 
-A função recebe um objeto `args` e retorna um objeto de resultado.
+Para uma ação com um esquema de entrada, a função recebe um objeto `args` e um contexto de tempo de execução opcional, `extra`, e retorna um objeto de resultado. Use `extra` para auxiliares de tempo de execução como `getVariable(extra, 'PRODUCT_API_ORIGIN')`; as variáveis de aplicativo não são expostas automaticamente por meio de `process.env`. Consulte [Configurar variáveis e segredos do aplicativo](/help/guides/app-variables.md).
 
 ### Entrada: `args`
 
@@ -67,12 +68,14 @@ A função recebe um objeto `args` e retorna um objeto de resultado.
 Para uma ação com `category` e `query` parâmetros:
 
 ```javascript
-module.exports = async ({ category = '', query = '' } = {}) => {
-  // Use the validated action arguments.
+module.exports = async ({ category = '', query = '' } = {}, extra) => {
+  // Validate business rules before using the arguments.
 };
 ```
 
-O tempo de execução valida o esquema de entrada quando os metadados da ação incluem `inputSchema`, como ocorre após a implantação. A descoberta de manipulador local sem `actions.json` não aplica a validação de esquema. O manipulador deve sempre aplicar regras de negócios, como valores compatíveis, tamanhos máximos e combinações permitidas.
+Com os metadados de ação, o tempo de execução converte o esquema de entrada declarado em validação para regras compatíveis, incluindo campos obrigatórios, tipos primitivos, enumerações e itens de matriz. O tempo de execução não executa a validação completa do Esquema JSON. Verifique restrições, como comprimentos de string, intervalos numéricos e propriedades de objetos aninhados no manipulador.
+
+A descoberta local sem metadados de esquema não é equivalente à implantação: o tempo de execução não passa argumentos de ação no formulário `(args, extra)` normal. Use testes de manipulador direto ou metadados `actions.json` locais representativos para testar argumentos. Consulte [Desenvolvimento e teste de manipulador local](/help/reference/development.md).
 
 ### Saída: `content`
 
@@ -87,7 +90,7 @@ content: [
 ]
 ```
 
-Mantenha essa resposta concisa. Não inclua credenciais, erros internos ou dados que o usuário não está autorizado a ver.
+Mantenha a resposta do texto concisa. Não inclua credenciais, erros internos ou dados que o usuário não está autorizado a ver.
 
 ### Saída: `structuredContent`
 
@@ -95,128 +98,118 @@ Retorna `structuredContent` quando a ação tiver um widget. Deve ser um objeto 
 
 ```javascript
 structuredContent: {
-  products: [
+  arguments: { query: 'coffee' },
+  records: [
     {
       id: 'P-100',
       name: 'Frescopa House Blend',
       price: '$14.99'
     }
-  ],
-  total: 1
+  ]
 }
 ```
 
-`structuredContent` é enviado ao widget, não ao LLM. Retorne somente os campos exigidos pela interface.
+`structuredContent` faz parte do resultado da ação de MCP entregue ao host. Não suponha que ele esteja oculto do modelo ou do usuário. Retorne somente os dados autorizados exigidos pela experiência, nunca as credenciais ou a configuração do servidor privado.
 
-Para uma ação somente texto, `structuredContent` pode ser omitido.
+Para uma ação somente texto, retornar `structuredContent` é opcional.
 
 ## O contrato do manipulador-widget
 
 O manipulador e o widget compartilham um contrato: a forma de `structuredContent`.
 
-```text
-Action arguments
-      ↓
-Handler
-      ├── content → LLM text response
-      └── structuredContent → Widget
-                                  ↓
-                           bridge.toolResult
-```
+| Saída do manipulador | Propósito |
+|---|---|
+| `content` | Resposta legível por modelo e fallback somente de texto |
+| `structuredContent` | Dados entregues ao host e lidos pelo widget através de `bridge.toolResult` |
 
 O widget lê o resultado do manipulador da ponte Aplicativos LLM do SDK:
 
 ```javascript
 export default async function decorate(block, bridge) {
+  if (!bridge?.isConnected || bridge.hostContext?.preview === true) {
+    // Render the block's local preview data instead.
+    return;
+  }
   const result = await bridge.toolResult;
-  const products = result?.structuredContent?.products ?? [];
+  const records = result?.structuredContent?.records ?? [];
 
-  // Render products.
+  // Render records.
 }
 ```
 
-Se o manipulador retornar:
-
-```javascript
-structuredContent: {
-  products: [...],
-  total: 3
-}
-```
-
-o widget deve ler `structuredContent.products` e `structuredContent.total`.
-
-A alteração do nome ou do tipo de um campo pode quebrar o widget. Atualize o manipulador, o widget e os testes juntos.
+Os manipuladores atuais gerados usam um objeto contendo `arguments` e `records`. Os aplicativos existentes podem usar uma forma diferente, portanto, verifique os arquivos gerados antes de editar. A alteração do nome ou do tipo de um campo pode quebrar o widget. Atualize o manipulador, o widget e os testes juntos.
 
 ## Substituir dados de amostra
 
-Os manipuladores gerados geralmente contêm uma matriz de amostra na memória. Substitua essa pesquisa de dados por uma chamada do lado do servidor para o sistema.
+Os manipuladores gerados carregam registros representativos de `data.json`. Substitua a pesquisa de dados de amostra por uma chamada do lado do servidor para o sistema. O exemplo a seguir usa uma API pública de catálogo HTTPS e lê sua origem não confidencial de uma variável de aplicativo. Adapte a validação de resposta à sua API.
 
 ```javascript
-const API_ORIGIN = process.env.PRODUCT_API_ORIGIN;
-const API_TOKEN = process.env.PRODUCT_API_TOKEN;
+const { getVariable } = require('@adobe/llm-apps-runtime');
 
-module.exports = async ({ query = '' } = {}) => {
-  const normalizedQuery = String(query).trim();
+module.exports = async ({ query = '' } = {}, extra) => {
+  const normalizedQuery = typeof query === 'string' ? query.trim() : '';
   if (!normalizedQuery || normalizedQuery.length > 200) {
     return {
       content: [{ type: 'text', text: 'Enter a valid product search.' }],
-      structuredContent: { products: [], total: 0 }
+      structuredContent: { arguments: {}, records: [] },
+      isError: true
     };
   }
 
-  if (!API_ORIGIN || !API_TOKEN) {
-    throw new Error('Product API configuration is unavailable.');
-  }
-
-  const origin = new URL(API_ORIGIN);
-  if (origin.protocol !== 'https:') {
-    throw new Error('Product API configuration must use HTTPS.');
-  }
-
-  const url = new URL('/v1/products', origin);
-  url.searchParams.set('query', normalizedQuery);
-
-  const response = await fetch(url, {
-    headers: { Authorization: `Bearer ${API_TOKEN}` },
-    signal: AbortSignal.timeout(8000)
-  });
-
-  if (!response.ok) {
-    throw new Error('Product service request failed.');
-  }
-
-  const payload = await response.json();
-  if (!payload || !Array.isArray(payload.products)
-      || !payload.products.every((product) =>
-        product
-        && typeof product.id === 'string'
-        && typeof product.name === 'string'
-        && typeof product.price === 'string')) {
-    throw new Error('Product service returned an unexpected response.');
-  }
-
-  const products = payload.products.map(({ id, name, price }) => ({
-    id,
-    name,
-    price
-  }));
-
-  return {
-    content: [
-      { type: 'text', text: `Found ${products.length} matching products.` }
-    ],
-    structuredContent: {
-      products,
-      total: products.length
+  const knownArguments = { query };
+  try {
+    const apiOrigin = getVariable(extra, 'PRODUCT_API_ORIGIN');
+    if (!apiOrigin) {
+      throw new Error('Missing configuration');
     }
-  };
+    const origin = new URL(apiOrigin);
+    if (origin.protocol !== 'https:' || origin.username || origin.password) {
+      throw new Error('Invalid API origin');
+    }
+    const url = new URL('/v1/products', origin);
+    url.searchParams.set('query', normalizedQuery);
+
+    const response = await fetch(url, {
+      signal: AbortSignal.timeout(8000)
+    });
+    if (!response.ok) {
+      throw new Error('Request failed');
+    }
+    const payload = await response.json();
+    if (!payload || !Array.isArray(payload.products)
+        || !payload.products.every((product) =>
+          product
+          && typeof product.id === 'string'
+          && typeof product.name === 'string'
+          && typeof product.price === 'string')) {
+      throw new Error('Unexpected response');
+    }
+
+    const records = payload.products.map(({ id, name, price }) => ({
+      id,
+      name,
+      price
+    }));
+
+    return {
+      content: [
+        { type: 'text', text: `Found ${records.length} matching products.` }
+      ],
+      structuredContent: { arguments: knownArguments, records }
+    };
+  } catch {
+    return {
+      content: [{ type: 'text', text: 'Product search is unavailable. Try again later.' }],
+      structuredContent: { arguments: knownArguments, records: [] },
+      isError: true
+    };
+  }
 };
 ```
 
-Mantenha o acesso protegido à rede no manipulador. Nunca coloque credenciais de API no JavaScript widget ou no controle de origem.
+Mantenha o acesso protegido à rede no manipulador. Nunca coloque credenciais de API no JavaScript widget ou no controle de origem. Para solicitações feitas em nome de um usuário conectado, consulte [Autenticar usuários finais](/help/guides/authentication.md).
 
-Para configurações não confidenciais de que seu manipulador precisa, como uma URL de serviço, consulte [Configurar variáveis e segredos do aplicativo](/help/guides/app-variables.md). As variáveis são configuradas por ambiente e têm efeito na próxima implantação. O suporte secreto ainda não está disponível; não use variáveis para armazenar credenciais da API.
+Para configurações não confidenciais de que seu manipulador precisa, como uma URL de serviço, consulte [Configurar variáveis e segredos do aplicativo](/help/guides/app-variables.md). Configure variáveis separadamente para cada ambiente. As alterações de variáveis entram em vigor na próxima implantação. A interface atual oferece suporte somente à adição de variáveis; não use variáveis para armazenar credenciais de API.
 
 ## Gerenciar estados esperados
 
@@ -227,7 +220,7 @@ Preservar uma forma de saída previsível para cada resultado.
 ```javascript
 {
   content: [{ type: 'text', text: 'Found 3 products.' }],
-  structuredContent: { products: [...], total: 3 }
+  structuredContent: { arguments: { query: 'coffee' }, records: [...] }
 }
 ```
 
@@ -236,13 +229,13 @@ Preservar uma forma de saída previsível para cada resultado.
 ```javascript
 {
   content: [{ type: 'text', text: 'No matching products were found.' }],
-  structuredContent: { products: [], total: 0 }
+  structuredContent: { arguments: { query: 'coffee' }, records: [] }
 }
 ```
 
-O widget agora pode renderizar um estado vazio sem adivinhar se `products` existe.
+Uma forma de resultado previsível permite que o widget renderize um estado vazio sem adivinhar se `records` existe.
 
-Para falhas de serviço, retorne ou acione um erro seguro sem expor rastreamentos de pilha, tokens, hosts internos ou corpos de resposta de upstream.
+Para falhas de serviço, retorne um resultado de erro seguro com `isError: true`, como no exemplo. Verifique `result.isError` no widget para que uma solicitação com falha não seja apresentada como uma pesquisa vazia bem-sucedida. Não exponha rastreamentos de pilha, credenciais, hosts internos ou corpos de resposta upstream.
 
 ## Testar o contrato
 
@@ -252,24 +245,26 @@ Atualize os testes gerados sempre que o manipulador for alterado. Capa:
 - Estados de resultados e sem resultados.
 - Falhas de API e tempos limite.
 - Respostas de API malformadas.
-- `content` está sempre presente.
-- `structuredContent` é um objeto simples.
+- Presença de `content` em cada resultado.
+- Um objeto simples para `structuredContent`.
 - A forma esperada pelo widget.
 
-Executar:
+Execute o conjunto de testes configurado do repositório:
 
 ```bash
 npm test
 ```
+
+Se um teste gerado importar `node:test` em vez de Jest, execute-o com `node --test test/actions/<action-slug>.test.js` e verifique se seu caminho de importação resolve de `test/actions/`. Use o executor de teste apropriado para o arquivo; o comando `npm test` da placa-mãe executa Jest.
 
 Para testes de MCP local, consulte [Desenvolvimento e teste de manipulador local](/help/reference/development.md).
 
 ## Implantar a alteração
 
 1. Confirme e envie as alterações do manipulador por push.
-2. Se a forma de dados mudou, atualize e envie por push o widget.
+2. Se você alterar a forma dos dados, atualize e envie o widget por push.
 3. [Implante o aplicativo](/help/guides/deploy-your-app.md) para o Preparo.
-4. [Testar o plug-in ChatGPT](/help/guides/test-in-chatgpt.md).
-5. Após o Êxito do preparo, implante para produção.
+4. Testar em uma plataforma LLM compatível. Consulte [Testar no ChatGPT](/help/guides/test-in-chatgpt.md) ou [Testar no Claude](/help/guides/test-in-claude.md).
+5. Depois que os testes forem aprovados no Preparo, implante para produção.
 
 Em seguida, consulte [Personalizar um widget gerado](/help/guides/widgets.md).
