@@ -1,9 +1,9 @@
 ---
 title: Configurar variáveis e segredos do aplicativo
 description: Adicione variáveis específicas do ambiente ao aplicativo Aplicativos Adobe LLM, leia-as em um manipulador de ação, implante e solucione problemas comuns.
-source-git-commit: 141d7a263a6937299b3ff52bdcc7c16197e55632
+source-git-commit: 0f9dd0a5b1008e183eb8ab5a4c2eae34a78923bb
 workflow-type: tm+mt
-source-wordcount: '1158'
+source-wordcount: '1170'
 ht-degree: 0%
 ---
 
@@ -15,24 +15,24 @@ ht-degree: 0%
 >
 >Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-Use variáveis e segredos para configurar seu aplicativo sem codificar valores nos manipuladores de ação. Por exemplo, defina o URL da API do catálogo de produtos para a qual seu aplicativo chama, usando um serviço de teste no Preparo e o serviço em tempo real na Produção, sem alterar o código do manipulador.
+Use variáveis e segredos para configurar seu aplicativo sem codificar valores nos manipuladores de ação. Por exemplo, configure o URL da API do catálogo de produtos para usar um serviço de teste no Preparo e o serviço em tempo real na Produção sem alterar o código do manipulador.
 
 As variáveis mantêm configurações não confidenciais. Os segredos são destinados a valores confidenciais, como chaves de API e tokens de acesso.
 
 >[!IMPORTANT]
 >
->Atualmente, há suporte para **somente variáveis**. O suporte secreto está planejado para uma versão futura. Até lá, **NÃO armazene** senhas, chaves de API, tokens de acesso ou outras informações confidenciais **em variáveis**: seus valores são visíveis e copiáveis na tabela de configurações.
+>Atualmente, a interface dá suporte a **apenas variáveis**. O suporte secreto está planejado para uma versão futura. Até lá, **NÃO armazene** senhas, chaves de API, tokens de acesso ou outras informações confidenciais **em variáveis**: a tabela de configurações exibe valores variáveis e permite que os usuários os copiem.
 
-**Jornada:** Adicione uma variável ou segredo → leia-o em seu manipulador → implantar → teste.
+**Neste guia:** Saiba como adicionar uma variável de aplicativo e lê-la em um manipulador de ações. Implante o aplicativo e verifique se o manipulador usa o valor esperado.
 
 ## Antes de começar {#before-you-begin}
 
 Você precisa:
 
-- **Acesse o repositório do manipulador do seu aplicativo**, para que você possa atualizar os manipuladores para ler suas variáveis, se necessário.
-- **`@adobe/llm-apps-runtime`1.1.0 ou posterior** nesse repositório. Os aplicativos criados desde agosto de 2026 já o incluem.
+- **Acesse o repositório do manipulador do seu aplicativo** para atualizar manipuladores que precisam ler variáveis.
+- **`@adobe/llm-apps-runtime`1.1.0 ou posterior** nesse repositório. Verifique a versão antes de usar o auxiliar abaixo.
 
-Para verificar a versão, execute isso no repositório do manipulador:
+Para verificar a versão, execute o seguinte comando no repositório do manipulador:
 
 ```bash
 npm ls @adobe/llm-apps-runtime
@@ -46,19 +46,16 @@ npm install @adobe/llm-apps-runtime@latest
 
 ## Gerenciar variáveis {#manage-variables}
 
-Cada ambiente, **[!UICONTROL Preparo]** ou **[!UICONTROL Produção]**, tem suas próprias variáveis. Portanto, verifique o **[!UICONTROL Workspace]** antes de adicionar, atualizar ou excluir um ambiente. As alterações entrarão em vigor na próxima vez que você implantar o aplicativo nesse ambiente.
+Cada ambiente, **[!UICONTROL Preparo]** ou **[!UICONTROL Produção]**, tem suas próprias variáveis. Verifique o **[!UICONTROL Workspace]** antes de adicionar, atualizar ou excluir uma variável. As alterações entrarão em vigor na próxima vez que você implantar o aplicativo nesse ambiente.
 
 ### Adicionar uma variável {#add-variable-to-app}
 
-Este guia usa uma variável nomeada `GREETING_PREFIX` com o valor `Good day` como um exemplo não sensível, substituindo a saudação padrão do manipulador de `Hello`. A adição de uma variável **não** altera uma ação automaticamente: o manipulador **deve** lê-la.
+Este exemplo usa a variável não sensível `GREETING_PREFIX` com o valor `Good day` para substituir a saudação padrão do manipulador de `Hello`. A adição de uma variável **não** altera uma ação automaticamente: o manipulador **deve** lê a variável.
 
 #### Etapa 1: adicionar uma variável na interface do {#add-a-variable}
 
 1. Abra o aplicativo e selecione **[!UICONTROL Configurações]** na navegação à esquerda.
 2. Abra a guia **[!UICONTROL Variáveis e segredos]**.
-
-
-
 3. Em **[!UICONTROL Workspace]**, selecione **[!UICONTROL Estágio]** ou **[!UICONTROL Produção]**.
 4. Selecione **[!UICONTROL Adicionar]**.
 
@@ -71,13 +68,11 @@ Este guia usa uma variável nomeada `GREETING_PREFIX` com o valor `Good day` com
 
    ![Adicionar variável ou segredo — GREETING_PREFIX definido como Dia Bom](/help/assets/guide-app-variables/add-variable-dialog.png)
 
-6. Selecione **[!UICONTROL Adicionar]** para salvar.
+6. Para salvar a variável, selecione **[!UICONTROL Adicionar]**.
 
-A variável aparece na tabela com seu **[!UICONTROL Nome]**, **[!UICONTROL Tipo]**, **[!UICONTROL Valor]** e data da **[!UICONTROL Última atualização]**. Use o controle de cópia ao lado do valor se precisar copiá-lo.
+A variável aparece na tabela com seu **[!UICONTROL Nome]**, **[!UICONTROL Tipo]**, **[!UICONTROL Valor]** e data da **[!UICONTROL Última atualização]**. Para copiar o valor, use o controle de cópia adjacente.
 
 ![Variáveis e segredos — GREETING_PREFIX salvo no espaço de trabalho de Preparo](/help/assets/guide-app-variables/variable-added.png)
-
-
 
 >[!IMPORTANT]
 >
@@ -85,7 +80,7 @@ A variável aparece na tabela com seu **[!UICONTROL Nome]**, **[!UICONTROL Tipo]
 
 #### Etapa 2: leia a variável no seu manipulador {#use-a-variable}
 
-No repositório do manipulador, abra `actions/<action-name>/index.js`. Verifique se o manipulador aceita um segundo argumento, `extra`, e leia a variável com `getVariable`:
+No repositório do manipulador, abra `actions/<action-name>/index.js`. Certifique-se de que o manipulador aceita um segundo argumento, `extra`, e leia a variável com `getVariable`:
 
 ```javascript
 const { getVariable } = require('@adobe/llm-apps-runtime');
@@ -101,7 +96,7 @@ module.exports = async ({ name = 'there' } = {}, extra) => {
 
 Com o valor `Good day`, uma chamada com `name` definida como `Ada` retorna `Good day, Ada!` em vez do `Hello, Ada!` padrão. Posteriormente, se você alterar o valor para `Howdy`, a saudação será alterada após a reimplantação, sem que outro manipulador seja editado.
 
-O nome no código **deve** corresponder exatamente ao nome na interface do usuário. Se a variável não estiver definida, `getVariable` retornará `undefined`. Decida se sua ação pode usar um padrão adequado, como no exemplo, ou se deve retornar um erro claro, pois requer a configuração.
+O nome no código **deve** corresponder exatamente ao nome na interface do usuário. Se a variável não estiver definida, `getVariable` retornará `undefined`. Escolha um padrão adequado, como no exemplo, ou retorne um erro claro se a ação exigir a configuração.
 
 >[!NOTE]
 >
@@ -113,10 +108,9 @@ Quando as alterações do manipulador estiverem prontas, confirme-as e envie-as 
 
 1. [Implante seu aplicativo](/help/guides/deploy-your-app.md) no mesmo ambiente selecionado no **[!UICONTROL Workspace]**.
 2. Chame a ação de uma plataforma LLM com suporte, com `name` definido como `Ada`. Consulte [Testar o plug-in ChatGPT](/help/guides/test-in-chatgpt.md) ou [Testar o conector Claude](/help/guides/test-in-claude.md).
-3. Confirme se a resposta é `Good day, Ada!`. Isso confirma que o manipulador lê a variável configurada e substitui a saudação padrão.
+3. Confirme se a resposta é `Good day, Ada!`. A resposta verifica se o manipulador lê a variável configurada e substitui a saudação padrão.
 
-Para configurar o outro ambiente, selecione-o no **[!UICONTROL Workspace]**, repita a instalação com o valor apropriado e, em seguida, implante-o e verifique-o.
-
+Para configurar o outro ambiente, selecione-o no **[!UICONTROL Workspace]**, repita a configuração com o valor apropriado e implante e teste o aplicativo lá.
 
 >[!NOTE]
 >
@@ -138,7 +132,7 @@ Para configurar o outro ambiente, selecione-o no **[!UICONTROL Workspace]**, rep
 3. Selecione **[!UICONTROL Atualizar]**.
 4. Implante o aplicativo novamente no mesmo ambiente e verifique o comportamento alterado.
 
-A atualização altera somente o valor. As variáveis **não podem** ser renomeadas; para usar um nome diferente, exclua a variável existente e adicione uma nova e atualize o manipulador para ler o novo nome.
+A atualização de uma variável altera apenas seu valor. Você **não pode** renomear variáveis. Para usar um nome diferente, exclua a variável existente, adicione uma nova variável e atualize o manipulador para ler o novo nome.
 
 ### Excluir uma variável {#delete-a-variable}
 
@@ -152,7 +146,7 @@ A atualização altera somente o valor. As variáveis **não podem** ser renomea
 
 >[!IMPORTANT]
 >
->A exclusão **NÃO PODE** ser desfeita, portanto, verifique se você selecionou a variável correta. O aplicativo implantado mantém a configuração existente até a próxima implantação. Após essa implantação, os manipuladores **não mais** recebem a variável excluída, portanto, uma ação que a exija pode falhar.
+>Você **NÃO PODE** desfazer a exclusão. Verifique se você selecionou a variável correta. O aplicativo implantado mantém a configuração existente até a próxima implantação. Após essa implantação, os manipuladores **não mais** recebem a variável excluída, portanto, uma ação que requer a variável pode falhar.
 
 ## Regras e limites {#good-to-know}
 
@@ -160,7 +154,7 @@ A atualização altera somente o valor. As variáveis **não podem** ser renomea
 |------|------|
 | Nome | Até 64 caracteres: letras maiúsculas, dígitos e sublinhados, não começando com um dígito. **Deve** ser exclusivo por aplicativo e ambiente e deve corresponder ao manipulador. |
 | Nomes reservados | Nomes que começam com `LLMA_` e `MCP_SERVER_URL`. |
-| Valor | **Obrigatório**, até 500 caracteres. Espaços à esquerda e à direita são removidos. |
+| Valor | **Obrigatório**, até 500 caracteres. A plataforma remove espaços à esquerda e à direita. |
 | Limite | 50 variáveis por aplicativo e ambiente. |
 | Visibilidade | Os valores das variáveis são visíveis e copiáveis. O suporte para segredo planejado mantém os valores salvos ocultos. |
 | Alterações | Entrará em vigor na próxima implantação para o ambiente selecionado. |
@@ -174,8 +168,8 @@ A atualização altera somente o valor. As variáveis **não podem** ser renomea
 | *Este nome é reservado pela plataforma* | Escolha um nome que não comece com `LLMA_` e não seja `MCP_SERVER_URL`. |
 | *Já existe uma variável com este nome* | Em vez disso, atualize a variável existente. |
 | *Esta variável acabou de ser modificada em outro lugar* | Atualize a página e tente novamente. |
-| *Não foi possível carregar variáveis* | Recarregue a página. Se persistir, verifique se você tem acesso ao aplicativo. |
-| A ação não usa o novo valor | Verifique se você implantou **depois** de salvar a variável, no mesmo ambiente testado, se a alteração do manipulador foi enviada por push e se o nome corresponde a **exatamente**. **[!UICONTROL Última atualização]** mostra quando o valor foi salvo, não quando foi implantado. |
+| *Não foi possível carregar variáveis* | Recarregue a página. Se o erro persistir, verifique se você tem acesso ao aplicativo. |
+| A ação não usa o novo valor | Verifique se você implantou **depois** de salvar a variável e testou o mesmo ambiente. Confirme se você enviou por push a alteração do manipulador e se o nome da variável corresponde a **exatamente**. **[!UICONTROL Última atualização]** mostra quando você salvou o valor, não quando você implantou o aplicativo. |
 | `getVariable is not a function` | Seu aplicativo usa um tempo de execução anterior a 1.1.0. Atualize conforme descrito em [Antes de começar](#before-you-begin) e implante. |
 | A ação falha após a exclusão de uma variável | Adicione a variável novamente ou atualize o manipulador para que ele não precise mais dela e, em seguida, implante. |
 

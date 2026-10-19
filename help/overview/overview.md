@@ -1,13 +1,11 @@
 ---
 title: Uma visão geral dos aplicativos Adobe LLM
-description: Saiba o que são os aplicativos LLM do Adobe, como funcionam e o que é necessário para começar.
-source-git-commit: 2f3480b3667a6ab7c4ed65b999eed4638c383edb
+description: Saiba o que são os aplicativos Adobe LM, como funcionam e como começar a criar seu aplicativo.
+source-git-commit: 14d94a68dabddd2f2ef2cef65c51d31645d4a958
 workflow-type: tm+mt
-source-wordcount: '969'
-ht-degree: 1%
-
+source-wordcount: '606'
+ht-degree: 0%
 ---
-
 
 # Aplicativos Adobe LLM - Uma visão geral {#adobe-llm-apps-an-overview}
 
@@ -19,9 +17,9 @@ ht-degree: 1%
 
 ## O que é [!DNL Adobe LLM Apps]?
 
-O [!DNL Adobe LLM Apps] permite que sua marca ofereça ações úteis — como descoberta de produtos, verificações de disponibilidade ou reservas de serviços — dentro de assistentes de IA, como o [!DNL ChatGPT].
+O [!DNL Adobe LLM Apps] permite que sua marca ofereça ações úteis — como descoberta de produtos, verificações de disponibilidade ou reservas de serviços — dentro de assistentes de IA com suporte, como o [!DNL ChatGPT] e o [!DNL Claude].
 
-[!DNL LLM Apps] está disponível em [experience.adobe.com](https://experience.adobe.com/#/@llmapps/llm-apps/).
+[!DNL LLM Apps] está disponível em [experience.adobe.com/llm-apps](https://experience.adobe.com/llm-apps).
 
 ## O que você pode fazer com [!DNL LLM Apps]
 
@@ -29,7 +27,7 @@ O [!DNL Adobe LLM Apps] permite que sua marca ofereça ações úteis — como d
 - **Criar widgets LLM interativos** — Crie componentes visuais de interface do usuário (cartões de produto, formulários de reserva, localizadores de lojas) gerenciados como componentes do AEM em seu repositório [!DNL GitHub].
 - **Manter o controle centralizado de marcas** — Os autores e desenvolvedores mantêm controle total sobre todo o conteúdo, cópia e visuais expostos na plataforma LLM, com aprovações gerenciadas pelo AEM.
 - **Implantar para preparo e produção** — um pipeline de implantação controlada permite que você teste a experiência em um ambiente de preparo antes de promover para produção.
-- **Controlar visibilidade no nível de ação** — Após a implantação, ações individuais podem ser ativadas ou desativadas sem reimplantar todo o aplicativo.
+- **Controlar visibilidade no nível de ação** — Habilite ou desabilite ações individuais e implante o aplicativo para aplicar a alteração.
 - **Meça o que impulsiona as decisões** — contagens de acionadores de ação de superfície de análise interna (viabilizada pelo Adobe Customer Journey Analytics), taxas de sucesso, taxas de abandono, principais prompts de usuário e pontuações de visibilidade.
 
 ## Por que [!DNL LLM Apps] é importante
@@ -44,15 +42,15 @@ Seu assistente de marca com o qual os usuários interagem dentro do [!DNL ChatGP
 
 ### Ação {#actions}
 
-Um recurso que seu aplicativo oferece, como *Localizar um distribuidor* ou *Procurar produtos*. A plataforma LLM invoca uma ação quando uma solicitação corresponde à sua descrição. Os metadados de ação são gerenciados em [!DNL LLM Apps], enquanto seu manipulador é o código em seu repositório [!DNL GitHub].
+Um recurso que seu aplicativo oferece, como *Localizar um distribuidor* ou *Procurar produtos*. A plataforma LLM invoca uma ação quando uma solicitação corresponde à sua descrição. [!DNL LLM Apps] gerencia metadados de ação, e o repositório [!DNL GitHub] armazena o código do manipulador.
 
 ### Manipulador de ação
 
-A função do lado do servidor executada quando uma ação é chamada. Ele pode validar a entrada, chamar suas APIs e retornar texto e dados estruturados.
+A função do lado do servidor executada quando a plataforma LLM chama uma ação. Use o manipulador para validar a entrada, chamar as APIs e retornar texto e dados estruturados.
 
 ### Widget {#widgets-eds}
 
-A resposta visual mostrada com a resposta do LLM, como um cartão, carrossel ou tabela. Os widgets gerados são blocos em um repositório do [!DNL Edge Delivery Services] (EDS) que você possui.
+A resposta visual mostrada com a resposta do LLM, como um cartão, carrossel ou tabela. Os widgets gerados são blocos em um repositório [!DNL Edge Delivery Services] (EDS). Com a infraestrutura gerenciada da Adobe, a Adobe prepara e hospeda o repositório para você. Como alternativa, conecte seu próprio repositório.
 
 ### Servidor MCP
 
@@ -60,7 +58,7 @@ O endpoint exposto após a implantação. Uma plataforma LLM compatível se cone
 
 ## Como funciona
 
-Em um alto nível, três coisas acontecem: você informa ao [!DNL LLM Apps] o que sua marca oferece, isso se transforma em algo em que um assistente de IA pode agir, e seu cliente recebe uma resposta real — bem no bate-papo.
+Você define os recursos da sua marca no [!DNL LLM Apps]. A plataforma disponibiliza esses recursos como ações, e um assistente de IA usa as ações para responder às solicitações do cliente na conversa.
 
 ```
 ┌────────────────────┐          ┌────────────────────┐          ┌────────────────────┐
@@ -72,71 +70,14 @@ Em um alto nível, três coisas acontecem: você informa ao [!DNL LLM Apps] o qu
 └────────────────────┘          └────────────────────┘          └────────────────────┘
 ```
 
-Quer os detalhes técnicos — o que você constrói e como as peças se encaixam? Consulte [Como um aplicativo é conectado](/help/guides/app-architecture.md).
+Para obter detalhes técnicos sobre o que criar e como os componentes funcionam juntos, consulte [Como conectar um aplicativo](/help/guides/app-architecture.md).
 
-## Requisitos {#requirements}
+## Introdução {#choose-your-journey}
 
-Conclua todos os requisitos a seguir antes de criar um aplicativo.
+A criação de um aplicativo e de suas ações são etapas separadas:
 
-### Console do desenvolvedor da Adobe
+1. [Configurar a infraestrutura](/help/guides/create-app.md). Use a infraestrutura gerenciada da Adobe para uma configuração rápida ou use seus próprios repositórios do [!DNL GitHub].
+2. [Crie suas ações](/help/guides/creating-actions.md). Peça à plataforma que analise seu site e gere ações ou crie você mesmo.
+3. [Implante e teste o aplicativo](/help/guides/deploy-your-app.md). Revise o trabalho gerado, implante no ambiente de preparo e teste em uma plataforma de LLM compatível.
 
-Sua organização do Adobe IMS deve ter acesso a [[!DNL App Builder]](https://developer.adobe.com/app-builder/docs/intro_and_overview/). Você precisa da função **Desenvolvedor** ou **Administrador do Sistema**.
-
-Para verificar seu acesso, abra o [Adobe Developer Console](https://developer.adobe.com/console). A tela Início rápido confirma que você tem o acesso necessário.
-
-![Adobe Developer Console — Tela de Início Rápido confirmando o acesso do desenvolvedor](/help/assets/overview/dev-console-access-granted.png)
-
-Se você vir **Acesso restrito**, entre em contato com o administrador da organização IMS e solicite a função de Desenvolvedor.
-
-![Adobe Developer Console — Mensagem de acesso restrito](/help/assets/overview/dev-console-access-denied.png)
-
-### [!DNL GitHub]
-
-Você precisa de uma conta [!DNL GitHub] que **possa** fazer o seguinte. Esta é uma verificação de permissões — não instalar nada ainda:
-
-- Crie dois repositórios na conta ou organização que será proprietária do aplicativo.
-- Instale [!DNL GitHub] aplicativos mais tarde no processo de instalação ou tenha um administrador da organização que possa aprová-los.
-
-Para verificar o acesso de criação de repositório, abra [github.com/new](https://github.com/new) e confirme se a conta ou organização pretendida aparece em **Proprietário**.
-
-![GitHub — selecione um proprietário de repositório](/help/assets/overview/github-repo-owner-dropdown.png)
-
-Para repositórios de propriedade da organização, um administrador da organização pode precisar aprovar os aplicativos [!DNL GitHub].
-
->[!NOTE]
->
->Esta é uma verificação de permissão, não uma etapa de configuração. Ainda não instale aplicativos do [!DNL GitHub] — [Crie seu primeiro aplicativo automaticamente](/help/guides/create-app.md) orientará você na instalação de cada um, com escopo para os repositórios exatos que criar, no ponto em que for necessário.
-
-### Site
-
-Você precisa de um site HTTPS público que represente os produtos, serviços ou tarefas que o aplicativo deve suportar. A plataforma analisa esse site para propor ações e criar dados de amostra representativos.
-
-Não use um site que exponha informações confidenciais ou de acesso controlado.
-
-### [!DNL ChatGPT] ou [!DNL Claude] para teste
-
-Para concluir o tutorial de introdução, use um plano [!DNL ChatGPT] com suporte e o modo de desenvolvedor habilitado, ou um plano [!DNL Claude] com suporte e conectores personalizados habilitados. Os administradores da Workspace ou da organização podem restringir o acesso. Consulte [Testar no ChatGPT](/help/guides/test-in-chatgpt.md#plan-requirements) ou [Testar no Claude](/help/guides/test-in-claude.md#plan-requirements).
-
-## Escolha sua jornada {#choose-your-journey}
-
-### &#x200B;1. Crie e inicie seu primeiro aplicativo
-
-Comece com [Crie e inicie seu primeiro aplicativo](/help/guides/create-app.md). Esta jornada começa com dois repositórios vazios e termina com um aplicativo pronto para produção testado como plug-in em uma plataforma LLM compatível, como o [!DNL ChatGPT].
-
-### &#x200B;2. Personalizar o aplicativo gerado
-
-Escolha esta jornada quando a plataforma tiver criado o aplicativo automaticamente e você quiser substituir o comportamento de amostra:
-
-1. [Personalize os manipuladores gerados](/help/guides/customize-handler.md) para conectar suas APIs e definir os dados retornados por cada ação.
-2. [Personalize os widgets gerados](/help/guides/widgets.md) para usar esses dados e aplicar suas interações e design.
-
-### &#x200B;3. Adicionar uma nova ação do zero
-
-Escolha [Adicionar uma nova ação do zero](/help/guides/create-action.md) para definir novos metadados, gravar o manipulador, conectar um widget, testar e implantar a ação.
-
-### &#x200B;4. Conectar um projeto EDS existente
-
-Escolha [Conectar um projeto EDS existente](/help/guides/bring-your-own-eds.md) quando já tiver um site EDS ou não tiver compilado o aplicativo automaticamente.
-
-Cada jornada usa a etapa [implantação](/help/guides/deploy-your-app.md) compartilhada e, em seguida, o [teste de plug-in ChatGPT](/help/guides/test-in-chatgpt.md) ou o [teste de conector Claude](/help/guides/test-in-claude.md) compartilhado.
-
+A geração automática oferece um ponto de partida com comportamento de amostra. Antes de disponibilizar o aplicativo para os clientes, [conecte os manipuladores aos seus sistemas](/help/guides/customize-handler.md) e [personalize os widgets](/help/guides/widgets.md).
