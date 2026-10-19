@@ -1,15 +1,13 @@
 ---
-title: Criar o primeiro aplicativo LLM automaticamente
-description: Crie um aplicativo Adobe LLM no seu site, analise as ações geradas, implante-o e teste-o em uma plataforma LLM compatível, como o ChatGPT.
-source-git-commit: f91bb73a39cc5aacf44979ee55dd0ab5f69d4c81
+title: Configuração da infraestrutura
+description: Crie um aplicativo Adobe LLM usando a infraestrutura gerenciada da Adobe ou forneça dois repositórios GitHub vazios para a plataforma ser inicializada.
+source-git-commit: 14d94a68dabddd2f2ef2cef65c51d31645d4a958
 workflow-type: tm+mt
-source-wordcount: '1272'
+source-wordcount: '1337'
 ht-degree: 0%
-
 ---
 
-
-# Criar Seu Primeiro Aplicativo Automaticamente {#create-first-app}
+# Configuração da infraestrutura {#create-first-app}
 
 >[!IMPORTANT]
 >
@@ -17,198 +15,135 @@ ht-degree: 0%
 >
 >Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
 
-A plataforma transforma seu site em um aplicativo totalmente funcional. Ele propõe ações, grava código do manipulador e testa, cria widgets EDS e envia os arquivos gerados para dois repositórios [!DNL GitHub] que você possui.
+A infraestrutura é a base técnica do seu aplicativo: os repositórios que armazenam seu código e os serviços que executam seus manipuladores de ação e fornecem seus widgets aos usuários.
 
-Aguarde aproximadamente 15 minutos para a geração. No final deste tutorial, você terá um aplicativo implantado que poderá testar em uma plataforma LLM compatível, como o [!DNL ChatGPT].
+Conforme explicado na [visão geral](/help/overview/overview.md#key-concepts), um **manipulador de ações** executa uma tarefa, como localizar produtos, enquanto um **widget** apresenta o resultado como uma experiência interativa na conversa.
 
-**Jornada:** Confirme os requisitos → crie dois repositórios → crie o aplicativo → revise as ações geradas → implante em Preparo → teste o plug-in → conecte os sistemas de produção.
+[!DNL LLM Apps] armazena o código-fonte do manipulador e do widget em dois repositórios [!DNL GitHub] separados:
 
-## Antes de começar
+- **Repositório de ações** — contém os manipuladores do lado do servidor e seus testes.
+- **Repositório de widgets** — contém o código e os estilos dos widgets interativos.
 
-Conclua todos os [requisitos de Aplicativos LLM](/help/overview/overview.md#requirements) antes de iniciar este tutorial.
+Por exemplo, um manipulador de pesquisa de produto recupera produtos correspondentes e seu widget os exibe como cartões de produto. Os repositórios armazenam esse código; o Adobe I/O Runtime executa os manipuladores implantados e o Edge Delivery Services fornece os widgets.
 
-Este tutorial cria um aplicativo LLM para o [Frescopa Coffee](https://frescopa.coffee/).
+O assistente de configuração prepara esses repositórios e conecta os serviços de que seu aplicativo precisa. Recomendamos começar com a **infraestrutura gerenciada pela Adobe**, a maneira mais rápida de começar. O Adobe cria e hospeda os repositórios para seus manipuladores de ação e widgets. Você não precisa configurar repositórios sozinho.
 
-## Criar dois repositórios vazios
+Como alternativa, forneça dois repositórios [!DNL GitHub] vazios em sua própria conta ou organização. A plataforma os inicializa com os arquivos de projeto necessários; não é necessário preparar o código de ação ou widget antecipadamente.
 
-A plataforma precisa de dois repositórios vazios. Crie ambos na mesma conta ou organização [!DNL GitHub]:
+**Neste guia:** saiba como escolher uma opção de infraestrutura e criar seu aplicativo com o assistente de configuração. Após a instalação, continue em [Criar ações](/help/guides/creating-actions.md).
 
-- **Repositório de manipulador** — armazena manipuladores de ação e testes. Por exemplo, `my-brand-llm-app`.
-- **Repositório EDS** — armazena blocos de widget e estilos gerados. Por exemplo, `my-brand-llm-app-eds`.
+A criação do aplicativo **não** inicia a geração da ação. Inicie a geração de ação separadamente da página do aplicativo.
 
-Vá para [github.com/new](https://github.com/new) para cada repositório.
+## Abrir o assistente criar aplicativo
 
-Não inicialize o repositório com um arquivo README, `.gitignore` ou licença. A plataforma prepara a estrutura de projeto necessária.
+Abra os [Aplicativos Adobe LLM](https://experience.adobe.com/llm-apps). Na página de boas-vindas, selecione **[!UICONTROL Introdução]**. Se você já tiver um aplicativo aberto, use o seletor de aplicativos e selecione **[!UICONTROL Criar novo aplicativo]**.
 
->[!TIP]
->
->Use nomes de repositório que identifiquem o aplicativo e a finalidade de cada repositório. Isso facilita seu reconhecimento na caixa de diálogo de criação do aplicativo.
+O assistente **[!UICONTROL Criar Aplicativo LLM]** começa com **[!UICONTROL Introdução]**. Escolha como configurar o ambiente técnico.
 
-## Iniciar o aplicativo
+![Crie seu aplicativo LLM — escolha entre a infraestrutura gerenciada da Adobe e conecte seus próprios repositórios](/help/assets/guide-infrastructure/setup-choice.png)
 
-1. Abra os [Aplicativos Adobe LLM](https://experience.adobe.com/#/@llmapps/llm-apps/) e selecione **[!UICONTROL Criar aplicativo]**.
-2. Insira o **[!UICONTROL Nome do Aplicativo LLM]** e uma descrição opcional.
-3. Selecione a **[!UICONTROL região do Analytics]**.
+| Opção de infraestrutura | Selecionar no assistente | O que significa |
+|---|---|---|
+| **Infraestrutura gerenciada pela Adobe** | **[!UICONTROL Deixe-nos lidar com isso]** | A Adobe cria e gerencia os repositórios e serviços conectados para seu aplicativo. O acesso ao código está disponível mediante solicitação. |
+| **Seus próprios repositórios** | **[!UICONTROL Eu mesmo vou configurar]** | Você fornece dois repositórios GitHub vazios e concede acesso por meio do assistente. A plataforma inicializa um para manipuladores de ação e outro para widgets. |
 
-   >[!IMPORTANT]
-   >
-   >A região de análise não pode ser alterada após a criação do aplicativo.
+Ambas as opções oferecem suporte à geração de ação automática posteriormente. Nenhuma opção requer que você grave ações manualmente.
 
-4. Em **[!UICONTROL Criar Meu Aplicativo]**, selecione **[!UICONTROL Criar meu aplicativo automaticamente]**.
-5. Em **[!UICONTROL seu site]**, digite a URL do site, incluindo o protocolo `https://`. A plataforma analisa esse site para determinar ações úteis e resultados de amostra representativos.
+## Usar a infraestrutura gerenciada da Adobe {#adobe-managed-infrastructure}
 
-![Criar Aplicativo LLM — detalhes do aplicativo e Compilar Meu Aplicativo habilitado](/help/assets/guide-onboarding-agent/app-details-onboarding.png)
+Use essa opção para permitir que a Adobe configure e gerencie os repositórios e serviços conectados para seu aplicativo. Não é necessário criar repositórios ou instalar [!DNL GitHub] aplicativos você mesmo.
 
-## Conceder acesso aos repositórios a [!DNL LLM Apps]
-
-O aplicativo Adobe LLM Apps [!DNL GitHub] dá a [!DNL LLM Apps] acesso aos repositórios selecionados.
-
->[!NOTE]
->
->A conexão de uma organização [!DNL GitHub] é uma configuração única. Se a organização já aparecer na caixa de diálogo, use **[!UICONTROL Gerenciar repositórios no GitHub]** em vez de conectá-la novamente.
-
-### Organização conectada
-
-Se o aplicativo [!DNL GitHub] do Adobe LLM Apps já tiver sido instalado antes da criação dos repositórios:
-
-1. Selecione a organização conectada.
-2. Selecione **[!UICONTROL Gerenciar repositórios no GitHub]**.
-3. Adicione os dois repositórios à instalação existente do Aplicativo [!DNL GitHub].
-4. Retorne a [!DNL LLM Apps] e atualize as listas de repositório.
-
-### Somente primeira conexão
-
-Se a organização não aparecer na caixa de diálogo:
-
-1. Selecione **[!UICONTROL Conectar a uma organização do GitHub]**.
-2. Instalar o Aplicativo [!DNL GitHub] de Aplicativos Adobe LLM.
-3. Escolha **[!UICONTROL Selecionar apenas repositórios]** e selecione os dois repositórios.
-4. Retorne à caixa de diálogo Criar aplicativo LLM.
-
-Se não conseguir instalar ou atualizar o Aplicativo [!DNL GitHub], peça a um administrador da organização.
-
-## Selecionar os repositórios
-
-1. Em **[!UICONTROL Repositório Modelo]**, selecione a organização e o repositório de manipuladores vazio.
-2. Em **[!UICONTROL Repositório EDS]**, selecione a organização e o repositório EDS vazio.
-
-   ![Criar Meu Aplicativo — selecione a organização do GitHub, o Repositório Modelo e o Repositório EDS](/help/assets/guide-onboarding-agent/repos-selected.png)
-
-3. Em **[!UICONTROL Termos e Condições]**, marque **[!UICONTROL Aceito os Termos do Adobe Developer]**.
+1. Selecione **[!UICONTROL Let us handle it]**.
+2. Selecione **[!UICONTROL Próxima etapa]**.
+3. Conclua os [detalhes do aplicativo](#app-details).
 4. Selecione **[!UICONTROL Criar aplicativo]**.
 
-## Conclua a configuração do EDS
+A página do aplicativo mostra **[!UICONTROL Configurando seu aplicativo]** enquanto o Adobe prepara os repositórios e conecta o site do widget. A interface do usuário indica que a configuração geralmente leva de 1 a 2 minutos; as ações, os testes e a implantação permanecem indisponíveis até que a configuração esteja pronta.
 
-Quando o repositório EDS selecionado está vazio, o [!DNL LLM Apps] o inicializa com o padrão AEM. A caixa de diálogo solicita que você instale a Sincronização de código do AEM antes de tentar criar o aplicativo novamente.
+![Configuração do aplicativo — a Adobe está preparando a infraestrutura do aplicativo](/help/assets/guide-infrastructure/provisioning.png)
 
-1. Na mensagem abaixo do repositório EDS, selecione **[!UICONTROL Instalar sincronização de código do AEM]**.
-2. Em [!DNL GitHub], instale a Sincronização de Código AEM e conceda a ela acesso ao repositório EDS.
+Se a instalação falhar, leia o erro e selecione **[!UICONTROL Repetir]**. Se a página não puder verificar o progresso, a instalação continuará em segundo plano; selecione **[!UICONTROL Verificar novamente]** para se reconectar.
 
-   Na página de confirmação **Sincronização de Código AEM registrada**, em **[!UICONTROL Usuários do site]**, selecione **[!UICONTROL + Adicionar usuário]** e adicione o endereço de email que você usa para entrar no [!DNL LLM Apps] com a função de **[!UICONTROL administrador]**. Em seguida, selecione **[!UICONTROL Concluir configuração]** na parte inferior da página.
+Quando a instalação for concluída, continue com [Criar ações](/help/guides/creating-actions.md).
 
-   ![Sincronização de código do AEM registrada — adicione a si mesmo como um usuário do site com a função de administrador](/help/assets/guide-onboarding-agent/aem-code-sync-site-users-admin.png)
+## Conectar seus próprios repositórios {#your-own-repositories}
 
-3. Retorne à caixa de diálogo Criar aplicativo LLM.
+Selecione **[!UICONTROL Eu mesmo vou configurar]** e depois **[!UICONTROL Próxima etapa]**. Esse caminho tem quatro etapas do assistente:
 
-![Criar Aplicativo LLM — repositório EDS vazio inicializado e sincronização de código AEM necessária](/help/assets/guide-onboarding-agent/install-aem-code-sync.png)
+**Introdução → Configuração da infraestrutura de ação → Configuração da infraestrutura do widget → Detalhes do aplicativo.**
 
-Você deve ser um administrador do site de EDS. Se a caixa de diálogo relatar que você não é um administrador:
+Você precisa de acesso aos repositórios selecionados e de permissão para instalar ou configurar os [!DNL GitHub] Aplicativos necessários. Para repositórios de propriedade da organização, um administrador pode precisar aprovar o acesso.
 
-![Criar Aplicativo LLM — Acesso de administrador EDS necessário](/help/assets/guide-onboarding-agent/eds-admin-required.png)
+Crie dois repositórios vazios: um para manipuladores de ação e um para widgets. Não inicialize com um README, licença ou `.gitignore`. A plataforma adiciona a estrutura do projeto necessária ao validar cada repositório no assistente.
 
-1. Selecione **[!UICONTROL Abrir Administrador Do AEM Live]**.
-2. Adicione a si mesmo como administrador para o site EDS clicando no botão **[!UICONTROL + Adicionar Usuário(s)]**.
-
-   ![Criar Aplicativo LLM — Adicione você como um Administrador de EDS](/help/assets/guide-onboarding-agent/add-eds-admin.png)
-
-3. Retorne a [!DNL LLM Apps], atualize o repositório EDS e selecione **[!UICONTROL Criar Aplicativo]** novamente.
-
-Depois que as verificações do repositório e do administrador forem bem-sucedidas, [!DNL LLM Apps] cria o aplicativo e começa a gerar ações.
-
-## Aguardar a geração de Ações
-
-Vá para a página **[!UICONTROL Ações]**, à esquerda. A página Ações mostra **Descobrindo ações para sua experiência de conversação** enquanto o agente analisa o site e gera o aplicativo. A geração geralmente leva aproximadamente 15 minutos. Você pode sair desta página e retornar mais tarde.
-
-![Ações — gerando recomendações](/help/assets/guide-onboarding-agent/actions-generating.png)
-
-Durante a geração, [!DNL LLM Apps]:
-
-1. Analisa o site e identifica intenções úteis do cliente.
-2. Cria metadados de ação, incluindo descrições e parâmetros de entrada.
-3. Gera um manipulador e testa para cada ação no repositório do manipulador.
-4. Gera um dispositivo EDS para cada ação no repositório EDS.
-5. Prepara as ações para sua revisão.
-
-Os manipuladores gerados usam inicialmente dados de amostra derivados do site. Eles demonstram a experiência completa, mas não se conectam aos sistemas de produção.
-
-## Revisar as ações geradas
-
-Quando a geração termina, a página Ações exibe as ações geradas e as visualizações do widget. Cada ação tem uma **[!UICONTROL ação gerada por IA, precisa da medalha review]**.
-
-![Ações — ações geradas prontas para revisão](/help/assets/guide-onboarding-agent/actions-ready-for-review.png)
-
-Para cada ação:
-
-1. Selecione **[!UICONTROL Revisão]**.
-2. Revise o nome, a descrição, os parâmetros, as anotações, o manipulador gerado e o dispositivo.
-3. Selecione **[!UICONTROL Marcar como revisado]**. Isso mescla as solicitações de pull geradas.
-4. Retorne à página Ações e repita as ações restantes.
-
-![Ação gerada — pronta para marcar como revisada](/help/assets/guide-onboarding-agent/generated-action-review.png)
-
-Quando todas as ações forem revisadas, selecione **[!UICONTROL Ir para a página do aplicativo]**.
-
-![Ações — todas as ações geradas revisadas](/help/assets/guide-onboarding-agent/actions-reviewed.png)
+Se você já tiver projetos de ação e EDS compatíveis, poderá conectá-los, mas o código existente não será necessário.
 
 >[!NOTE]
 >
->O código gerado é um ponto de partida que você possui. Você pode alterar metadados de ação, manipuladores, testes, JavaScript do widget e estilos de widget após a revisão.
+>Para um repositório vazio, a validação grava os arquivos iniciais do projeto. Escolha os repositórios destinados a este aplicativo antes de selecionar **[!UICONTROL Validar repositório]**.
 
-## Implantar o aplicativo
+### Configurar a infraestrutura de ação
 
-1. Retorne à página Detalhes do aplicativo.
-2. Selecione **[!UICONTROL Implantar]**.
-3. Selecione **[!UICONTROL Preparo]** como o ambiente de destino.
-4. Selecione **[!UICONTROL Implantar]**.
+O repositório de ações contém os manipuladores do lado do servidor e os testes que são executados quando uma plataforma LLM chama uma ação.
 
-![Implantar — selecione o ambiente de Preparo](/help/assets/guide-onboarding-agent/deploy-stage.png)
+1. Em **[!UICONTROL Origem das ações]**, selecione **[!UICONTROL GitHub]**. As outras fontes de código não estão disponíveis no momento.
+2. Resposta **[!UICONTROL Você tem um repositório GitHub já criado?]**:
+   - Selecione **[!UICONTROL Sim, usarei um repositório já criado]** para conectar um projeto existente compatível ou um repositório vazio.
+   - Selecione **[!UICONTROL I don&#39;t have a repository yet]** e, em seguida, **[!UICONTROL Create repositories on GitHub]** para criar um repositório de ações vazio. Retorne ao assistente posteriormente.
+3. Conecte o repositório ao Aplicativo [!DNL GitHub] do Adobe LLM Apps:
+   - Se nenhuma organização estiver conectada, selecione **[!UICONTROL Instalar no GitHub]**.
+   - Se uma organização já estiver conectada, selecione **[!UICONTROL Conectar repositório]** e adicione o repositório a essa instalação.
+4. Em [!DNL GitHub], escolha **[!UICONTROL Somente selecionar repositórios]** e conceder acesso somente aos repositórios usados por este aplicativo.
+5. Retorne ao assistente. Em **[!UICONTROL Selecionar repositório]**, escolha a **[!UICONTROL Organização]** e o **[!UICONTROL Repositório]**.
+6. Selecione **[!UICONTROL Validar repositório]**. A validação inicializa um repositório vazio com o modelo de aplicativos Adobe LLM. Um repositório existente deve conter um projeto de ações compatíveis.
+7. Após a validação, selecione **[!UICONTROL Próxima etapa]**.
 
-Aguarde enquanto [!DNL LLM Apps] prepara, compila e publica o aplicativo.
+![Configuração da infraestrutura de ação — escolha GitHub e conecte um repositório de ações](/help/assets/guide-infrastructure/action-repository.png)
 
-![Implantar — pipeline de implantação em execução](/help/assets/guide-onboarding-agent/deploy-running.png)
+Se uma organização ou repositório estiver ausente, use **[!UICONTROL Conectar outra organização]** ou **[!UICONTROL Conectar outro repositório]** em seu seletor. Depois de alterar o acesso em [!DNL GitHub], selecione **[!UICONTROL Atualizar organizações e repositórios]**.
 
-![Implantar — implantação de preparo bem-sucedida](/help/assets/guide-onboarding-agent/deploy-successful.png)
+### Configurar a infraestrutura do widget
 
-Após a implantação, a seção **[!UICONTROL Testar o aplicativo]** exibe a URL do servidor MCP de preparo. Selecione **[!UICONTROL Copiar URL]**.
+Os widgets são respostas visuais opcionais anexadas a ações, como cartões de produto ou formulários de reserva. O assistente conecta um repositório [!DNL Edge Delivery Services] (EDS) para hospedá-los.
 
-![Detalhe do Aplicativo — copie a URL do servidor MCP de preparo](/help/assets/guide-onboarding-agent/app-mcp-url.png)
+1. Em **[!UICONTROL Origem do widget]**, selecione **[!UICONTROL Selecionar repositório de widget manualmente]**.
+2. Em **[!UICONTROL Code source]**, selecione **[!UICONTROL GitHub]**.
+3. Escolha se você já tem um repositório. Caso contrário, selecione **[!UICONTROL Criar repositórios no GitHub]**, crie um repositório de widget vazio e retorne ao assistente.
+4. Instale ou configure o Aplicativo [!DNL GitHub] do Adobe LLM para este repositório, como você fez para o repositório de ações.
+5. Selecione sua **[!UICONTROL Organização]** e **[!UICONTROL Repositório]**. Não selecione o repositório de ações.
+6. Selecione **[!UICONTROL Validar repositório]**. A validação inicializa um repositório vazio com o modelo do AEM. Um repositório existente deve ser um projeto de EDS compatível.
+7. Selecione **[!UICONTROL Instalar Sincronização de Código do AEM]** e conceda acesso à Sincronização de Código do AEM ao repositório de widgets.
+8. Na página de confirmação da instalação, use o assistente de configuração para adicionar a si mesmo como administrador do site do EDS.
+9. Retorne a [!DNL LLM Apps] e selecione **[!UICONTROL Validar instalação da Sincronização de Código do AEM]**.
+10. Quando a **[!UICONTROL Sincronização de Código AEM instalada]** for exibida, selecione **[!UICONTROL Próxima etapa]**.
 
-## Teste em [!DNL ChatGPT]
+>[!NOTE]
+>
+>O assistente marca **[!UICONTROL Usar Cloud Manager Edge Delivery Services]** como **[!UICONTROL Em breve]** e não permite seleção. Use a opção manual de repositório de widgets.
 
-Siga [Testar no ChatGPT](/help/guides/test-in-chatgpt.md) para criar um plug-in usando a URL do servidor MCP de preparo.
+Se a validação não detectar a Sincronização de código do AEM, confirme se a Sincronização de código do AEM tem acesso ao repositório de widgets selecionado e se você adicionou a si mesmo como administrador do site. Em seguida, valide novamente.
 
-Faça uma pergunta que corresponda a uma das ações geradas. Verifique se:
+## Inserir detalhes do aplicativo {#app-details}
 
-- [!DNL ChatGPT] seleciona a ação esperada.
-- O widget é renderizado e contém os dados de amostra esperados.
-- Os controles de widget produzem o comportamento de acompanhamento esperado.
-- A resposta em texto resume com precisão o resultado.
+Ambas as opções de infraestrutura terminam com **[!UICONTROL Detalhes do aplicativo]**.
 
-![ChatGPT — resposta de plug-in do aplicativo LLM gerada](/help/assets/guide-onboarding-agent/chatgpt-generated-app.png)
+![Detalhes do aplicativo — digite um nome de aplicativo, selecione um programa do AEM e escolha a região de dados de análise](/help/assets/guide-infrastructure/app-details.png)
 
-Agora você tem um aplicativo completo e funcional.
+1. Insira o **[!UICONTROL Nome do Aplicativo LLM]**. Use um nome que identifique a marca ou experiência, como *Frescopa Coffee*.
+2. Selecione o **[!UICONTROL programa AEM]** ao qual o aplicativo pertence. Se você tiver acesso a apenas um programa, o assistente selecionará esse programa automaticamente.
+3. Em **[!UICONTROL Região de dados do Analytics]**, escolha **[!UICONTROL Estados Unidos (EUA)]** ou **[!UICONTROL Europa (UE)]**.
+4. Selecione **[!UICONTROL Criar aplicativo]**.
 
-## Prepare o aplicativo para produção
+>[!IMPORTANT]
+>
+>O programa AEM e a região de dados de análise não podem ser alterados após a criação do aplicativo. A região de análise determina onde os dados de análise do aplicativo são armazenados.
 
-O aplicativo gerado usa dados de amostra. Antes de usá-lo com os clientes:
+Se nenhum programa do AEM estiver disponível, peça acesso ao administrador. Se o carregamento dos programas falhar, selecione **[!UICONTROL Repetir o carregamento dos programas]**.
 
-1. **Conecte seus sistemas** — [personalize cada manipulador gerado](/help/guides/customize-handler.md) para substituir dados de exemplo por chamadas para suas APIs ou fontes de dados.
-2. **Proteger credenciais** — armazene URLs de API e credenciais na configuração de tempo de execução gerenciada, nunca no código-fonte ou no widget JavaScript.
-3. **Validar dados** — valide argumentos de ação e respostas da API, adicione tempos limite de solicitação e retorne mensagens de erro seguras.
-4. **Atualizar os widgets** — mantenha cada widget alinhado com o `structuredContent` do seu manipulador e, em seguida, aplique seus requisitos de identidade visual e acessibilidade. Consulte [Personalizar um widget gerado](/help/guides/widgets.md).
-5. **Testar os manipuladores** — cobre entrada válida, entrada inválida, resultados vazios, falhas de API e a forma de dados esperada pelo widget.
-6. **Verificar no Estágio** — reimplante e teste cada ação por meio do plug-in [!DNL ChatGPT].
-7. **Implantar para produção** — após o êxito no teste de preparo, implante para produção e crie ou atualize o plug-in com a URL do servidor MCP de produção.
+O assistente abre a página do aplicativo após a criação. Com a infraestrutura gerenciada pela Adobe, aguarde a conclusão da configuração da infraestrutura antes de continuar.
 
-Para adicionar um recurso que a plataforma não criou, consulte [Criar uma ação do zero](/help/guides/create-action.md).
+## Próximo: criar as ações
 
+Seu aplicativo agora tem sua infraestrutura, mas nenhuma ação gerada ainda. Continue com [Criar ações](/help/guides/creating-actions.md) para analisar um site ou escolher a criação de ação manual.
+
+Para obter a relação entre metadados de ação, manipuladores, widgets e o servidor MCP implantado, consulte [Como um aplicativo é conectado](/help/guides/app-architecture.md).
