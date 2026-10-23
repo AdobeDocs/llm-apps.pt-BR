@@ -1,7 +1,7 @@
 ---
-source-git-commit: a48b4022979d9a13b4fc3aa870c4ee6375e8bc13
+source-git-commit: 557173e8d95325b980efac4d72c06bb3d90dcd72
 workflow-type: tm+mt
-source-wordcount: '1052'
+source-wordcount: '1418'
 ht-degree: 1%
 ---
 # Manifesto de captura de tela
@@ -135,6 +135,28 @@ resposta. Ele não verifica a interface de configuração atual. Nova configura�
 as capturas de tela exigem acesso autenticado no momento; caso contrário, use o fornecedor oficial
 instruções e omitir imagens não verificadas.
 
+## Configuração do Analytics
+
+Artigo: `/help/guides/analytics-setup.md`
+
+Diretório de saída: `help/assets/guide-analytics/`
+
+| Nome de arquivo | Estado e contexto útil | Texto alternativo sugerido |
+|---|---|---|
+| `analytics-settings.png` | Configurações do aplicativo, guia Analytics, Habilitar Analytics ativado, ID de sequência de dados vazia, Requisitos expandidos, Salvar alterações desativado | Configurações do aplicativo, guia Analytics - Habilitar o Analytics ativado, um campo de ID de sequência de dados vazio e a lista de Requisitos expandida |
+| `datastream-analytics-service.png` | Coleta de dados, Adicionar serviço, Adobe Analytics ativado com uma ID de conjunto de relatórios fictícia | Adicionar serviço - Adobe Analytics ativado com uma ID de conjunto de relatórios de exemplo |
+| `datastream-platform-service.png` | Coleta de dados, serviço Adobe Experience Platform com somente o conjunto de dados do evento selecionado | Serviço Adobe Experience Platform - o conjunto de dados do evento selecionado e as outras opções limpas |
+| `datastream-services.png` | Detalhes da sequência de dados com ambos os serviços ativados, uma ID de sequência de dados fictícia e o esquema de mapeamento | Detalhes da sequência de dados - ambos os serviços ativados, com o exemplo ID da sequência de dados e o esquema de mapeamento |
+
+Nunca capture uma ID de sequência de dados real. Não selecione **Salvar alterações**: depois de salvar,
+somente um administrador pode alterar a sequência de dados. Mostrar Experience Platform, Adobe Analytics,
+e Customer Journey Analytics somente quando eles mostrarem uma configuração específica para
+Aplicativos LLM; vincular ao Experience League para todo o resto. Substituir organização
+nomes, IDs de conjunto de relatórios, IDs de sequência de dados, IDs de conjunto de dados, emails e nomes pessoais
+com estes valores fictícios: `example-org`, `demo.<suffix>` conjuntos de relatórios,
+`00000000-0000-0000-0000-000000000000`, `0000…0001`, `user@example.com` e
+`Example User`.
+
 ## Origem de captura existente
 
 A execução de captura 2026-10-19 usou a interface local solicitada pelo usuário, com interface/API correspondente
@@ -162,3 +184,25 @@ interruptor permanece o controle de ação ligado/desligado; configurações de 
 permanecem no editor. O link do repositório é mascarado e a navegação da conta é
 excluído. Nenhuma ação foi salva, aprovada, alternada ou implantada durante esta atualização.
 Captura bruta: `docs-captures/2026-10-19/remove-enabled/`.
+
+### Configurações do Analytics, 21/10/2026
+
+Atualizado `guide-analytics/analytics-settings.png` a partir do fornecido pelo usuário
+`Screenshot 2026-10-21 at 11.48.36.png`, não é uma execução orientada por agente. Origem
+ambiente: não gravado e não visível na imagem; a paridade de produção não é
+verificado. Revisão visual confirmada Habilitar o Analytics está ativado, o campo ID da sequência de dados
+está vazio, Requisitos é expandido e Salvar alterações é desativado. A imagem foi
+copiado sem edições; nenhum identificador ou detalhe de conta está visível.
+
+### Capturas de tela da sequência de dados, 10/10/2026
+
+Adicionado `guide-analytics/datastream-analytics-service.png`,
+`datastream-platform-service.png` e `datastream-services.png` de existentes
+Capturas internas de coleção de dados (29/07/2026 e 10/10/2026). A ID do conjunto de relatórios
+e a ID da sequência de dados foram substituídas por sobreposições de texto fictício (`demo.aem.llm` e
+`00000000-0000-0000-0000-000000000000`); a fonte de sobreposição é São Francisco, então
+O é ligeiramente diferente da fonte do produto. A imagem de serviço da plataforma não precisava de
+alterações. A imagem de serviço do Analytics ainda mostra o ponteiro do mouse do
+captura original. Um OCR transmite as imagens finais e não encontra identificadores originais.
+Substitua-os por capturas novas que usam valores fictícios digitados na interface do usuário quando
+o artigo é atualizado em seguida.

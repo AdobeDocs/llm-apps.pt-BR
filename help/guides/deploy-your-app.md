@@ -1,9 +1,9 @@
 ---
 title: Implante seu aplicativo
 description: Saiba como implantar seu aplicativo Adobe LLM no preparo e na produção usando a interface do usuário de aplicativos LLM.
-source-git-commit: a48b4022979d9a13b4fc3aa870c4ee6375e8bc13
+source-git-commit: 557173e8d95325b980efac4d72c06bb3d90dcd72
 workflow-type: tm+mt
-source-wordcount: '412'
+source-wordcount: '444'
 ht-degree: 0%
 ---
 
@@ -58,11 +58,14 @@ Cada linha mostra o **Ambiente** de destino (Preparo ou Produção), **Status** 
 
 ## Implantar alterações de configuração
 
-As alterações nos metadados de ação, nos switches de **[!UICONTROL Visibilidade]** da página do aplicativo, na autenticação e nas variáveis do aplicativo entrarão em vigor na próxima implantação nesse ambiente. Salvar uma configuração não atualiza o servidor MCP implantado sozinho.
+As alterações nos metadados de ação, nos switches de **[!UICONTROL Visibilidade]** da página do aplicativo, na autenticação, nas variáveis do aplicativo e nas configurações do Analytics têm efeito na próxima implantação nesse ambiente. Salvar uma configuração não atualiza o servidor MCP implantado sozinho.
 
 Verifique o ambiente de destino todas as vezes. A implantação em preparo não implanta as mesmas alterações na produção.
+
+Se o aplicativo não atender aos requisitos de tempo de execução de análise ou do SDK, siga [Atualizar um aplicativo existente](/help/guides/upgrade-existing-app.md) antes de reimplantar.
 
 ## Próxima etapa
 
 - [Testar o aplicativo implantado como um plug-in ChatGPT](/help/guides/test-in-chatgpt.md).
 - [Teste o aplicativo implantado como um conector Claude](/help/guides/test-in-claude.md).
+- [Envie os eventos do seu aplicativo para a Adobe Analytics ou a Customer Journey Analytics](/help/guides/analytics-setup.md).
