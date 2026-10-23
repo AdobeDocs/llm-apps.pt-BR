@@ -1,9 +1,9 @@
 ---
 title: Criar uma ação do zero
 description: Defina os metadados da ação, implemente o manipulador, conecte um widget de EDS, teste-o e implante-o com os aplicativos Adobe LLM.
-source-git-commit: 0f9dd0a5b1008e183eb8ab5a4c2eae34a78923bb
+source-git-commit: 557173e8d95325b980efac4d72c06bb3d90dcd72
 workflow-type: tm+mt
-source-wordcount: '1453'
+source-wordcount: '1476'
 ht-degree: 0%
 ---
 
@@ -147,9 +147,11 @@ query
 
 Use nomes de parâmetros estáveis. Alterar um nome também requer alterar o manipulador e seus testes.
 
-### Configurar análises
+### Configurar análises {#configure-analytics}
 
 Habilite **[!UICONTROL Coletar intenção de usuário]** quando quiser que a análise inclua um resumo da conversa que levou à ação.
+
+Se você configurar seu próprio [!DNL Adobe Analytics] ou [!DNL Customer Journey Analytics], a intenção do usuário também será enviada para lá. Consulte [Configurar Adobe Analytics e Customer Journey Analytics](/help/guides/analytics-setup.md).
 
 A coleta de intenção do usuário é ativada por padrão. Revise a **[!UICONTROL Descrição da intenção do usuário]**, que contém as instruções para solicitar o resumo. Limite as instruções a uma intenção não confidencial e anônima e descreva sua coleta de dados na sua política de privacidade. A descrição aceita até 2.000 caracteres.
 
