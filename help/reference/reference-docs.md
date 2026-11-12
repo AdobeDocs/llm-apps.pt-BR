@@ -1,9 +1,9 @@
 ---
 title: Campos de ação e widget
 description: Definições de campo para metadados de ação, parâmetros, widgets, CSP e permissões em aplicativos Adobe LLM.
-source-git-commit: a48b4022979d9a13b4fc3aa870c4ee6375e8bc13
+source-git-commit: 2892acf4b3042c296203377a06bc3ff80fd375a5
 workflow-type: tm+mt
-source-wordcount: '890'
+source-wordcount: '1257'
 ht-degree: 3%
 ---
 
@@ -19,15 +19,16 @@ Use esta página para pesquisar campos no editor de ações. Para as etapas de c
 
 ## Encontrar as configurações
 
-A caixa de diálogo **[!UICONTROL Criar nova ação]** tem as guias **[!UICONTROL Ação]** e **[!UICONTROL Metadados do widget]**.
+A caixa de diálogo **[!UICONTROL Criar nova ação]** tem as guias **[!UICONTROL Ação]**, **[!UICONTROL Metadados do widget]** e **[!UICONTROL Extensões de ChatGPT]**.
 
-Após a criação, o editor de ação salva usa três guias:
+Após a criação, o editor de ação salva usa quatro guias:
 
 | Guia | Configurações |
 |---|---|
 | **[!UICONTROL Detalhes do LLM Widget]** | Tipo de dispositivo, domínio de sandbox, descrição do dispositivo, URLs de modelo e CSP |
 | **[!UICONTROL Detalhes da ação]** | Identificador de código, descrição, parâmetros de entrada e **[!UICONTROL configurações de LLM]**, incluindo anotações, texto de status de invocação e visibilidade |
 | **[!UICONTROL Análises]** | Coleta de intenção do usuário e instruções |
+| **[!UICONTROL Extensões ChatGPT]** | Pontos de entrada de abertura direta, ícones de ação, preferências de exibição e menções do compositor |
 
 Para salvar suas edições, selecione **[!UICONTROL Salvar alterações]**. As ações geradas que aguardam revisão mostram **[!UICONTROL Marcar como revisado]**, que também lida com as solicitações de pull geradas.
 
@@ -38,13 +39,15 @@ Parâmetros de entrada são os valores que a plataforma LLM envia para o manipul
 | Propriedade | Descrição |
 |----------|-------------|
 | **Nome** | O identificador de parâmetro (por exemplo, `category`, `query`) |
-| **Tipo** | `String`, `Number`, `Integer` ou `Boolean` |
+| **Tipo** | `String`, `Number`, `Integer`, `Boolean` ou `Object`; o editor salvo também oferece `File` para parâmetros de arquivos carregados |
 | **Descrição** | Uma explicação legível — a plataforma LLM usa a explicação para extrair o valor correto |
 | **Obrigatório** | Se marcado, o modelo deve fornecer este parâmetro antes de chamar a ação |
 
 ### Parâmetros de arquivo
 
 Parâmetros de arquivo são nomes de campos de entrada configurados no editor de ação. Quando um usuário carrega um arquivo, o host fornece um objeto de arquivo para esses argumentos, normalmente incluindo `download_url` e `file_id`.
+
+Os parâmetros do arquivo carregado são diferentes de [pontos de entrada do arquivo](/help/guides/chatgpt-extensions.md#file-entrypoint). Um ponto de entrada File usa um parâmetro Object chamado `file`, contendo os `name` e `resourceUri` do arquivo aberto.
 
 ## Campos de metadados
 
@@ -126,6 +129,36 @@ A Política de segurança de conteúdo controla com quais domínios externos o i
 | **Enquadrar domínios** | Origens permitidas para iframes aninhados; aciona revisão mais rígida do aplicativo |
 | **Redirecionar domínios** | Destinos confiáveis para `openExternal` links de redirecionamento ([!DNL ChatGPT]-específico) |
 | **Domínios URI de base** | A diretiva CSP `base-uri` (somente MCP Apps SDK, não [!DNL ChatGPT]) |
+
+## Campos de extensão do ChatGPT {#chatgpt-extension-fields}
+
+Essas configurações opcionais são somente ChatGPT; elas não configuram o Claude ou outras plataformas LLM. A disponibilidade varia de acordo com o cliente ChatGPT. Para obter os requisitos e as etapas, consulte [Configurar extensões ChatGPT](/help/guides/chatgpt-extensions.md).
+
+### Pontos de entrada e ícones de ação
+
+Os pontos de entrada exigem um widget. Selecione qualquer combinação de Global, Thread e Arquivo para o mesmo widget, ou deixe todas desmarcadas. Global e Thread invocam a ação sem entradas; File fornece apenas o objeto `file`. Outras entradas necessárias impedem que o ponto de entrada correspondente funcione. Se Arquivo for combinado com Global ou Thread, `file` deve ser opcional.
+
+| Texto | Descrição |
+|---|---|
+| **Onde os usuários podem abrir este aplicativo** | Caixas de seleção para Global (tela cheia da navegação), Thread (uma guia de conteúdo na conversa) e Arquivo (um visualizador personalizado para extensões de arquivo correspondentes). Vários tipos podem ser selecionados |
+| **URL do ícone** | Ícone de ação opcional compartilhado por seus pontos de entrada. Aceita um URL HTTP(S) ou URI de dados; prefira um URL de imagem HTTPS público. Alterar ou limpar o URL substitui qualquer variante de ícone salva |
+| **Extensões de arquivo** | Pelo menos uma extensão, como `.csv`, para um ponto de entrada File. O editor adiciona um ponto à esquerda quando omitido |
+
+Selecionar Arquivo adiciona uma entrada de Objeto opcional chamada `file` se estiver ausente. As definições existentes são preservadas e devem aceitar os `name` e `resourceUri` do arquivo aberto.
+
+### Preferências de exibição
+
+Essas configurações do widget são separadas dos pontos de entrada. O host escolhe a apresentação final.
+
+| Texto | Opções e comportamento padrão |
+|---|---|
+| **Exibir quando iniciado pelo modelo** | `inline`, `fullscreen` ou **Nenhuma preferência** |
+| **Modos de exibição de recursos com suporte** | **Inline**, **Fullscreen** ou ambos. Nenhum dos selecionados deixa os padrões do host em vigor |
+| **Exibição inicial do recurso** | **Padrão de host**, **Em linha** ou **Tela cheia**. Quando os modos suportados são selecionados, o modo inicial deve ser incluído |
+
+### Menções do compositor
+
+**Habilitar menções ao compositor** designa a ação de pesquisa de recursos do aplicativo. Somente uma ação por aplicativo pode fornecer menção à pesquisa. A ação deve ser somente leitura e visível para aplicativo, com um parâmetro de Cadeia de Caracteres chamado `query` que aceite texto vazio e nenhuma outra entrada necessária. Um provedor pode ser somente texto; ativar a visibilidade do aplicativo não requer a configuração de um widget para o provedor de pesquisa.
 
 ## Permissões
 
