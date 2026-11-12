@@ -1,7 +1,7 @@
 ---
-source-git-commit: a48b4022979d9a13b4fc3aa870c4ee6375e8bc13
+source-git-commit: fa80b7b68e1b905eb22d4789a74b2f0de886d70c
 workflow-type: tm+mt
-source-wordcount: '1109'
+source-wordcount: '1179'
 ht-degree: 0%
 ---
 # Procedimento de captura de tela orientada por agente
@@ -106,6 +106,13 @@ docs-captures/<run-id>/
 Use nomes de arquivo descritivos como `setup-choice.png`, `action-basic-info.png`,
 e `generated-action-review.png`. Preservar capturas de origem inalteradas. Manter bruto
 captura perfis de navegador fora dos arquivos de confirmações e revisão.
+
+Antes de editar capturas de tela, pergunte ao usuário quais detalhes não confidenciais desfocar
+e se chamadas de contorno vermelho devem ser adicionadas em torno de campos ou controles relevantes.
+Reutilizar preferências já fornecidas em vez de solicitar novamente. Confirmar se
+para reter a janela inteira ou cortá-la, preservando a navegação necessária para a tarefa.
+Mantenha as chamadas sem rótulos e explique que são anotações, não a interface do usuário
+erros. Não armazene a conversa de edição ou o histórico de iteração na habilidade.
 
 Crie cópias finais nos diretórios de saída no manifesto:
 

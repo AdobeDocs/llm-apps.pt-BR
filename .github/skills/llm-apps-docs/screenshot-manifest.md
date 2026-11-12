@@ -1,7 +1,7 @@
 ---
-source-git-commit: 557173e8d95325b980efac4d72c06bb3d90dcd72
+source-git-commit: fa80b7b68e1b905eb22d4789a74b2f0de886d70c
 workflow-type: tm+mt
-source-wordcount: '1418'
+source-wordcount: '1963'
 ht-degree: 1%
 ---
 # Manifesto de captura de tela
@@ -69,8 +69,10 @@ Diretório de saída: `help/assets/guide-create-action/`
 | `widget-permissions.png` | Permissões opcionais do navegador, com permissões não usadas desativadas | Criar nova ação - permissões do navegador |
 | `widget-csp.png` | Controles de domínio de recursos, conexões, quadros, redirecionamentos e URI de base | Criar nova ação - domínios da política de segurança de conteúdo |
 
-A caixa de diálogo de criação tem guias **Ação** e **Metadados do widget**. O editor salvo
-tem **detalhes do Widget de LLM**, **detalhes da ação** e **guias do Analytics**. Capturar o
+As capturas existentes mostram **Ação** e **Metadados do widget** na criação
+e **Detalhes do LLM Widget**, **Detalhes da ação** e **Analytics** na
+editor salvo. A implementação atual também tem **extensões ChatGPT** em ambas
+fluxos; verifique essa guia na interface do usuário em execução ao atualizar as imagens. Capturar o
 layout que o procedimento realmente usa. Preencha os campos de exemplo sem salvar e
 descartar as edições.
 
@@ -113,6 +115,65 @@ valor de substituição. Nunca capture um valor real de configuração.
 A abertura de uma caixa de diálogo não autoriza um salvamento ou exclusão. Reutilizar um existente seguro
 corrigir variável ou perguntar antes de criar um. Manter uma imagem mais antiga somente após
 verificando se os campos e controles ainda correspondem à interface do usuário atual.
+
+## Extensões da ChatGPT
+
+Artigo: `/help/guides/chatgpt-extensions.md`
+
+Diretório de saída: `help/assets/guide-chatgpt-extensions/`
+
+Capturas de tela de ponto de entrada globais e de thread, configurações de exibição e menção do compositor
+as capturas de tela de configuração do foram fornecidas em 11/2026 e são publicadas como
+registrados abaixo. Outros pontos de verificação permanecem planejados, não ativos existentes. Não
+adicione links de imagem do artigo até que as capturas reais tenham sido higienizadas e visualmente
+revistos.
+
+| Nome de arquivo | Estado e contexto útil | Texto alternativo sugerido |
+|---|---|---|
+| `extensions-tab.png` | Ação salva, apoiada por widget, com extensões ChatGPT selecionadas | Extensões do ChatGPT - menções a pontos de entrada, modo de exibição e compositor |
+| `global-thread-entrypoints.png` | Global e Thread selecionados juntos para o widget Início, com a opção Arquivo desmarcada | Extensões ChatGPT - Global e Thread selecionadas para a ação Página inicial |
+| `global-entrypoint-menu.png` | Ponto de entrada inicial no menu de navegação do cliente | Menu de navegação do ChatGPT mostrando o ponto de entrada global da Página inicial |
+| `global-entrypoint-open.png` | Janela completa do cliente com a tela inicial aberta e o painel de navegação visível | Painel inicial aberto a partir do ponto de entrada global |
+| `thread-entrypoint-menu.png` | Menu de conversa com plug-ins expandidos | Menu Conversa - escolha o ponto de entrada do thread Início |
+| `thread-entrypoint-open.png` | Painel inicial ao lado de uma conversa | Painel inicial aberto ao lado de uma conversa no ChatGPT |
+| `file-entrypoint.png` | Ponto de entrada de arquivo não salvo com .csv | Ponto de entrada do arquivo - ofereça um visualizador personalizado para arquivos CSV |
+| `entrypoint-icon.png` | URL do ícone opcional não salvo compartilhado pelos pontos de entrada selecionados da ação | Ícone de ponto de entrada - defina um ícone de ação compartilhada opcional |
+| `display-settings.png` | Preferência de inicialização do modelo, modos de recursos compatíveis e exibição inicial nos padrões do host | Modo de exibição - preferências de lançamento de recurso e modelo nos padrões |
+| `composer-mentions.png` | Pesquisar menções somente texto com a opção de menção ativada | Menções de pesquisa - ativadas menções ao compositor |
+| `composer-mentions-query.png` | Detalhes da ação Pesquisar menções com uma entrada de consulta de sequência opcional | Menções de pesquisa - entrada opcional de sequência de caracteres chamada query |
+| `composer-mentions-conflict.png` | Desativação da opção de menção e do aviso ao nomear o provedor existente | As menções do compositor não estão disponíveis porque as menções de pesquisa já são o provedor |
+
+Usar um equipamento de catálogo aprovado e não sensível. Confirmar se os formulários não são salvos automaticamente
+antes de inserir valores de exemplo; descarte as alterações não salvas posteriormente. Não salvar,
+aprove as ações geradas ou implante apenas para concluir esta lista de verificação.
+Os resultados de terceiros precisam de acesso autenticado a um cliente compatível. Arquivo
+Os pontos de entrada exigem desktop; o navegador Trabalho não é o ChatGPT clássico.
+
+### Atualização da documentação do ponto de entrada, 05/11/2026
+
+- Source: componentes `llm-apps-ui` locais atuais e validação de entrada, não um
+Apresentação da interface de produção.
+- Os controles de ação rápida foram removidos. Uso global, de thread e de arquivo
+caixas de seleção que suportam várias seleções para um widget. O URL do ícone é um
+configuração opcional de nível de ação compartilhada por pontos de entrada.
+- Selecionar Arquivo adiciona uma entrada de Objeto opcional chamada `file` quando ausente.
+A combinação de Arquivo com Global ou Thread requer que a entrada permaneça opcional.
+- A inspeção do navegador foi bloqueada porque ambos os perfis do navegador de automação foram
+já está em uso. Nenhuma captura de tela nova foi capturada.
+
+### Texto da origem do rascunho, 2026-11-03
+
+- Ambiente do Source: implementação local de UI/API/runtime/SDK, não uma concluída
+Apresentação do editor de ação de produção.
+- A verificação do pacote publicado confirmou as APIs de extensão no tempo de execução 1.3.0 e
+SDK 0.2.1 Estas são as versões documentadas da linha de base, não uma alegação de
+recurso foi introduzido nessas versões exatas.
+- A especificação de extensão pública do OpenAI foi verificada quanto a restrições de plataforma.
+- Logon de produção bem-sucedido em um navegador separado controlado por agente. Nenhum aplicativo
+as configurações foram salvas, nenhuma correção foi selecionada e nenhuma implantação foi iniciada.
+- O usuário adiou as capturas de tela. Nenhuma imagem nova foi capturada ou substituída.
+Os rótulos exatos do controle de produção e o comportamento completo do host ainda exigem um
+apresentação ao vivo antes da publicação.
 
 ## Implantação e teste
 

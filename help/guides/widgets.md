@@ -1,9 +1,9 @@
 ---
 title: Personalizar um widget de EDS gerado
 description: Entenda e personalize o widget do Edge Delivery Services criado automaticamente pelos aplicativos LLM do Adobe.
-source-git-commit: 0f9dd0a5b1008e183eb8ab5a4c2eae34a78923bb
+source-git-commit: 74769d0b2eb2d9323a39ae645dc5359404450164
 workflow-type: tm+mt
-source-wordcount: '1065'
+source-wordcount: '1148'
 ht-degree: 0%
 ---
 
@@ -71,6 +71,8 @@ O incorporado busca o conteúdo `.plain.html` da página do widget e importa seu
 - Mantenha seu tamanho sincronizado com `bridge.autoResize()`.
 
 Este guia aborda os métodos comuns de ponte. Consulte o [`@adobe/llmapps-sdk` pacote](https://www.npmjs.com/package/@adobe/llmapps-sdk) para obter a API completa.
+
+Para permitir que as pessoas abram um widget preparado diretamente, ao lado de uma conversa ou como um visualizador de arquivo em clientes OpenAI compatíveis, consulte [Configurar extensões ChatGPT](/help/guides/chatgpt-extensions.md). Esse guia explica a configuração e os requisitos da interface do usuário do. O manuseio de arquivos, o contexto de seleção, os deep links e os controles de mensagem avançada precisam de implementação de widgets. Ativar uma extensão não adiciona esse comportamento automaticamente. Verifique os recursos do host antes de usar APIs opcionais. A API de fornecedor `bridge.chatgpt` separada está disponível somente no ChatGPT e está `null` em outro lugar; não é o mesmo que a API de ponte padrão.
 
 ## Entender o contrato de dados
 

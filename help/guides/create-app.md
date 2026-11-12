@@ -1,9 +1,9 @@
 ---
 title: Configuração da infraestrutura
 description: Crie um aplicativo Adobe LLM usando a infraestrutura gerenciada da Adobe ou forneça dois repositórios GitHub vazios para a plataforma ser inicializada.
-source-git-commit: 14d94a68dabddd2f2ef2cef65c51d31645d4a958
+source-git-commit: 079eb2403f15a97842c5c336c03ec5bfe10de622
 workflow-type: tm+mt
-source-wordcount: '1337'
+source-wordcount: '1595'
 ht-degree: 0%
 ---
 
@@ -106,22 +106,51 @@ Se uma organização ou repositório estiver ausente, use **[!UICONTROL Conectar
 
 Os widgets são respostas visuais opcionais anexadas a ações, como cartões de produto ou formulários de reserva. O assistente conecta um repositório [!DNL Edge Delivery Services] (EDS) para hospedá-los.
 
+Use a mesma conta do Adobe para [!DNL LLM Apps], acesso ao site do AEM e acesso de gravação do DA.
+
+#### Conectar o repositório de widgets {#connect-widget-repository}
+
 1. Em **[!UICONTROL Origem do widget]**, selecione **[!UICONTROL Selecionar repositório de widget manualmente]**.
 2. Em **[!UICONTROL Code source]**, selecione **[!UICONTROL GitHub]**.
 3. Escolha se você já tem um repositório. Caso contrário, selecione **[!UICONTROL Criar repositórios no GitHub]**, crie um repositório de widget vazio e retorne ao assistente.
 4. Instale ou configure o Aplicativo [!DNL GitHub] do Adobe LLM para este repositório, como você fez para o repositório de ações.
 5. Selecione sua **[!UICONTROL Organização]** e **[!UICONTROL Repositório]**. Não selecione o repositório de ações.
 6. Selecione **[!UICONTROL Validar repositório]**. A validação inicializa um repositório vazio com o modelo do AEM. Um repositório existente deve ser um projeto de EDS compatível.
-7. Selecione **[!UICONTROL Instalar Sincronização de Código do AEM]** e conceda acesso à Sincronização de Código do AEM ao repositório de widgets.
-8. Na página de confirmação da instalação, use o assistente de configuração para adicionar a si mesmo como administrador do site do EDS.
-9. Retorne a [!DNL LLM Apps] e selecione **[!UICONTROL Validar instalação da Sincronização de Código do AEM]**.
-10. Quando a **[!UICONTROL Sincronização de Código AEM instalada]** for exibida, selecione **[!UICONTROL Próxima etapa]**.
+
+#### &#x200B;7. Configurar o acesso ao site do AEM {#aem-site-access}
+
+**Nova instalação:** Selecione **[!UICONTROL Instalar Sincronização de Código AEM]** e conceda a ele acesso ao repositório de widgets. Conclua o assistente de configuração na página de confirmação da instalação para adicionar a si mesmo como administrador do site.
+
+**Site EDS existente:** mantenha sua instalação da Sincronização de Código do AEM e confirme se ela abrange o repositório de widgets selecionado. Peça a um administrador de site existente para abrir o Administrador de Usuários do AEM em `https://tools.aem.live/tools/user-admin/index.html/?org=<org>&site=<site>` e adicionar sua conta do Adobe com a função `admin`. Não é necessário reinstalar a Sincronização de código.
+
+Substitua `<org>` e `<site>` por sua organização da AEM e nomes de site. O administrador do site pode confirmar esses valores.
+
+#### &#x200B;8. Conceder acesso de gravação do DA {#da-write-access}
+
+Para sites novos e existentes, peça a um administrador de organização de DAs para:
+
+1. Abra a configuração do DA em `https://da.live/config#/<org>/`, substituindo `<org>` pela organização do DA que armazena o conteúdo do site.
+2. Abra a planilha **permissões**. Se não existir, selecione **[!UICONTROL Adicionar planilha]**, nomeie-a como `permissions` e adicione os cabeçalhos de coluna **caminho**, **grupos** e **ações**. Você também pode adicionar uma coluna **comentários** para descrever cada regra.
+3. Adicione uma linha que conceda à sua conta da Adobe acesso de gravação a todo o conteúdo do site: use o caminho de conteúdo do site em **caminho**, o email da sua conta do Adobe em **grupos** e `write` em **ações**. Salve a configuração.
+
+   ![Folha de permissões do DA mostrando exemplos de contas na coluna de grupos e acesso de gravação na coluna de ações](/help/assets/guide-infrastructure/da-write-permissions.png)
+
+   A captura de tela usa contas fictícias. Substitua `widget-author@example.com` pelo email da sua conta da Adobe e use o caminho do conteúdo do seu site em vez do exemplo de `/ + **` em toda a organização. A linha `CONFIG` é para administradores de configuração; você não precisa alterá-la para conceder acesso ao conteúdo.
+
+As funções de site do AEM não concedem acesso de gravação do DA. Você não precisa de acesso de gravação em toda a organização.
+
+Para obter detalhes sobre como configurar permissões do DA, consulte [Permissões e segurança](https://www.aem.live/docs/ew/administering/permissions).
+
+#### &#x200B;9. Validar a configuração do AEM {#validate-aem-setup}
+
+1. Retorne a [!DNL LLM Apps] e selecione **[!UICONTROL Validar configuração do AEM]**.
+2. Quando a **[!UICONTROL instalação do AEM verificada]** for exibida, selecione **[!UICONTROL Próxima etapa]**.
+
+Se a validação falhar, siga a mensagem para verificar o [acesso ao site do AEM](#aem-site-access) ou o [acesso de gravação do DA](#da-write-access) e valide novamente.
 
 >[!NOTE]
 >
 >O assistente marca **[!UICONTROL Usar Cloud Manager Edge Delivery Services]** como **[!UICONTROL Em breve]** e não permite seleção. Use a opção manual de repositório de widgets.
-
-Se a validação não detectar a Sincronização de código do AEM, confirme se a Sincronização de código do AEM tem acesso ao repositório de widgets selecionado e se você adicionou a si mesmo como administrador do site. Em seguida, valide novamente.
 
 ## Inserir detalhes do aplicativo {#app-details}
 
