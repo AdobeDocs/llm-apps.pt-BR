@@ -77,7 +77,7 @@ O [!DNL LLM Apps] alcança seus repositórios por meio do [!DNL Cloud Manager], 
 
 - Acesso ao programa [!DNL Cloud Manager] ao qual o aplicativo pertencerá.
 - Dois repositórios, um para manipuladores de ação e outro para widgets. Repositórios vazios são adequados, incluindo um repositório que contém somente o arquivo README cujo host Git foi criado.
-- Ambos os repositórios [adicionados ao Cloud Manager](https://experienceleague.adobe.com/en/docs/experience-manager-cloud-manager/content/managing-code/external-repositories) como repositórios privados, com propriedade validada e status **Pronto**. [!DNL Cloud Manager] deve ser capaz de gravar neles; um token de acesso somente leitura não é suficiente.
+- Ambos os repositórios [adicionados ao Cloud Manager](https://experienceleague.adobe.com/pt-br/docs/experience-manager-cloud-manager/content/managing-code/external-repositories) como repositórios privados, com propriedade validada e status **Pronto**. [!DNL Cloud Manager] deve ser capaz de gravar neles; um token de acesso somente leitura não é suficiente.
 
 Somente os repositórios que você hospeda são listados. Repositórios hospedados pela Adobe em [!DNL Cloud Manager] não são suportados.
 
