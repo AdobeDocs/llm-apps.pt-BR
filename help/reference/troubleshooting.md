@@ -1,9 +1,9 @@
 ---
 title: Solução de problemas de aplicativos Adobe LLM
 description: Resolva problemas comuns de infraestrutura, geração de ação, manipulador, widget, implantação, autenticação e conexão da plataforma LLM.
-source-git-commit: a48b4022979d9a13b4fc3aa870c4ee6375e8bc13
+source-git-commit: 2afae0696de15ec4d0a6596e413dd4851761439e
 workflow-type: tm+mt
-source-wordcount: '1350'
+source-wordcount: '1503'
 ht-degree: 0%
 ---
 
@@ -25,7 +25,9 @@ Comece com o sintoma observável. Não compartilhe credenciais, tokens, URLs de 
 | Nenhum programa do AEM está disponível | Solicite acesso ao programa ao administrador. Se o carregamento falhar, selecione **Repetir carregamento de programas** |
 | Novos repositórios não são exibidos | Use **Conectar outro repositório** para conceder acesso ao Aplicativo GitHub para Aplicativos Adobe LLM, retornar ao assistente e selecione **Atualizar organizações e repositórios** |
 | Falha na validação do repositório de ações ou widgets | Use um projeto existente compatível ou um repositório vazio. Use repositórios separados para ações e widgets e selecione **Validar repositório** novamente |
-| A sincronização de código do AEM não foi detectada | Instale a Sincronização de código do AEM para o repositório de widgets, adicione a si mesmo como administrador do site em sua página de confirmação, retorne ao assistente e selecione **Validar instalação da Sincronização de Código do AEM** |
+| Falha na configuração do site do AEM ou na validação do acesso | Siga [Configurar o acesso ao site do AEM](/help/guides/create-app.md#aem-site-access). Para uma nova instalação da Sincronização de código, conclua o assistente de página de confirmação. Para um site existente, mantenha a instalação e peça a um administrador de site para conceder acesso à conta do Adobe `admin` por meio do Administrador de Usuários do AEM. Confirme se a Sincronização de Código cobre o repositório do widget e selecione **Validar configuração do AEM** |
+| É necessário acesso de gravação do DA | Solicite a um administrador de organização do DA que conceda acesso de gravação à conta do Adobe usada em aplicativos LLM para todo o conteúdo do site. Siga [Conceder acesso de gravação do DA](/help/guides/create-app.md#da-write-access), entre com essa conta e selecione **Validar configuração do AEM**. As funções de site do AEM não concedem permissões do DA |
+| Não foi possível verificar o acesso ao AEM ou ao DA | Tente **Validar a configuração do AEM** novamente para obter uma falha de verificação temporária. Se, em vez disso, a mensagem relatar uma negação de acesso, corrija as permissões do AEM ou DO usando as instruções acima antes de tentar novamente |
 | A criação do aplicativo não gerou ações | A criação do aplicativo só configura a infraestrutura. Na página do aplicativo, selecione **Criar ações automaticamente**, insira **Seu site** e selecione **Criar minhas ações**. Consulte [Criar ações](/help/guides/creating-actions.md) |
 | As ações ainda estão sendo geradas | A interface do usuário estima até 30 minutos para geração. Siga o progresso na página Ações ou saia da página e retorne posteriormente |
 | Falha na geração de relatórios de ação | Confirme se o site é público por HTTPS e, para seus próprios repositórios, se o acesso ao repositório ainda é válido. Entre em contato com a equipe do Beta com a mensagem de erro visível se o problema persistir |
@@ -50,6 +52,10 @@ Comece com o sintoma observável. Não compartilhe credenciais, tokens, URLs de 
 | O Editor de Cabeçalhos HTTP não pode salvar a configuração | Use o [Serviço de Configuração do AEM](https://aem.live/docs/config-service-setup) ou peça ao administrador do EDS para inicializar a configuração dos cabeçalhos do site |
 
 Não registre em log os valores `bridge.toolResult` concluídos quando eles puderem conter dados pessoais ou confidenciais.
+
+## Extensões da ChatGPT
+
+Para pontos de entrada ausentes, problemas do visualizador de arquivos, URLs de ícone inválidos, configurações de exibição ou erros de menção do compositor, consulte [Solução de problemas de extensões ChatGPT](/help/guides/chatgpt-extensions.md#troubleshooting). Verifique o suporte ao cliente antes de alterar o aplicativo: uma conexão funcional não significa que todas as extensões sejam compatíveis com esse cliente.
 
 ## Implantação
 
