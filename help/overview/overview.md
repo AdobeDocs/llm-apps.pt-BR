@@ -1,17 +1,13 @@
 ---
 title: Uma visão geral dos aplicativos Adobe LLM
 description: Saiba o que são os aplicativos Adobe LM, como funcionam e como começar a criar seu aplicativo.
-source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
+source-git-commit: 07bcd58b3aab70b03f62523b5b25f30f4b6d7004
 workflow-type: tm+mt
-source-wordcount: '642'
-ht-degree: 0%
+source-wordcount: '596'
+ht-degree: 1%
 ---
 
 # Aplicativos Adobe LLM - Uma visão geral {#adobe-llm-apps-an-overview}
-
->[!IMPORTANT]
->
->Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 ## O que é [!DNL Adobe LLM Apps]?
 
