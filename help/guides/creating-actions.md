@@ -1,9 +1,9 @@
 ---
 title: Criar ações
 description: Gere ações do aplicativo Adobe LLM a partir de um site público, siga o progresso da geração, revise o trabalho gerado ou escolha a criação de ação manual.
-source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
+source-git-commit: 0276ae4e4627e49157911ad579a42c0e77045eee
 workflow-type: tm+mt
-source-wordcount: '1039'
+source-wordcount: '1047'
 ht-degree: 0%
 ---
 
@@ -81,9 +81,9 @@ Analise cada ação sugerida antes da implantação. Confirme se ela representa 
 5. Quando a ação estiver pronta, selecione **[!UICONTROL Marcar como revisado]**.
 6. Retorne à lista de ações e repita as ações restantes.
 
-O editor de ações salvas separa **[!UICONTROL Detalhes do widget de LLM]**, **[!UICONTROL Detalhes da ação]** e **[!UICONTROL Analytics]**. Revise as alterações geradas no widget e no manipulador em suas respectivas guias.
+O editor de ação salva separa **[!UICONTROL Detalhes da ação]**, **[!UICONTROL Detalhes do widget LLM]**, **[!UICONTROL Insights do aplicativo]** e **[!UICONTROL Extensões ChatGPT]**. Revise as alterações geradas no widget e no manipulador em suas respectivas guias.
 
-![Ação gerada — guias do editor atual e Marcar como revisado, com o link do repositório oculto](/help/assets/guide-creating-actions/generated-action-review.png)
+![Revisão da ação gerada — a ramificação enviada explica como a ramificação é mesclada, com as guias do editor e Marcar como revisada](/help/assets/guide-creating-actions/generated-action-review.png)
 
 Selecionar **[!UICONTROL Marcar como revisado]** mescla as alterações geradas se nenhum bloqueador de mesclagem permanecer: puxa solicitações com a infraestrutura gerenciada [!DNL LLM Apps], ramifica com seus próprios repositórios. Se uma solicitação de pull aberta bloquear a revisão, resolva o bloqueador e tente novamente. Não aprove uma implementação com falhas de geração de código não resolvidas ou mesclagem.
 

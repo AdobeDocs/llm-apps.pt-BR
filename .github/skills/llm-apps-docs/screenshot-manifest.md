@@ -1,7 +1,7 @@
 ---
-source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
+source-git-commit: 0276ae4e4627e49157911ad579a42c0e77045eee
 workflow-type: tm+mt
-source-wordcount: '2090'
+source-wordcount: '2314'
 ht-degree: 1%
 ---
 # Manifesto de captura de tela
@@ -53,7 +53,7 @@ Diretório de saída: `help/assets/guide-creating-actions/`
 | `build-choice.png` | Criar ações selecionadas automaticamente, um site público inserido e um controle de início estável, se incluído | Ações - escolha a geração automática e insira um site público |
 | `generating.png` | Geração em execução, tempo estimado e ações Ir para | Ações - a geração está em execução |
 | `actions-ready-for-review.png` | Corrigir nomes de ação, selos de revisão e controles de revisão | Ações - as ações geradas estão prontas para revisão e não são implantadas |
-| `generated-action-review.png` | Detalhes do widget do LLM, detalhes da ação, Analytics, um aviso de solicitação de pull gerado e marcar como revisado | Ação gerada - inspecione o widget e o manipulador antes da aprovação |
+| `generated-action-review.png` | Detalhes de ação, detalhes do Widget do LLM, Insights do aplicativo, Extensões do ChatGPT, o aviso **Ramificação enviada** (repositórios próprios) e Marcar como revisado. Última captura: 2026-11-13, Stage, aplicativo GitLab; nome do aplicativo mascarado | Revisão de ação gerada - Ramificação enviada e Marcar como revisada |
 
 Mascarar links de repositório privado e de solicitação de pull. Cortar pessoal ou
 detalhes de contato quando o artigo precisar apenas do status de revisão. Não selecionar
@@ -71,19 +71,16 @@ Diretório de saída: `help/assets/guide-create-action/`
 
 | Nome de arquivo | Estado e contexto útil | Texto alternativo sugerido |
 |---|---|---|
-| `action-basic-info.png` | Pesquisar produtos, seu identificador derivado, uma descrição útil e anotações somente leitura | Criar nova ação - informações básicas e anotações |
-| `action-analytics-user-intent.png` | Coletar a intenção do usuário e as instruções de resumo anônimo padrão | Criar nova ação: analisar a coleção de intenções do usuário |
-| `widget-metadata.png` | Tipo de bloco do Edge Delivery Services e um exemplo seguro de origem da sandbox | Criar nova ação - tipo de widget e domínio de sandbox |
-| `widget-template-urls.png` | Exemplo de URLs de script e widget | Criar nova ação - URLs de script e widget |
-| `widget-permissions.png` | Permissões opcionais do navegador, com permissões não usadas desativadas | Criar nova ação - permissões do navegador |
-| `widget-csp.png` | Controles de domínio de recursos, conexões, quadros, redirecionamentos e URI de base | Criar nova ação - domínios da política de segurança de conteúdo |
+| `action-basic-info.png` | Detalhes da ação: Pesquisar Produtos, seu identificador de código, descrição e os parâmetros `category` e `query` | Criar nova ação - Detalhes da ação com informações de ação e parâmetros de entrada |
+| `action-llm-settings.png` | Configurações do LLM expandidas: somente leitura, idempotente, anotações de mundo aberto, textos de status, visibilidade | Criar nova ação - Configurações de LLM |
+| `action-analytics-user-intent.png` | Application Insights: Coletar a intenção do usuário e as instruções padrão | Criar nova ação - Application Insights |
+| `widget-metadata.png` | Detalhes do widget do LLM: Bloco do Edge Delivery Services, exemplo de domínio do widget, descrição do widget e URLs do modelo | Criar nova ação - Detalhes do dispositivo LLM |
+| `widget-csp.png` | URLs de modelo e as listas de domínio de Configuração da CSP | Criar nova ação - Configuração da CSP |
 
-As capturas existentes mostram **Ação** e **Metadados do widget** na criação
-e **Detalhes do LLM Widget**, **Detalhes da ação** e **Analytics** na
-editor salvo. A implementação atual também tem **extensões ChatGPT** em ambas
-fluxos; verifique essa guia na interface do usuário em execução ao atualizar as imagens. Capturar o
-layout que o procedimento realmente usa. Preencha os campos de exemplo sem salvar e
-descartar as edições.
+Última captura: 2026-11-13, Preparo, após a refatoração da caixa de diálogo (mesmas guias que o editor de ação:
+Detalhes de ação, detalhes do Widget do LLM, Insights do aplicativo, Extensões ChatGPT; Permissões,
+Borda preferida e a seção Parâmetros do arquivo removida). Somente valores de exemplo; a caixa de diálogo
+foi cancelado sem salvar. Os contornos vermelhos são chamadas de retorno.
 
 ## Autenticação
 
@@ -226,6 +223,28 @@ nomes, IDs de conjunto de relatórios, IDs de sequência de dados, IDs de conjun
 com estes valores fictícios: `example-org`, `demo.<suffix>` conjuntos de relatórios,
 `00000000-0000-0000-0000-000000000000`, `0000…0001`, `user@example.com` e
 `Example User`.
+
+## Preparar para envio
+
+Artigo: `/help/guides/prepare-submission.md`
+
+Diretório de saída: `help/assets/guide-submission/`
+
+| Nome de arquivo | Estado e contexto útil | Texto alternativo sugerido |
+|---|---|---|
+| `submission-card.png` | Aplicativo após uma implantação de Produção, Prepare para o cartão de envio com a Configuração | Preparar para envio - o status de preparação da Produção e Configurar |
+| `submission-setup.png` | Caixa de diálogo Preparar para envio, Configurar e preparar, detalhes do editor de exemplo e ambos os ícones salvos | Configurar e preparar - Editor e detalhes legais, ícones Aprovado e Salvar alterações |
+| `submission-prepare.png` | A mesma caixa de diálogo foi rolada para Prepare your package, Readiness mostra Ready to prepare (Pronto para preparar), caixa de seleção desmarcada | Preparar o pacote - Pronto para preparar, a caixa de seleção de confirmação e Preparar pacote |
+| `submission-progress.png` | Mesma caixa de diálogo enquanto uma execução está em andamento | Preparação em andamento - barra de progresso e hora de início |
+| `submission-results.png` | Resultados após uma execução concluída com links legais de espaço reservado: a preparação requer atenção, Download do pacote desabilitado | Resultados - o resumo da preparação, o relatório de Download, o pacote de Download e a gravação do Download |
+| `submission-test-cases.png` | Resultados, casos de teste, primeiro caso descrito | Casos de teste - um caso de revisão com sua solicitação, comportamento esperado e status Registrado |
+| `submission-before-submit.png` | Resultados, Antes de enviar a lista e as verificações APROVAR/AVISAR/FALHAR; execute a ID abaixo do recorte | Antes de enviar - os detalhes restantes, os detalhes de Atualização e as verificações do pacote |
+
+Capturado no palco, 13/11/2026, de um aplicativo implantado na produção. Somente uso
+exemplo de valores do publicador (`Frescopa Coffee (example)`, `https://www.example.com/...`)
+e ícones de espaço reservado. Cada execução de preparação chama o aplicativo implantado e leva sobre
+20 minutos; inicie um somente quando as telas Resultados precisarem de atualização. Mascaramento de URLs MCP,
+IDs de execução e nomes de aplicativos nas capturas de Resultados.
 
 ## Origem de captura existente
 

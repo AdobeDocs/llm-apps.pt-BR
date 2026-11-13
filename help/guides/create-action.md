@@ -1,9 +1,9 @@
 ---
 title: Criar uma ação do zero
 description: Defina os metadados da ação, implemente o manipulador, conecte um widget de EDS, teste-o e implante-o com os aplicativos Adobe LLM.
-source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
+source-git-commit: 0276ae4e4627e49157911ad579a42c0e77045eee
 workflow-type: tm+mt
-source-wordcount: '1532'
+source-wordcount: '1582'
 ht-degree: 0%
 ---
 
@@ -64,15 +64,15 @@ Mantenha as tarefas relacionadas, mas diferentes, separadas. Use ações separad
 
 Abra o aplicativo e selecione **[!UICONTROL Ações]** e, em seguida, **[!UICONTROL Criar Ação]**.
 
-A caixa de diálogo de criação contém as guias **[!UICONTROL Ação]**, **[!UICONTROL Metadados do Widget]** e **[!UICONTROL Extensões de ChatGPT]**. Expanda cada seção para configurar seus campos.
+A caixa de diálogo **[!UICONTROL Criar nova ação]** tem quatro guias: **[!UICONTROL Detalhes da ação]**, **[!UICONTROL Detalhes do widget LLM]**, **[!UICONTROL Insights do aplicativo]** e **[!UICONTROL Extensões de ChatGPT]**. A caixa de diálogo é aberta em **[!UICONTROL Detalhes da ação]**. O editor de ação salva usa as mesmas guias.
 
 As configurações opcionais de **[!UICONTROL extensões ChatGPT]** permitem que as pessoas abram o aplicativo diretamente, usem um visualizador de arquivo personalizado ou encontrem recursos no compositor em clientes compatíveis. Configure-os depois que o comportamento correspondente do widget e da ação estiver pronto. Consulte [Configurar extensões ChatGPT](/help/guides/chatgpt-extensions.md).
 
-### Inserir informações básicas
+### Inserir as informações da ação e os parâmetros de entrada
 
-![Criar Ação — informações básicas](/help/assets/guide-create-action/action-basic-info.png)
+![Criar nova ação — Detalhes da ação com o nome da ação, identificador de código, descrição e dois parâmetros de entrada](/help/assets/guide-create-action/action-basic-info.png)
 
-Insira:
+Em **[!UICONTROL Informações de ação]**, digite:
 
 - **[!UICONTROL Nome da ação]** — um nome de tarefa curto, como *Pesquisar Produtos*.
 - **[!UICONTROL Descrição]** — explique quando usar a ação e o que ela retorna.
@@ -88,48 +88,12 @@ products with their names, prices, categories, and image URLs.
 
 Evite descrições vagas como *Obtém informações sobre o produto*. A plataforma LLM usa a descrição para escolher entre as ações.
 
-### Selecionar anotações
+Em **[!UICONTROL Parâmetros de entrada]**, selecione **[!UICONTROL Adicionar parâmetro]** uma vez para cada valor aceito pelo manipulador. Para cada parâmetro, insira:
 
-As anotações descrevem o comportamento da ação:
-
-- **Dica destrutiva** — a ação pode excluir ou alterar dados permanentemente.
-- **Idempotente (mesmos argumentos = sem efeito extra)** — repetir a mesma solicitação tem o mesmo efeito.
-- **Abrir dica do mundo** — a ação se comunica com sistemas externos.
-- **Dica somente leitura** — a ação não altera os dados.
-
-Selecione somente anotações que sejam verdadeiras. Por exemplo, a pesquisa de produtos normalmente é somente leitura, idempotente e de mundo aberto.
-
-### Adicionar metadados do OpenAI
-
-Insira mensagens curtas exibidas enquanto a ação é executada e após sua conclusão:
-
-```text
-Invoking: Searching products...
-Invoked: Products found
-```
-
-Para ações com widgets, adicione **[!UICONTROL Descrição do widget]**. A descrição do widget é diferente da descrição da ação:
-
-- **A descrição da ação** ajuda o modelo a decidir quando invocar a ação.
-- A **Descrição do widget** mapeia para `_meta["openai/widgetDescription"]` e resume o que o componente renderizado mostra, reduzindo a narração repetida.
-
-[!DNL LLM Apps] aplica a descrição do widget como metadados do componente. Não retorne a descrição do manipulador.
-
-### Configurar visibilidade
-
-- **[!UICONTROL Expor ao modelo de IA]** permite que o modelo selecione a ação.
-- **[!UICONTROL Mostrar como widget na superfície do aplicativo]** exibe o widget configurado.
-
-Para uma ação somente texto, selecione também **[!UICONTROL Nenhum widget]** em **[!UICONTROL Metadados do widget]** > **[!UICONTROL Tipo]**. Os controles de visibilidade não escolhem o tipo de widget da ação.
-
-### Adicionar parâmetros de entrada
-
-Adicione um parâmetro para cada valor que o manipulador aceita. Todos os parâmetros precisam:
-
-- **Nome** — a chave que o manipulador recebe.
-- **Tipo** — String, Número, Inteiro ou Booleano.
-- **Descrição** — como extrair o valor.
-- **Obrigatório** — se a ação requer o valor.
+- **[!UICONTROL Nome do parâmetro]** — a chave que o manipulador recebe.
+- **[!UICONTROL Tipo]** — String, Número, Inteiro, Booleano, Objeto ou Arquivo.
+- **[!UICONTROL Obrigatório]** — se a ação requer o valor.
+- **[!UICONTROL Descrição]** — como extrair o valor.
 
 Para **Pesquisar Produtos**:
 
@@ -147,38 +111,70 @@ query
 
 Use nomes de parâmetros estáveis. Alterar um nome também requer alterar o manipulador e seus testes.
 
-### Configurar análises {#configure-analytics}
+### Definir as configurações do LLM
 
-Habilite **[!UICONTROL Coletar intenção de usuário]** quando quiser que a análise inclua um resumo da conversa que levou à ação.
+Expandir **[!UICONTROL configurações LLM]**. A seção é recolhida por padrão.
+
+![Criar nova ação — Configurações LLM com anotações, textos de status de metadados OpenAI e visibilidade](/help/assets/guide-create-action/action-llm-settings.png)
+
+Em **[!UICONTROL Anotações]**, selecione somente as dicas que são verdadeiras para a ação:
+
+- **[!UICONTROL Dica destrutiva]** — a ação pode excluir ou alterar dados permanentemente.
+- **[!UICONTROL Idempotente (mesmos argumentos = sem efeito extra)]** — repetir a mesma solicitação tem o mesmo efeito.
+- **[!UICONTROL Abrir dica do mundo]** — a ação se comunica com sistemas externos.
+- **[!UICONTROL Dica somente leitura]** — a ação não altera os dados.
+
+Por exemplo, a pesquisa de produtos normalmente é somente leitura, idempotente e de mundo aberto.
+
+Em **[!UICONTROL Metadados de OpenAI]**, insira mensagens curtas exibidas enquanto a ação é executada e, após sua conclusão, até 64 caracteres cada:
+
+```text
+Invoking status text: Searching products...
+Invoked status text: Products found
+```
+
+Em **[!UICONTROL Visibilidade]**:
+
+- **[!UICONTROL Expor ao modelo de IA]** permite que o modelo selecione a ação.
+- **[!UICONTROL Mostrar como widget na superfície do aplicativo]** exibe o widget configurado.
+
+A Visibilidade não escolhe o tipo de widget. Para uma ação somente texto, selecione **[!UICONTROL Nenhuma interface do usuário interativa]** em **[!UICONTROL Detalhes do widget LLM]** > **[!UICONTROL Tipo de widget]**.
+
+### Configurar Application Insights {#configure-analytics}
+
+Abra o **[!UICONTROL Application Insights]**. Por padrão, a opção **[!UICONTROL Coletar intenção de usuário]** está selecionada: a plataforma LLM cria um resumo curto e anônimo do que o usuário estava tentando realizar quando a ação foi executada.
 
 Se você configurar seu próprio [!DNL Adobe Analytics] ou [!DNL Customer Journey Analytics], a intenção do usuário também será enviada para lá. Consulte [Configurar Adobe Analytics e Customer Journey Analytics](/help/guides/analytics-setup.md).
 
-A coleta de intenção do usuário é ativada por padrão. Revise a **[!UICONTROL Descrição da intenção do usuário]**, que contém as instruções para solicitar o resumo. Limite as instruções a uma intenção não confidencial e anônima e descreva sua coleta de dados na sua política de privacidade. A descrição aceita até 2.000 caracteres.
+Revise as instruções abaixo da caixa de seleção, que orientam o resumo. Limite-as a intenções não confidenciais e anônimas e descreva sua coleta de dados na política de privacidade. As instruções aceitam até 2.000 caracteres Limpe **[!UICONTROL Coletar intenção de usuário]** para não coletar resumo.
 
-![Criar Ação — análise de intenção de usuário](/help/assets/guide-create-action/action-analytics-user-intent.png)
+![Criar nova ação — Application Insights com a intenção de usuário Coletar e as instruções padrão](/help/assets/guide-create-action/action-analytics-user-intent.png)
 
 Para obter definições completas de campo, consulte [Campos de ação e widget](/help/reference/reference-docs.md).
 
 ## Configurar o widget
 
-Para uma ação somente texto, abra **[!UICONTROL Metadados do widget]** e defina **[!UICONTROL Tipo]** como **[!UICONTROL Nenhum widget]**. Em seguida, ignore as configurações restantes do widget.
+Abra **[!UICONTROL Detalhes do Widget do LLM]**. Para uma ação somente texto, selecione **[!UICONTROL Nenhuma interface do usuário interativa]** em **[!UICONTROL Tipo de widget]** e ignore as configurações restantes do widget.
 
-Abra Os **[!UICONTROL Metadados Do Widget]**.
+![Criar nova ação — Detalhes do Widget do LLM com bloco do Edge Delivery Services selecionado e URLs de modelo de exemplo](/help/assets/guide-create-action/widget-metadata.png)
 
-![Criar Ação — metadados do widget](/help/assets/guide-create-action/widget-metadata.png)
+Em **[!UICONTROL Informações do widget]**, configure:
 
-Configurar o:
-
-- **[!UICONTROL Tipo]** — selecione **[!UICONTROL Bloco Edge Delivery Services]** para um widget interativo.
+- **[!UICONTROL Tipo de widget]** — selecione **[!UICONTROL Bloco Edge Delivery Services]** para um widget interativo.
 - **[!UICONTROL Domínio do widget]** — a origem da sandbox do widget. A interface o identifica conforme necessário para o envio do aplicativo e exclusivo por aplicativo; não é o mesmo que o URL da página de EDS.
-- **Borda preferencial** — solicita um contêiner com bordas no host.
+- **[!UICONTROL Descrição do widget]** — o que o modelo diz depois que o widget é renderizado, até 512 caracteres.
+
+A descrição do widget é diferente da descrição da ação:
+
+- **A descrição da ação** ajuda o modelo a decidir quando invocar a ação.
+- A **Descrição do widget** mapeia para `_meta["openai/widgetDescription"]` e resume o que o componente renderizado mostra, reduzindo a narração repetida.
+
+[!DNL LLM Apps] aplica a descrição do widget como metadados do componente. Não retorne a descrição do manipulador.
 
 Expanda **[!UICONTROL URLs de modelo]** e insira:
 
 - **[!UICONTROL URL do Script]** — o ponto de entrada do widget EDS.
 - **[!UICONTROL URL do Widget]** — a página de EDS publicada para esta ação.
-
-![Criar nova ação — URLs de script e widget para um widget EDS](/help/assets/guide-create-action/widget-template-urls.png)
 
 Os URLs típicos são:
 
@@ -190,15 +186,9 @@ Widget URL:
 https://main--<repo>--<owner>.aem.live/<widget-page>
 ```
 
-Conceda somente as permissões do navegador e os domínios CSP necessários.
+Em **[!UICONTROL Configuração da CSP]**, adicione apenas as origens que o dispositivo precisa para ativos e solicitações de rede. Um widget que carrega recursos externos pode não ser renderizado se o CSP estiver incompleto.
 
-Expanda **[!UICONTROL Permissões (específicas do MCP)]** somente se o widget precisar de recursos do navegador, como localização geográfica. Deixe as permissões não usadas desativadas.
-
-![Criar nova ação — permissões opcionais do navegador](/help/assets/guide-create-action/widget-permissions.png)
-
-Em **[!UICONTROL Configuração da CSP]**, adicione as origens necessárias para ativos e solicitações de rede. Um widget que carrega recursos externos pode não ser renderizado se o CSP estiver incompleto.
-
-![Criar nova ação — listas de domínios da política de segurança de conteúdo](/help/assets/guide-create-action/widget-csp.png)
+![Criar nova ação — Configuração da CSP com listas de recursos, conexões, quadros, redirecionamentos e base do domínio URI](/help/assets/guide-create-action/widget-csp.png)
 
 Se a página do projeto ou widget do EDS ainda não existir, conclua [Trazer seu próprio projeto EDS](/help/guides/bring-your-own-eds.md) e retorne à ação.
 
@@ -208,7 +198,7 @@ Selecione **[!UICONTROL Criar nova ação]**. A ação aparece na página Açõe
 
 Salvar cria os metadados, mas a ação ainda precisa de um manipulador.
 
-Quando você reabre a ação salva, o editor tem **[!UICONTROL detalhes do Widget de LLM]**, **[!UICONTROL detalhes da ação]** e **[!UICONTROL guias do Analytics]**. Para salvar edições posteriores, selecione **[!UICONTROL Salvar alterações]**. A caixa de diálogo de criação e o editor de ação salva têm layouts diferentes.
+Quando você reabre a ação salva, o editor mostra as mesmas guias. Para salvar edições posteriores, selecione **[!UICONTROL Salvar alterações]**.
 
 ## Implementar o manipulador
 
