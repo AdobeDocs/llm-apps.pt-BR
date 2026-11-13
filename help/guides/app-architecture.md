@@ -1,9 +1,9 @@
 ---
 title: Como um aplicativo é conectado em conjunto
 description: Entenda as três partes de um aplicativo LLM, como elas funcionam em uma conversa e onde fazer alterações.
-source-git-commit: af83670aebde1e6f73585c89a891bc7f5e92fb3a
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '573'
+source-wordcount: '587'
 ht-degree: 0%
 ---
 
@@ -11,9 +11,7 @@ ht-degree: 0%
 
 >[!IMPORTANT]
 >
->[!DNL Adobe LLM Apps] está atualmente na Beta.
->
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 Um **aplicativo LLM** traz os serviços de sua marca para uma conversa sobre IA. Por exemplo, um cliente solicita recomendações de café, seu aplicativo encontra produtos correspondentes e o assistente mostra os resultados.
 
@@ -23,7 +21,7 @@ Um **aplicativo LLM** traz os serviços de sua marca para uma conversa sobre IA.
 
 Um aplicativo pode agrupar várias ações relacionadas, como *Procurar produtos*, *Comparar produtos* e *Localizar uma loja*. Cada ação tem suas próprias configurações, manipulador e widget opcional. Adicionar uma ação não requer outro par de repositórios.
 
-Um aplicativo com widgets interativos tem três partes: configurações de ação, código do manipulador e código do widget. Você gerencia as configurações em [!DNL LLM Apps]. O código do manipulador e do widget está em dois repositórios [!DNL GitHub] separados.
+Um aplicativo com widgets interativos tem três partes: configurações de ação, código do manipulador e código do widget. Você gerencia as configurações em [!DNL LLM Apps]. O código do manipulador e do widget fica em dois repositórios separados.
 
 ```text
 ┌───────────────────────┐   ┌───────────────────────┐   ┌───────────────────────┐

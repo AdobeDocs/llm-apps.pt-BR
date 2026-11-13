@@ -1,9 +1,9 @@
 ---
 title: Personalizar um manipulador de ação gerado
 description: Entenda o contrato do manipulador de aplicativos LLM do Adobe, substitua os dados de amostra gerados e mantenha a saída do manipulador alinhada com o widget.
-source-git-commit: 0f9dd0a5b1008e183eb8ab5a4c2eae34a78923bb
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '880'
+source-wordcount: '895'
 ht-degree: 0%
 ---
 
@@ -11,9 +11,7 @@ ht-degree: 0%
 
 >[!IMPORTANT]
 >
->[!DNL Adobe LLM Apps] está atualmente na Beta.
->
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 A plataforma cria um manipulador de trabalho para cada ação gerada. Inicialmente, o manipulador retorna dados de amostra para testar a experiência completa.
 
@@ -21,7 +19,7 @@ A plataforma cria um manipulador de trabalho para cada ação gerada. Inicialmen
 
 ## Localizar o manipulador gerado
 
-Abra o repositório do manipulador conectado durante a [configuração de infraestrutura](/help/guides/create-app.md). Se você usa a infraestrutura gerenciada da Adobe, solicite acesso ao código antes de continuar.
+Abra o repositório do manipulador conectado durante a [configuração de infraestrutura](/help/guides/create-app.md). Se você usa a infraestrutura gerenciada do [!DNL LLM Apps], solicite acesso ao código antes de continuar.
 
 ```text
 actions/
@@ -38,7 +36,7 @@ test/
     └── <action-slug>.test.js
 ```
 
-Use a solicitação de pull gerada para localizar os arquivos exatos. A pasta slug usa hifens: a plataforma gera uma ação com o identificador de código `search_products` em `actions/search-products/`. O tempo de execução reconhece o formulário hifenizado, bem como uma pasta que corresponde exatamente ao identificador.
+Use a solicitação ou ramificação de pull gerada para localizar os arquivos exatos. A pasta slug usa hifens: a plataforma gera uma ação com o identificador de código `search_products` em `actions/search-products/`. O tempo de execução reconhece o formulário hifenizado, bem como uma pasta que corresponde exatamente ao identificador.
 
 Edite o `index.js` gerado e quaisquer dados de amostra associados. Não altere arquivos de tempo de execução como `entry.js`.
 

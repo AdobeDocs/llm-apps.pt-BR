@@ -1,7 +1,7 @@
 ---
-source-git-commit: fa80b7b68e1b905eb22d4789a74b2f0de886d70c
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '1179'
+source-wordcount: '1180'
 ht-degree: 0%
 ---
 # Procedimento de captura de tela orientada por agente
@@ -68,7 +68,7 @@ Capture estados acessíveis e relate o estado ausente.
 
 Quando forem necessários novos recursos, confirme a organização de destino, o site,
 opção de infraestrutura, programa AEM e nome da correção antes de criá-los. Para
-Infraestrutura gerenciada pela Adobe, deixe que a plataforma crie os repositórios. Para o
+Aplicativos LLM gerenciam a infraestrutura, permitem que a plataforma crie os repositórios. Para o
 caminho do próprio repositório, use dois repositórios vazios e obtenha aprovação antes de
 a validação os inicializa.
 

@@ -1,9 +1,9 @@
 ---
 title: Uma visão geral dos aplicativos Adobe LLM
 description: Saiba o que são os aplicativos Adobe LM, como funcionam e como começar a criar seu aplicativo.
-source-git-commit: d37cb1f4e199d77c94def7a034a55598bd3d8d83
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '624'
+source-wordcount: '642'
 ht-degree: 0%
 ---
 
@@ -11,9 +11,7 @@ ht-degree: 0%
 
 >[!IMPORTANT]
 >
->[!DNL Adobe LLM Apps] está atualmente na Beta.
->
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 ## O que é [!DNL Adobe LLM Apps]?
 
@@ -27,7 +25,7 @@ O [!DNL Adobe LLM Apps] permite que sua marca ofereça ações úteis — como d
 ## O que você pode fazer com [!DNL LLM Apps]
 
 - **Criar ações LLM de propriedade da marca** — Defina os fluxos comerciais específicos que você deseja ativar dentro dos assistentes de IA (por exemplo, *Agendar um Teste*, *Comparar Produtos*, *Reservar um Serviço*).
-- **Criar widgets LLM interativos** — Crie componentes visuais de interface do usuário (cartões de produto, formulários de reserva, localizadores de lojas) gerenciados como componentes do AEM em seu repositório [!DNL GitHub].
+- **Criar widgets LLM interativos** — crie componentes visuais de interface do usuário (cartões de produto, formulários de reserva, localizadores de lojas) gerenciados como componentes do AEM no seu repositório Git, em qualquer plataforma Git com suporte.
 - **Manter o controle centralizado de marcas** — Os autores e desenvolvedores mantêm controle total sobre todo o conteúdo, cópia e visuais expostos na plataforma LLM, com aprovações gerenciadas pelo AEM.
 - **Implantar para preparo e produção** — um pipeline de implantação controlada permite que você teste a experiência em um ambiente de preparo antes de promover para produção.
 - **Controlar visibilidade no nível de ação** — Habilite ou desabilite ações individuais e implante o aplicativo para aplicar a alteração.
@@ -53,7 +51,7 @@ A função do lado do servidor executada quando a plataforma LLM chama uma açã
 
 ### Widget {#widgets-eds}
 
-A resposta visual mostrada com a resposta do LLM, como um cartão, carrossel ou tabela. Os widgets gerados são blocos em um repositório [!DNL Edge Delivery Services] (EDS). Com a infraestrutura gerenciada da Adobe, a Adobe prepara e hospeda o repositório para você. Como alternativa, conecte seu próprio repositório.
+A resposta visual mostrada com a resposta do LLM, como um cartão, carrossel ou tabela. Os widgets gerados são blocos em um repositório [!DNL Edge Delivery Services] (EDS). Com a infraestrutura gerenciada do [!DNL LLM Apps], a Adobe prepara e hospeda o repositório para você. Como alternativa, conecte seu próprio repositório.
 
 ### Servidor MCP
 
@@ -79,7 +77,7 @@ Para obter detalhes técnicos sobre o que criar e como os componentes funcionam 
 
 A criação de um aplicativo e de suas ações são etapas separadas:
 
-1. [Configurar a infraestrutura](/help/guides/create-app.md). Use a infraestrutura gerenciada da Adobe para uma configuração rápida ou use seus próprios repositórios do [!DNL GitHub].
+1. [Configurar a infraestrutura](/help/guides/create-app.md). Use a infraestrutura gerenciada do [!DNL LLM Apps] para uma configuração rápida ou use seus próprios repositórios adicionados ao [!DNL Cloud Manager].
 2. [Crie suas ações](/help/guides/creating-actions.md). Peça à plataforma que analise seu site e gere ações ou crie você mesmo.
 3. [Implante e teste o aplicativo](/help/guides/deploy-your-app.md). Revise o trabalho gerado, implante no ambiente de preparo e teste em uma plataforma de LLM compatível.
 

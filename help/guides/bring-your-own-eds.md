@@ -2,9 +2,9 @@
 title: Traga seu próprio projeto do Edge Delivery Services
 description: Conecte um projeto existente do Adobe Edge Delivery Services a uma ação do Adobe LLM Apps.
 hidefromtoc: true
-source-git-commit: 557173e8d95325b980efac4d72c06bb3d90dcd72
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '866'
+source-wordcount: '900'
 ht-degree: 1%
 ---
 
@@ -12,9 +12,7 @@ ht-degree: 1%
 
 >[!IMPORTANT]
 >
->[!DNL Adobe LLM Apps] está atualmente na Beta.
->
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 Use este guia para conectar um projeto Edge Delivery Services (EDS) compatível existente ou para adicionar um widget a uma ação que você criou. Um projeto existente é opcional. Se você configurar sua própria infraestrutura, o caminho padrão começará com dois repositórios vazios que a plataforma inicializa durante a [configuração de infraestrutura](/help/guides/create-app.md).
 
@@ -26,7 +24,7 @@ Se a plataforma criou seu widget automaticamente, siga [Personalizar um widget g
 
 Você precisa:
 
-- Um repositório EDS compatível com a matriz AEM com a [Sincronização de Código AEM](https://github.com/apps/aem-code-sync) instalada e uma fonte de conteúdo configurada.
+- Um repositório EDS compatível com a matriz AEM com uma fonte de conteúdo configurada, cujo código chega ao site por meio da [Sincronização de Código AEM](https://github.com/apps/aem-code-sync) (GitHub) ou por meio de [!DNL Cloud Manager] com [Traga seu próprio Git](https://www.aem.live/developer/byo-git) (outros provedores Git).
 - Permissão para adicionar dependências e criar blocos nesse repositório.
 - Permissão para configurar cabeçalhos de resposta para o site EDS.
 - Uma ação em [!DNL LLM Apps] com um manipulador que retorna `structuredContent`.

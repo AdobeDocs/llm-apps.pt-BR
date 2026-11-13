@@ -1,7 +1,7 @@
 ---
-source-git-commit: 14d94a68dabddd2f2ef2cef65c51d31645d4a958
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '715'
+source-wordcount: '717'
 ht-degree: 0%
 ---
 # Modelo de conteúdo e terminologia
@@ -61,7 +61,7 @@ Começa com um sintoma observável.
 
 - **Aplicativos Adobe LLM** — nome completo do produto na primeira menção.
 - **Aplicativo LLM** — um aplicativo gerenciado pelo produto.
-- **infraestrutura gerenciada pelo Adobe** — infraestrutura criada e gerenciada pelo Adobe; selecione **Let us handle it** no assistente create-app. Não descreva essa opção como somente de avaliação ou faça declarações não confirmadas sobre a qualificação da produção.
+- **Infraestrutura gerenciada de Aplicativos LLM** — infraestrutura criada e gerenciada pelo Adobe; selecione **Let us handle it** no assistente create-app. Não descreva essa opção como somente de avaliação ou faça declarações não confirmadas sobre a qualificação da produção.
 - **Eu mesmo vou configurá-lo** — opção de assistente para conectar seus próprios repositórios, não é um requisito para gravar ações manualmente. O caminho padrão começa com dois repositórios vazios que a plataforma inicializa; projetos existentes compatíveis são opcionais.
 - **Criar ações automaticamente** — opção de criação de ação recomendada na página do aplicativo após a configuração da infraestrutura.
 - **Criar minhas ações** — botão que inicia a geração de ação baseada no site.
@@ -85,7 +85,7 @@ O produto é independente de plataforma: seu servidor MCP funciona com qualquer 
 ## Sequência de leitura recomendada
 
 1. Visão geral.
-2. Crie um aplicativo usando a infraestrutura gerenciada da Adobe ou seus próprios repositórios.
+2. Crie um aplicativo usando a infraestrutura gerenciada dos Aplicativos LLM ou seus próprios repositórios.
 3. Inicie a geração de ação baseada no site a partir da página do aplicativo e revise as ações geradas.
 4. Implante para preparar e testar em uma plataforma LLM compatível.
 5. Personalize manipuladores e widgets gerados.

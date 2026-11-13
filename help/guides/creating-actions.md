@@ -1,9 +1,9 @@
 ---
 title: Criar ações
 description: Gere ações do aplicativo Adobe LLM a partir de um site público, siga o progresso da geração, revise o trabalho gerado ou escolha a criação de ação manual.
-source-git-commit: 0f9dd0a5b1008e183eb8ab5a4c2eae34a78923bb
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '938'
+source-wordcount: '1039'
 ht-degree: 0%
 ---
 
@@ -11,13 +11,11 @@ ht-degree: 0%
 
 >[!IMPORTANT]
 >
->[!DNL Adobe LLM Apps] está atualmente na Beta.
->
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 As ações são os recursos que seu aplicativo oferece em uma conversa do LLM, como encontrar produtos, verificar a disponibilidade ou reservar um serviço. Cada manipulador de ação executa a tarefa e um widget opcional apresenta o resultado.
 
-Após a [configuração de infraestrutura](/help/guides/create-app.md), escolha como criar ações na página do aplicativo. A geração automática está disponível com a infraestrutura gerenciada da Adobe e seus próprios repositórios.
+Após a [configuração de infraestrutura](/help/guides/create-app.md), escolha como criar ações na página do aplicativo. A geração automática está disponível com a infraestrutura gerenciada do [!DNL LLM Apps] e seus próprios repositórios.
 
 **Neste guia:** Aprenda a gerar ações do seu site ou criá-las você mesmo. Para geração automática, inicie o processo e revise os resultados antes de implantar e testar o aplicativo.
 
@@ -79,15 +77,17 @@ Analise cada ação sugerida antes da implantação. Confirme se ela representa 
 1. Na página **[!UICONTROL Ações]**, selecione **[!UICONTROL Revisar]** para uma ação pronta.
 2. Revise a descrição da ação, os parâmetros de entrada, as anotações, a visibilidade e o manipulador gerado.
 3. Reveja a configuração e visualização do widget, se a ação tiver um widget.
-4. Inspecione o código gerado e os testes, incluindo solicitações de pull vinculadas. Verifique o que é comportamento de amostra e o que deve ser substituído por integrações reais.
+4. Inspecione o código gerado e os testes. Com a infraestrutura gerenciada do [!DNL LLM Apps], a plataforma abre solicitações de pull; com seus próprios repositórios, ela envia uma ramificação para cada repositório. Verifique o que é comportamento de amostra e o que deve ser substituído por integrações reais.
 5. Quando a ação estiver pronta, selecione **[!UICONTROL Marcar como revisado]**.
 6. Retorne à lista de ações e repita as ações restantes.
 
-O editor de ações salvas separa **[!UICONTROL Detalhes do widget de LLM]**, **[!UICONTROL Detalhes da ação]** e **[!UICONTROL Analytics]**. Revise as solicitações de pull do manipulador e do widget em suas respectivas guias.
+O editor de ações salvas separa **[!UICONTROL Detalhes do widget de LLM]**, **[!UICONTROL Detalhes da ação]** e **[!UICONTROL Analytics]**. Revise as alterações geradas no widget e no manipulador em suas respectivas guias.
 
 ![Ação gerada — guias do editor atual e Marcar como revisado, com o link do repositório oculto](/help/assets/guide-creating-actions/generated-action-review.png)
 
-Selecionar **[!UICONTROL Marcar como revisado]** mescla as solicitações de pull geradas pela ação se nenhum bloqueador de mesclagem permanecer. Se uma solicitação de pull aberta bloquear a revisão, resolva o bloqueador e tente novamente. Não aprove uma implementação com falhas de geração de código não resolvidas ou mesclagem.
+Selecionar **[!UICONTROL Marcar como revisado]** mescla as alterações geradas se nenhum bloqueador de mesclagem permanecer: puxa solicitações com a infraestrutura gerenciada [!DNL LLM Apps], ramifica com seus próprios repositórios. Se uma solicitação de pull aberta bloquear a revisão, resolva o bloqueador e tente novamente. Não aprove uma implementação com falhas de geração de código não resolvidas ou mesclagem.
+
+Com seus próprios repositórios, sua equipe também pode mesclar a ramificação com seu próprio processo, como uma solicitação de pull ou merge, antes de selecionar **[!UICONTROL Marcar como revisado]**. Se a plataforma não puder mesclar a própria ramificação, por exemplo, porque a ramificação de destino está protegida ou a ramificação tem conflitos, a revisão mostra qual ramificação mesclar em qual base. Mescle e selecione **[!UICONTROL Marcar como revisado]** novamente.
 
 Depois de examinar todas as ações geradas, a página Ações mostra **[!UICONTROL Todas as ações foram revisadas!]**. Para retornar ao aplicativo, selecione **[!UICONTROL Ir para a página do aplicativo]**.
 
