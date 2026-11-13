@@ -1,9 +1,9 @@
 ---
 title: Implante seu aplicativo
 description: Saiba como implantar seu aplicativo Adobe LLM no preparo e na produção usando a interface do usuário de aplicativos LLM.
-source-git-commit: 557173e8d95325b980efac4d72c06bb3d90dcd72
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '444'
+source-wordcount: '458'
 ht-degree: 0%
 ---
 
@@ -11,9 +11,7 @@ ht-degree: 0%
 
 >[!IMPORTANT]
 >
->[!DNL Adobe LLM Apps] está atualmente na Beta.
->
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 Depois de analisar as ações geradas ou enviar seu próprio código de manipulador para o repositório vinculado, implante o aplicativo do [!DNL LLM Apps]. Para ações geradas, revise e mescle o trabalho gerado antes da implantação.
 

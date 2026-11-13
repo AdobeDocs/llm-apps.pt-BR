@@ -1,9 +1,9 @@
 ---
 title: Solução de problemas de aplicativos Adobe LLM
 description: Resolva problemas comuns de infraestrutura, geração de ação, manipulador, widget, implantação, autenticação e conexão da plataforma LLM.
-source-git-commit: 2afae0696de15ec4d0a6596e413dd4851761439e
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '1503'
+source-wordcount: '1602'
 ht-degree: 0%
 ---
 
@@ -11,9 +11,7 @@ ht-degree: 0%
 
 >[!IMPORTANT]
 >
->[!DNL Adobe LLM Apps] está atualmente na Beta.
->
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 Comece com o sintoma observável. Não compartilhe credenciais, tokens, URLs de MCP privados ou resultados confidenciais de manipuladores durante a solução de problemas.
 
@@ -21,16 +19,17 @@ Comece com o sintoma observável. Não compartilhe credenciais, tokens, URLs de 
 
 | Sintoma | O que tentar |
 |---------|-------------|
-| Falha na configuração da infraestrutura gerenciada da Adobe | Leia o erro em **Falha na instalação** e selecione **Repetir**. Se a página não puder verificar o progresso, selecione **Verificar novamente**; a instalação continua em segundo plano |
+| [!DNL LLM Apps] falha na configuração da infraestrutura gerenciada | Leia o erro em **Falha na instalação** e selecione **Repetir**. Se a página não puder verificar o progresso, selecione **Verificar novamente**; a instalação continua em segundo plano |
 | Nenhum programa do AEM está disponível | Solicite acesso ao programa ao administrador. Se o carregamento falhar, selecione **Repetir carregamento de programas** |
-| Novos repositórios não são exibidos | Use **Conectar outro repositório** para conceder acesso ao Aplicativo GitHub para Aplicativos Adobe LLM, retornar ao assistente e selecione **Atualizar organizações e repositórios** |
+| Novos repositórios não são exibidos | Adicione o repositório ao programa Cloud Manager como um repositório privado e aguarde o status ser **Pronto** e reabra a lista de repositórios. Repositórios hospedados pelo Adobe no Cloud Manager não são compatíveis |
+| Nenhum site do Edge Delivery Services vinculado | Um repositório de widgets que não esteja no GitHub deve ser vinculado a um site EDS no Cloud Manager com o Bring Your Own Git. Vincule-o e selecione **Validar repositório** novamente. Consulte [Traga seu próprio Git](https://www.aem.live/developer/byo-git) |
 | Falha na validação do repositório de ações ou widgets | Use um projeto existente compatível ou um repositório vazio. Use repositórios separados para ações e widgets e selecione **Validar repositório** novamente |
-| Falha na configuração do site do AEM ou na validação do acesso | Siga [Configurar o acesso ao site do AEM](/help/guides/create-app.md#aem-site-access). Para uma nova instalação da Sincronização de código, conclua o assistente de página de confirmação. Para um site existente, mantenha a instalação e peça a um administrador de site para conceder acesso à conta do Adobe `admin` por meio do Administrador de Usuários do AEM. Confirme se a Sincronização de Código cobre o repositório do widget e selecione **Validar configuração do AEM** |
+| Falha na configuração do site ou na validação de acesso do AEM (repositório de widgets do GitHub) | Siga [Configurar o acesso ao site do AEM](/help/guides/create-app.md#aem-site-access). Para uma nova instalação da Sincronização de código, conclua o assistente de página de confirmação. Para um site existente, mantenha a instalação e peça a um administrador de site para conceder acesso à conta do Adobe `admin` por meio do Administrador de Usuários do AEM. Confirme se a Sincronização de Código cobre o repositório do widget e selecione **Validar configuração do AEM** |
 | É necessário acesso de gravação do DA | Solicite a um administrador de organização do DA que conceda acesso de gravação à conta do Adobe usada em aplicativos LLM para todo o conteúdo do site. Siga [Conceder acesso de gravação do DA](/help/guides/create-app.md#da-write-access), entre com essa conta e selecione **Validar configuração do AEM**. As funções de site do AEM não concedem permissões do DA |
 | Não foi possível verificar o acesso ao AEM ou ao DA | Tente **Validar a configuração do AEM** novamente para obter uma falha de verificação temporária. Se, em vez disso, a mensagem relatar uma negação de acesso, corrija as permissões do AEM ou DO usando as instruções acima antes de tentar novamente |
 | A criação do aplicativo não gerou ações | A criação do aplicativo só configura a infraestrutura. Na página do aplicativo, selecione **Criar ações automaticamente**, insira **Seu site** e selecione **Criar minhas ações**. Consulte [Criar ações](/help/guides/creating-actions.md) |
 | As ações ainda estão sendo geradas | A interface do usuário estima até 30 minutos para geração. Siga o progresso na página Ações ou saia da página e retorne posteriormente |
-| Falha na geração de relatórios de ação | Confirme se o site é público por HTTPS e, para seus próprios repositórios, se o acesso ao repositório ainda é válido. Entre em contato com a equipe do Beta com a mensagem de erro visível se o problema persistir |
+| Falha na geração de relatórios de ação | Confirme se o site é público por HTTPS e, para seus próprios repositórios, se o acesso ao repositório ainda é válido. Entre em contato com a equipe de aplicativos LLM com a mensagem de erro visível se o problema persistir |
 
 ## Ações e manipuladores
 
@@ -39,7 +38,7 @@ Comece com o sintoma observável. Não compartilhe credenciais, tokens, URLs de 
 | A ação não foi invocada | Habilite o plug-in ou conector do aplicativo na conversa. Confirme se a opção **Expor ao modelo de IA** nas configurações de ação e a opção **Visibilidade** da ação na página do aplicativo estão ativadas. Melhorar a descrição e reimplantar alterações de metadados |
 | Resposta vazia ou de erro | Execute `npm test` e chame o manipulador com o Inspetor MCP ou `curl`. Consulte [Desenvolvimento e teste de manipulador local](/help/reference/development.md) |
 | O manipulador funciona localmente, mas não após a implantação | Verifique a confirmação enviada mais recentemente, confirme a configuração de tempo de execução e verifique se o identificador do código de ação corresponde a `actions/<code-identifier>/index.js` |
-| A ação gerada não pode ser marcada como revisada | Confirme a geração do manipulador e widget com êxito. Verifique se há conflitos de mesclagem nas solicitações de pull geradas, recarregue a ação e selecione **Marcar como revisado** novamente |
+| A ação gerada não pode ser marcada como revisada | Confirme a geração do manipulador e widget com êxito. Verifique se há conflitos de mesclagem nas solicitações de pull ou ramificações geradas, recarregue a ação e selecione **Marcar como revisado** novamente. Com seus próprios repositórios, se a revisão solicitar que você mescle uma ramificação, mescle-a com o processo normal primeiro |
 
 ## Widgets
 
@@ -100,4 +99,4 @@ Não cole tokens de acesso, conjuntos de declarações ou segredos de cliente do
 | O plug-in usa o ambiente errado | Editar ou recriar o plug-in com o URL do servidor de Preparo ou Produção MCP pretendido |
 | O plug-in ainda mostra metadados de ação antigos | Implante as alterações, selecione **Atualizar** na conexão ChatGPT e inicie uma nova conversa |
 
-Se o problema persistir, registre o nome do aplicativo, o ambiente, a etapa com falha, o horário e a mensagem de erro visível antes de entrar em contato com a equipe do Beta. Não inclua segredos ou dados confidenciais do cliente.
+Se o problema persistir, registre o nome do aplicativo, o ambiente, a etapa com falha, o horário e a mensagem de erro visível antes de entrar em contato com a equipe de aplicativos do LLM. Não inclua segredos ou dados confidenciais do cliente.

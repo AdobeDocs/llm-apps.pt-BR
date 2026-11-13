@@ -1,9 +1,9 @@
 ---
 title: Personalizar um widget de EDS gerado
 description: Entenda e personalize o widget do Edge Delivery Services criado automaticamente pelos aplicativos LLM do Adobe.
-source-git-commit: 74769d0b2eb2d9323a39ae645dc5359404450164
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '1148'
+source-wordcount: '1163'
 ht-degree: 0%
 ---
 
@@ -11,9 +11,7 @@ ht-degree: 0%
 
 >[!IMPORTANT]
 >
->[!DNL Adobe LLM Apps] está atualmente na Beta.
->
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 >[!NOTE]
 >
@@ -27,7 +25,7 @@ Comece testando o widget gerado. Em seguida, personalize o contrato de dados, a 
 
 ## Localizar o widget gerado
 
-Abra o repositório EDS conectado durante a [configuração de infraestrutura](/help/guides/create-app.md). Se você usa a infraestrutura gerenciada da Adobe, solicite acesso ao código antes de continuar. Cada widget gerado é um bloco EDS:
+Abra o repositório EDS conectado durante a [configuração de infraestrutura](/help/guides/create-app.md). Se você usa a infraestrutura gerenciada do [!DNL LLM Apps], solicite acesso ao código antes de continuar. Cada widget gerado é um bloco EDS:
 
 ```text
 blocks/
@@ -38,7 +36,7 @@ blocks/
 
 - O arquivo JavaScript lê o resultado da ação e cria a interface.
 - O arquivo CSS controla o layout, o comportamento responsivo e o design visual.
-- A solicitação de pull gerada mostra os arquivos exatos criados para a ação.
+- A solicitação de pull gerada ou ramificação mostra os arquivos exatos criados para a ação.
 
 O slug usa hifens: uma ação com o identificador de código `search_products` usa um bloco como `blocks/search-products/`. A página de widget gerada normalmente é `/eds-widgets/search-products-demo`; use a **[!UICONTROL URL do Widget]** real nos metadados da ação.
 

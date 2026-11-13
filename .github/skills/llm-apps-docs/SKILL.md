@@ -1,9 +1,9 @@
 ---
 name: llm-apps-docs
 description: Crie, revise e valide a documentação de aplicativos Adobe LLM, aplique seus padrões editoriais e capture as capturas de tela atuais da interface do usuário por meio da automação do navegador. Use para artigos llm-apps.en, navegação, capturas de tela e pacotes de revisão offline.
-source-git-commit: 14d94a68dabddd2f2ef2cef65c51d31645d4a958
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '1380'
+source-wordcount: '1382'
 ht-degree: 0%
 ---
 
@@ -40,8 +40,8 @@ apenas o comportamento que as evidências disponíveis suportam.
 
 ## Regras de criação
 
-- Usuários potenciais iniciantes por meio da **Configuração de infraestrutura** e depois de **Criar ações**. O assistente de criação de aplicativos configura somente a infraestrutura; **[!UICONTROL Criar ações automaticamente]** e **[!UICONTROL Criar minhas ações]** iniciam a geração de ações baseadas no site posteriormente, a partir da página do aplicativo. Use a **infraestrutura gerenciada pelo Adobe** para a opção rotulada **[!UICONTROL Deixe-nos manipulá-la]** na interface.
-- Descreva a infraestrutura gerenciada da Adobe de forma neutra, conforme a infraestrutura que a Adobe cria e gerencia. Não o rotule como uma opção de avaliação, de configuração temporária ou não somente de produção e não faça declarações não confirmadas sobre a qualificação da produção.
+- Usuários potenciais iniciantes por meio da **Configuração de infraestrutura** e depois de **Criar ações**. O assistente de criação de aplicativos configura somente a infraestrutura; **[!UICONTROL Criar ações automaticamente]** e **[!UICONTROL Criar minhas ações]** iniciam a geração de ações baseadas no site posteriormente, a partir da página do aplicativo. Use a **infraestrutura gerenciada de Aplicativos LLM** para a opção rotulada **[!UICONTROL Deixe-nos lidar com ela]** na interface do usuário.
+- Descreva a infraestrutura gerenciada de forma neutra pelos aplicativos LLM, conforme a infraestrutura criada e gerenciada pela Adobe. Não o rotule como uma opção de avaliação, de configuração temporária ou não somente de produção e não faça declarações não confirmadas sobre a qualificação da produção.
 - Organize a navegação em torno das jornadas e resultados do usuário, não em tópicos de implementação.
 - Próximo ao início de cada guia, use **Neste guia:** seguido por uma ou duas frases em linguagem simples que explicam a tarefa e a próxima etapa. Preferir &quot;Saiba como...&quot; sobre promessas de futuro. Não use **Jornada:** rótulos ou listas de etapas separadas por seta.
 - Não use nomes de código internos (por exemplo, &quot;Agente de integração&quot;) em documentos voltados para o cliente — esse recurso nunca é exposto na interface do usuário do produto. Descreva-a genericamente (por exemplo, &quot;a plataforma&quot;) e use a cópia exata da interface do usuário atual, como **[!UICONTROL Criar minhas ações]** para controles.
@@ -53,7 +53,7 @@ apenas o comportamento que as evidências disponíveis suportam.
 - Diferencie o scaffold gerado da integração pronta para produção.
 - Evite nomes de trabalhadores internos, campos de banco de dados, tíquetes de implementação e detalhes instáveis do pipeline.
 - Não duplique tabelas de campo entre guias; vincule à referência.
-- Preservar a interface e as diretivas do Experience League: `[!DNL]`, &grave;&grave;, `[!IMPORTANT]`, `[!NOTE]` e `[!TIP]`.
+- Preservar a interface e as diretivas do Experience League: `[!DNL]`, ``, `[!IMPORTANT]`, `[!NOTE]` e `[!TIP]`.
 - Usar links internos relativos à raiz: `/help/...`.
 - Use as frases em maiúsculas e minúsculas para títulos e cabeçalhos, a menos que o rótulo de um produto exija o contrário.
 - Use o texto alternativo de imagem descritiva que explica a tela e o estado.

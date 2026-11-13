@@ -1,9 +1,9 @@
 ---
 title: Desenvolvimento e teste do manipulador local
 description: Manipule a estrutura do projeto, os comandos do servidor local, o teste de MCP e o teste de unidade para aplicativos Adobe LLM.
-source-git-commit: 0f9dd0a5b1008e183eb8ab5a4c2eae34a78923bb
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '664'
+source-wordcount: '677'
 ht-degree: 0%
 ---
 
@@ -11,9 +11,7 @@ ht-degree: 0%
 
 >[!IMPORTANT]
 >
->[!DNL Adobe LLM Apps] está atualmente na Beta.
->
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 Use essa referência ao desenvolver manipuladores localmente. Para obter o contrato de resultado do manipulador, consulte [Personalizar um manipulador gerado](/help/guides/customize-handler.md).
 
@@ -23,7 +21,7 @@ Use essa referência ao desenvolver manipuladores localmente. Para obter o contr
 - npm.
 - Um clone local do repositório do manipulador vinculado.
 
-Para a infraestrutura gerenciada da Adobe, solicite acesso ao repositório antes de seguir esta referência. A execução do manipulador local não requer credenciais do Adobe, mas os serviços upstream protegidos ainda exigem seu próprio acesso autorizado.
+Para a infraestrutura gerenciada [!DNL LLM Apps], solicite acesso ao repositório antes de seguir esta referência. A execução do manipulador local não requer credenciais do Adobe, mas os serviços upstream protegidos ainda exigem seu próprio acesso autorizado.
 
 ## Estrutura de projeto
 

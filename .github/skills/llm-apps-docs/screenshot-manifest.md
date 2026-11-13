@@ -1,7 +1,7 @@
 ---
-source-git-commit: fa80b7b68e1b905eb22d4789a74b2f0de886d70c
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '1963'
+source-wordcount: '2090'
 ht-degree: 1%
 ---
 # Manifesto de captura de tela
@@ -23,10 +23,19 @@ Diretório de saída: `help/assets/guide-infrastructure/`
 
 | Nome de arquivo | Estado e contexto útil | Texto alternativo sugerido |
 |---|---|---|
-| `setup-choice.png` | Introdução às duas opções de infraestrutura visíveis | Crie seu aplicativo LLM - escolha a infraestrutura gerenciada da Adobe ou seus próprios repositórios |
-| `app-details.png` | Nome do aplicativo, programa AEM, região do Analytics e aviso de configuração imutável | Detalhes do aplicativo - digite um nome, selecione um programa do AEM e escolha uma região de análise |
-| `action-repository.png` | Caminho do próprio repositório com o GitHub selecionado e instruções de conexão do repositório | Configuração da infraestrutura de ação - conectar um repositório de ações vazio ou compatível |
-| `provisioning.png` | Configuração gerenciada aprovada do Adobe em andamento | Configuração do aplicativo - a Adobe está preparando a infraestrutura |
+| `setup-choice.png` | Introdução ao **Deixe-nos lidar com ele** e **Use minha configuração do Cloud Manager**, chamada na opção de repositório próprio | Criar seu aplicativo LLM - Introdução ao Deixe-nos lidar com isso e usar minha configuração do Cloud Manager |
+| `action-repository.png` | Programa e repositório do Cloud Manager selecionados, **Repositório validado** | Configuração da infraestrutura de ação — programa e repositório do Cloud Manager selecionados |
+| `widget-source.png` | Origem do widget com **Selecionar repositório de widget manualmente** (Cloud Manager EDS marcado como Em breve) | Configuração da infraestrutura do widget - Origem do widget |
+| `widget-repository.png` | Observação de repositório de widget não GitHub validado, **site do Edge Delivery Services** | Configuração da infraestrutura de widgets - repositório de widgets validado e seu site EDS vinculado |
+| `app-details.png` | Nome do aplicativo, conjunto de programas AEM do repositório, região de dados do Application Insights | Detalhes do aplicativo - nome, programa AEM e região de dados Application Insights |
+| `settings-repositories.png` | Configurações > Repositório com cartões de repositório do Cloud Manager e o site vinculado | Configurações do aplicativo - seção Repositório |
+| `provisioning.png` | Configuração gerenciada de Aplicativos LLM aprovada em andamento | Configuração do aplicativo - a Adobe está preparando a infraestrutura |
+
+Última captura (todas menos `provisioning.png` e `da-write-permissions.png`): 2026-11-13, Preparo
+(`experience-stage.adobe.com/llm-apps`), repositórios de ação e widget do GitLab com o
+Git próprio. Os valores de programa, repositório, site e origem são mascarados; os contornos vermelhos são chamadas.
+Não capturado: o caminho do widget GitHub (Instalar sincronização de código do AEM, Validar configuração do AEM). Ainda não
+verificado na produção.
 
 Excluir detalhes da conta, IDs da organização, nomes reais de programas, repositório
 identificadores e IDs do aplicativo. Use campos vazios ou um nome de ajuste neutro onde

@@ -1,19 +1,17 @@
 ---
 title: Campos de ação e widget
 description: Definições de campo para metadados de ação, parâmetros, widgets, CSP e permissões em aplicativos Adobe LLM.
-source-git-commit: 2892acf4b3042c296203377a06bc3ff80fd375a5
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '1257'
-ht-degree: 3%
+source-wordcount: '1273'
+ht-degree: 2%
 ---
 
 # Campos de ação e widget {#action-widget-configuration}
 
 >[!IMPORTANT]
 >
->[!DNL Adobe LLM Apps] está atualmente na Beta.
->
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 Use esta página para pesquisar campos no editor de ações. Para as etapas de criação, consulte [Criar uma ação do zero](/help/guides/create-action.md).
 
@@ -30,7 +28,7 @@ Após a criação, o editor de ação salva usa quatro guias:
 | **[!UICONTROL Análises]** | Coleta de intenção do usuário e instruções |
 | **[!UICONTROL Extensões ChatGPT]** | Pontos de entrada de abertura direta, ícones de ação, preferências de exibição e menções do compositor |
 
-Para salvar suas edições, selecione **[!UICONTROL Salvar alterações]**. As ações geradas que aguardam revisão mostram **[!UICONTROL Marcar como revisado]**, que também lida com as solicitações de pull geradas.
+Para salvar suas edições, selecione **[!UICONTROL Salvar alterações]**. As ações geradas que aguardam revisão mostram **[!UICONTROL Marcar como revisado]**, que também mescla suas solicitações de pull ou ramificações geradas.
 
 ## Parâmetros de ação
 

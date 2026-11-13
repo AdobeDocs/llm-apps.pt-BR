@@ -1,9 +1,9 @@
 ---
 title: Autentique usuários finais com seu próprio provedor de identidade
 description: Ative a autenticação de usuário final para seu aplicativo Adobe LLM para que uma plataforma LLM compatível faça com que o usuário entre com seu provedor de identidade antes de chamar ações protegidas.
-source-git-commit: 0f9dd0a5b1008e183eb8ab5a4c2eae34a78923bb
+source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
 workflow-type: tm+mt
-source-wordcount: '2136'
+source-wordcount: '2150'
 ht-degree: 0%
 ---
 
@@ -11,9 +11,7 @@ ht-degree: 0%
 
 >[!IMPORTANT]
 >
->[!DNL Adobe LLM Apps] está atualmente na Beta.
->
->Os recursos, fluxos de trabalho e interface mostrados aqui não representam necessariamente o estado final do produto. Para participar da Beta, envie um email para llm-apps-beta@adobe.com.
+>Aplicativos LLM está disponível para todos os clientes do AEM Sites Cloud Service para desenvolver e gerenciar seus próprios aplicativos. Depois que a medição for iniciada, cada chamada de aplicativo será contabilizada nas Solicitações de conteúdo do AEM Sites do cliente. A Adobe anunciará a taxa de medição e a data de início antes de a medição entrar em vigor.
 
 Por padrão, cada ação no aplicativo é pública. Qualquer plataforma LLM com o URL do servidor MCP pode chamar essas ações e o manipulador não pode identificar o usuário final.
 
