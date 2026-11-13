@@ -1,9 +1,9 @@
 ---
 title: Campos de ação e widget
 description: Definições de campo para metadados de ação, parâmetros, widgets, CSP e permissões em aplicativos Adobe LLM.
-source-git-commit: 9b2ec369baba5d533088d2dd4adefcb80f5c9727
+source-git-commit: 0276ae4e4627e49157911ad579a42c0e77045eee
 workflow-type: tm+mt
-source-wordcount: '1273'
+source-wordcount: '1173'
 ht-degree: 2%
 ---
 
@@ -17,15 +17,13 @@ Use esta página para pesquisar campos no editor de ações. Para as etapas de c
 
 ## Encontrar as configurações
 
-A caixa de diálogo **[!UICONTROL Criar nova ação]** tem as guias **[!UICONTROL Ação]**, **[!UICONTROL Metadados do widget]** e **[!UICONTROL Extensões de ChatGPT]**.
-
-Após a criação, o editor de ação salva usa quatro guias:
+A caixa de diálogo **[!UICONTROL Criar nova ação]** e o editor de ação salva usam as mesmas quatro guias:
 
 | Guia | Configurações |
 |---|---|
+| **[!UICONTROL Detalhes da ação]** | Nome da ação, identificador de código, descrição, parâmetros de entrada e **[!UICONTROL configurações de LLM]**, incluindo anotações, texto de status de invocação e visibilidade |
 | **[!UICONTROL Detalhes do LLM Widget]** | Tipo de dispositivo, domínio de sandbox, descrição do dispositivo, URLs de modelo e CSP |
-| **[!UICONTROL Detalhes da ação]** | Identificador de código, descrição, parâmetros de entrada e **[!UICONTROL configurações de LLM]**, incluindo anotações, texto de status de invocação e visibilidade |
-| **[!UICONTROL Análises]** | Coleta de intenção do usuário e instruções |
+| **[!UICONTROL Application Insights]** | Coleta de intenção do usuário e instruções |
 | **[!UICONTROL Extensões ChatGPT]** | Pontos de entrada de abertura direta, ícones de ação, preferências de exibição e menções do compositor |
 
 Para salvar suas edições, selecione **[!UICONTROL Salvar alterações]**. As ações geradas que aguardam revisão mostram **[!UICONTROL Marcar como revisado]**, que também mescla suas solicitações de pull ou ramificações geradas.
@@ -37,13 +35,13 @@ Parâmetros de entrada são os valores que a plataforma LLM envia para o manipul
 | Propriedade | Descrição |
 |----------|-------------|
 | **Nome** | O identificador de parâmetro (por exemplo, `category`, `query`) |
-| **Tipo** | `String`, `Number`, `Integer`, `Boolean` ou `Object`; o editor salvo também oferece `File` para parâmetros de arquivos carregados |
+| **Tipo** | `String`, `Number`, `Integer`, `Boolean`, `Object` ou `File` para parâmetros de arquivo carregado |
 | **Descrição** | Uma explicação legível — a plataforma LLM usa a explicação para extrair o valor correto |
 | **Obrigatório** | Se marcado, o modelo deve fornecer este parâmetro antes de chamar a ação |
 
 ### Parâmetros de arquivo
 
-Parâmetros de arquivo são nomes de campos de entrada configurados no editor de ação. Quando um usuário carrega um arquivo, o host fornece um objeto de arquivo para esses argumentos, normalmente incluindo `download_url` e `file_id`.
+Parâmetros de arquivo são parâmetros de entrada com o tipo `File`. Quando um usuário carrega um arquivo, o host fornece um objeto de arquivo para esses argumentos, normalmente incluindo `download_url` e `file_id`.
 
 Os parâmetros do arquivo carregado são diferentes de [pontos de entrada do arquivo](/help/guides/chatgpt-extensions.md#file-entrypoint). Um ponto de entrada File usa um parâmetro Object chamado `file`, contendo os `name` e `resourceUri` do arquivo aberto.
 
@@ -75,9 +73,6 @@ Dicas opcionais que descrevem o comportamento da ação:
 |-------|------------|-------------|
 | **Chamando texto de status** | 64 caracteres | Mensagem mostrada na plataforma LLM enquanto a ação é executada (por exemplo, *Carregando produtos...*) |
 | **Texto de status chamado** | 64 caracteres | Mensagem mostrada após a ação ser concluída (por exemplo, *Produtos carregados...*) |
-| **Descrição do widget** | 512 caracteres | Mapeia para `_meta["openai/widgetDescription"]`; resume o componente renderizado para o modelo e reduz a narração repetida |
-
-A descrição da ação controla quando o modelo seleciona a ação. A descrição do widget explica o que o componente mostra após ser renderizado.
 
 ### Visibilidade
 
@@ -105,9 +100,9 @@ As configurações de exposição do modelo e do widget não substituem a escolh
 
 | Texto | Descrição |
 |-------|-------------|
-| **Tipo / Tipo de widget** | Na caixa de diálogo de criação, selecione **[!UICONTROL Bloco Edge Delivery Services]** ou **[!UICONTROL Nenhum widget]**. O editor salvo rotula a opção somente texto **[!UICONTROL Nenhuma interface interativa]** |
+| **Tipo de widget** | **[!UICONTROL Bloco Edge Delivery Services]** para um widget interativo ou **[!UICONTROL Nenhuma interface interativa]** para uma ação somente texto |
 | **Domínio do widget** | Origem da sandbox usada pelo host. A interface o identifica conforme necessário para o envio do aplicativo e exclusivo por aplicativo. Isso é separado da **URL do Widget** da página do EDS |
-| **Borda preferencial** | Solicita um contêiner com borda; a renderização depende do host. Disponível na caixa de diálogo de criação |
+| **Descrição do widget** | Até 512 caracteres. Mapeia para `_meta["openai/widgetDescription"]`; resume o componente renderizado para o modelo e reduz a narração repetida. A descrição da ação controla quando o modelo seleciona a ação; a descrição do widget explica o que o componente mostra após ser renderizado |
 
 ### URLs de modelo
 
@@ -157,16 +152,3 @@ Essas configurações do widget são separadas dos pontos de entrada. O host esc
 ### Menções do compositor
 
 **Habilitar menções ao compositor** designa a ação de pesquisa de recursos do aplicativo. Somente uma ação por aplicativo pode fornecer menção à pesquisa. A ação deve ser somente leitura e visível para aplicativo, com um parâmetro de Cadeia de Caracteres chamado `query` que aceite texto vazio e nenhuma outra entrada necessária. Um provedor pode ser somente texto; ativar a visibilidade do aplicativo não requer a configuração de um widget para o provedor de pesquisa.
-
-## Permissões
-
-As permissões de widgets controlam o acesso a APIs de hardware e navegador. As permissões são mapeadas para a política de permissão iframe.
-
-Os controles de permissão aparecem em **[!UICONTROL Permissões (específicas de MCP)]** na caixa de diálogo de criação. Conceder somente os recursos exigidos pelo widget; o suporte ao host e o consentimento do usuário também se aplicam.
-
-| Permissão | Descrição |
-|------------|-------------|
-| **Câmera** | Acessar a câmera do dispositivo |
-| **Microfone** | Acessar o microfone do dispositivo |
-| **Geolocalização** | Acessar a localização do usuário |
-| **Área de transferência** | Ler ou gravar na área de transferência |
